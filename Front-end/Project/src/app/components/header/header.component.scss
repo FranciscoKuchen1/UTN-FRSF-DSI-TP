@@ -1,0 +1,40 @@
+.logo-home{
+  width: 75px;
+  height: 75px;
+}
+
+.logo-hombre{
+  width: 75px;
+  height: 75px;
+}
+
+.logo-mujer{
+  width: 75px;
+  height: 75px;
+
+}
+
+.header-user{
+  display: flex;
+  gap: 20px;
+  align-items: center;
+}
+
+.header-user-names{
+  font-size: 15px;
+  line-height: 25px;
+}
+
+.header-toolbar{
+  height: 95px;
+  gap: 30px
+}
+
+.header-buttons{
+  width: 100%;
+
+  div{
+    display: flex;
+    gap: 15px;
+  }
+}

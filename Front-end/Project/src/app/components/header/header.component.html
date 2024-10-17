@@ -1,0 +1,68 @@
+<mat-toolbar class="header-toolbar">
+
+  <div class="header-home">
+    <img src="assets/utn-icon.png" class="logo-home" alt="icono utn">
+  </div>
+
+  <div class="header-buttons" [ngSwitch]="user.rol">
+
+    <div *ngSwitchCase="'administrador'">
+      <button mat-button mat-stroked-button>Inicio</button>
+      <button mat-button mat-stroked-button>Buscar bedel</button>
+      <button mat-button mat-stroked-button>Registrar bedel</button>
+    </div>
+
+    <div *ngSwitchCase="'bedel'">
+      <button mat-button mat-stroked-button>Inicio</button>
+      <button mat-button mat-stroked-button [matMenuTriggerFor]="registrarReserva">Registrar reserva</button>
+
+      <mat-menu #registrarReserva="matMenu" xPosition="after">
+        <button mat-menu-item>
+          <span>Periodica</span>
+        </button>
+        <button mat-menu-item>
+          <span>Esporadica</span>
+        </button>
+      </mat-menu>
+
+      <button mat-button mat-stroked-button>Buscar aula</button>
+
+      <button mat-button mat-stroked-button [matMenuTriggerFor]="listadoReservas">Listado de reservas</button>
+
+      <mat-menu #listadoReservas="matMenu" xPosition="after">
+        <button mat-menu-item>
+          <span>Por día</span>
+        </button>
+        <button mat-menu-item>
+          <span>Por curso</span>
+        </button>
+      </mat-menu>
+    </div>
+
+    <div *ngSwitchDefault>
+      <h3> Invalid role</h3>
+    </div>
+
+  </div>
+
+  <div class="header-user">
+
+    <div class="header-user-names">
+      <div>
+        {{ user.apellido | titlecase }}, {{ user.nombre| titlecase }}
+      </div>
+      <div class="header-user-rol">
+        {{ user.rol | titlecase }}
+      </div>
+    </div>
+    <ng-container *ngIf="user.sexo !== 1">
+      <img src="assets/user-icon-mujer.png" class="logo-mujer" alt="icono mujer">
+    </ng-container>
+
+    <ng-container *ngIf="user.sexo === 1">
+      <img src="assets/user-icon-hombre.png" class="logo-hombre" alt="icono hombre">
+    </ng-container>
+
+  </div>
+
+</mat-toolbar>
