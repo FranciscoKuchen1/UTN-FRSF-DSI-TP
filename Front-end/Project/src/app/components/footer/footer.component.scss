@@ -1,0 +1,22 @@
+.footer-toolbar{
+  background-color: #0c0c0c;
+  color: #f5f5f5;
+}
+
+.footer-links{
+  display: flex;
+  gap: 15px;
+  width: 100%;
+  justify-content: end;
+
+  div{
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: initial;
+  }
+}
+
+.footer-copyright{
+  font-size: initial;
+}
