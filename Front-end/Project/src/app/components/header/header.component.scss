@@ -32,6 +32,8 @@
 
 .header-buttons{
   width: 100%;
+  display: flex;
+  gap: 15px;
 
   div{
     display: flex;

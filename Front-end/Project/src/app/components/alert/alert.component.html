@@ -1,0 +1,8 @@
+<h2 mat-dialog-title>{{ this.data.title }}</h2>
+
+<div mat-dialog-content [innerHTML]="this.data.text | replaceLineBreaks"></div>
+
+<div mat-dialog-actions align="end">
+  <button mat-button mat-stroked-button (click)="close(false)" *ngIf="this.data.negativeString">{{ this.data.negativeString }}</button>
+  <button mat-button mat-raised-button color="primary" mat-dialog-close (click)="close(true)">{{ this.data.positiveString }}</button>
+</div>

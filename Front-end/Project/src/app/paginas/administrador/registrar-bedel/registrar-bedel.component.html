@@ -1,0 +1,70 @@
+<mat-card class="pantalla-mat-card">
+  <mat-card-content>
+    <h1>Registro de bedel:</h1>
+
+    <br>
+    <br>
+
+    <form [formGroup]="bedelForm">
+      <div class="columns">
+        <mat-form-field appearance="outline">
+          <mat-label>Identificador de usuario</mat-label>
+          <input matInput formControlName="id">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Turno en el trabajo</mat-label>
+          <mat-select formControlName="turno">
+            <div *ngFor="let turno of turnos">
+              <mat-option [value]="turno.id">{{turno.name}}</mat-option>
+            </div>
+          </mat-select>
+          <button *ngIf="bedelForm.get('turno')?.value !== null" mat-icon-button matSuffix (click)="bedelForm.get('turno')?.reset(); $event.stopPropagation()">
+            <mat-icon>close</mat-icon>
+          </button>
+        </mat-form-field>
+      </div>
+
+      <div class="columns">
+        <mat-form-field appearance="outline">
+          <mat-label>Nombre</mat-label>
+          <input matInput formControlName="nombre">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Contraseña</mat-label>
+          <input matInput type="password" formControlName="contrasena1" #pass1>
+          <button mat-icon-button matSuffix (click)="pass1.type === 'password' ? pass1.type= 'text' : pass1.type= 'password'">
+            <mat-icon *ngIf="pass1.type === 'password'">visibility</mat-icon>
+            <mat-icon *ngIf="pass1.type === 'text'">visibility_off</mat-icon>
+          </button>
+        </mat-form-field>
+      </div>
+
+      <div class="columns">
+        <mat-form-field appearance="outline">
+          <mat-label>Apellido</mat-label>
+          <input matInput formControlName="apellido">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Confirmar contraseña</mat-label>
+          <input matInput type="password" formControlName="contrasena2" #pass2>
+          <button mat-icon-button matSuffix (click)="pass2.type === 'password' ? pass2.type= 'text' : pass2.type= 'password'">
+            <mat-icon *ngIf="pass2.type === 'password'">visibility</mat-icon>
+            <mat-icon *ngIf="pass2.type === 'text'">visibility_off</mat-icon>
+          </button>
+        </mat-form-field>
+      </div>
+    </form>
+
+    <div class="cancel-confirm">
+      <button mat-button mat-raised-button (click)="close()">Cancelar</button>
+
+      <div>
+        <button mat-button mat-raised-button color="primary" (click)="submit()" [disabled]="bedelForm.invalid">Registrar</button>
+      </div>
+    </div>
+
+  </mat-card-content>
+</mat-card>

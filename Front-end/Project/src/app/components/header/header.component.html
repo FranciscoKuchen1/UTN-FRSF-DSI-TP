@@ -6,34 +6,35 @@
 
   <div class="header-buttons" [ngSwitch]="user.rol">
 
+    <button mat-button mat-stroked-button (click)="redirect('')">Inicio</button>
+
     <div *ngSwitchCase="'administrador'">
-      <button mat-button mat-stroked-button>Inicio</button>
-      <button mat-button mat-stroked-button>Buscar bedel</button>
-      <button mat-button mat-stroked-button>Registrar bedel</button>
+      <button mat-button mat-stroked-button (click)="redirect('buscar-bedel')">Buscar bedel</button>
+      <button mat-button mat-stroked-button (click)="redirect('registrar-bedel')">Registrar bedel</button>
     </div>
 
     <div *ngSwitchCase="'bedel'">
-      <button mat-button mat-stroked-button>Inicio</button>
+
       <button mat-button mat-stroked-button [matMenuTriggerFor]="registrarReserva">Registrar reserva</button>
 
       <mat-menu #registrarReserva="matMenu" xPosition="after">
-        <button mat-menu-item>
+        <button mat-menu-item (click)="redirect('registrar-reserva-periodica')">
           <span>Periodica</span>
         </button>
-        <button mat-menu-item>
+        <button mat-menu-item (click)="redirect('registrar-reserva-esporadica')">
           <span>Esporadica</span>
         </button>
       </mat-menu>
 
-      <button mat-button mat-stroked-button>Buscar aula</button>
+      <button mat-button mat-stroked-button (click)="redirect('buscar-aula')">Buscar aula</button>
 
       <button mat-button mat-stroked-button [matMenuTriggerFor]="listadoReservas">Listado de reservas</button>
 
       <mat-menu #listadoReservas="matMenu" xPosition="after">
-        <button mat-menu-item>
+        <button mat-menu-item (click)="redirect('listado-reserva-dia')">
           <span>Por día</span>
         </button>
-        <button mat-menu-item>
+        <button mat-menu-item (click)="redirect('listado-reserva-curso')">
           <span>Por curso</span>
         </button>
       </mat-menu>
