@@ -35,3 +35,19 @@ mat-card.pantalla-mat-card{
     height: 100%;
   }
 }
+
+form .columns:not([hidden]) {
+  display: flex;
+  gap: 10px;
+
+}
+form .columns:not([hidden]) > * {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+@media screen and (max-width: 845px) {
+  form .columns {
+    flex-wrap: wrap;
+  }
+}

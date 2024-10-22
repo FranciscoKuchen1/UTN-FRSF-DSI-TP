@@ -12,7 +12,7 @@ import {AlertService} from "../../../services/alert.service";
 export class RegistrarBedelComponent {
 
   bedelForm: UntypedFormGroup;
-  turnos: Turnos[] = [{id: 0, name: 'Mañana'}, {id: 1, name: 'Tarde'}];
+  turnos: Turnos[] = [{id: 0, name: 'Mañana'}, {id: 1, name: 'Tarde'}, {id: 3, name: 'Noche'}];
 
   constructor(
     private formbuilder: FormBuilder,
