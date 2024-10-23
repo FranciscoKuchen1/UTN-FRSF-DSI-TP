@@ -1,9 +1,14 @@
+<div class="container">
+  <header class="header">
+    <tp-header [user]="{nombre: 'Nombre', apellido: 'Apellido', rol: 'administrador', sexo: 1}"></tp-header>
+    <mat-divider></mat-divider>
+  </header>
 
-<tp-header [user]="{nombre: 'Nombre', apellido: 'Apellido', rol: 'administrador', sexo: 1}"></tp-header>
-<mat-divider></mat-divider>
+  <main class="content">
+    <router-outlet></router-outlet>
+  </main>
 
-<tp-footer></tp-footer>
-
-<router-outlet></router-outlet>
-
-
+  <footer class="footer">
+    <tp-footer></tp-footer>
+  </footer>
+</div>

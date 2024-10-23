@@ -1,5 +1,13 @@
 import {Component} from '@angular/core';
-import {FormBuilder, UntypedFormGroup, Validators} from "@angular/forms";
+import {
+  AbstractControl,
+  FormBuilder,
+  FormGroup,
+  UntypedFormGroup,
+  ValidationErrors,
+  ValidatorFn,
+  Validators
+} from "@angular/forms";
 import {Router} from "@angular/router";
 import {Turnos} from "../../../interfaces/turnos";
 import {AlertService} from "../../../services/alert.service";
@@ -14,6 +22,13 @@ export class RegistrarBedelComponent {
   bedelForm: UntypedFormGroup;
   turnos: Turnos[] = [{id: 0, name: 'Mañana'}, {id: 1, name: 'Tarde'}, {id: 3, name: 'Noche'}];
 
+  isLengthValid = false;
+  isSamePass = false;
+  hasUppercase = false;
+  hasNumber = false;
+  hasSpecialCharacter = false;
+
+
   constructor(
     private formbuilder: FormBuilder,
     private router: Router,
@@ -24,9 +39,9 @@ export class RegistrarBedelComponent {
       nombre: [null, Validators.required],
       apellido: [null, Validators.required],
       turno: [null, Validators.required],
-      contrasena1: [null, Validators.required],
-      contrasena2: [null, Validators.required],
-    })
+      contrasena1: [null, this.passValidator()],
+      contrasena2: [null, this.passValidator()]
+    }, {validators: this.passMatchValidator});
   }
 
   redirect(url: string) {
@@ -39,37 +54,81 @@ export class RegistrarBedelComponent {
     });
   }
 
-  checkValidId(): boolean {
-    return true;
+  checkPasswordCriteria(): void {
+    const value1 = this.bedelForm.get('contrasena1')?.value;
+    const value2 = this.bedelForm.get('contrasena2')?.value;
+
+    this.isLengthValid = (value1.length >= 6 && value1.length <= 20);
+    this.hasUppercase = /[A-Z]/.test(value1);
+    this.hasNumber = /[0-9]/.test(value1);
+    this.hasSpecialCharacter = /[@#$%&*]/.test(value1);
+    this.isSamePass = (value1 === value2) && (value1.length !== 0 && value2.length !== 0);
   }
 
-  checkValidPolitics(): boolean {
-    return true;
+  passValidator(): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      const value = control.value;
+
+      if (!value) {
+        return {passwordEmpty: true};
+      }
+
+      const isLengthValid = (value.length >= 6 && value.length <= 20);
+      const hasUppercase = /[A-Z]/.test(value);
+      const hasNumber = /[0-9]/.test(value);
+      const hasSpecialCharacter = /[@#$%&*]/.test(value);
+
+      const passwordValid = isLengthValid && hasUppercase && hasNumber && hasSpecialCharacter;
+
+      return !passwordValid ? {
+        passwordStrength: {
+          isLengthValid,
+          hasUppercase,
+          hasNumber,
+          hasSpecialCharacter
+        }
+      } : null;
+    };
+  }
+
+  passMatchValidator(form: FormGroup): ValidationErrors | null {
+    const contrasena1 = form.get('contrasena1')?.value;
+    const contrasena2 = form.get('contrasena2')?.value;
+
+    return contrasena1 === contrasena2 ? null : {passwordsMismatch: true};
+  }
+
+  checkValidId(): boolean {
+    return true; //TODO insertar endpoint de validacion de id de usuario
   }
 
   checkValidContrasena(): boolean {
-    const contrasena1 = this.bedelForm.get('contrasena1')?.value;
-    const contrasena2 = this.bedelForm.get('contrasena2')?.value;
-
-    if (contrasena1 === contrasena2) {
+    if (this.bedelForm.get('contrasena1')?.value === this.bedelForm.get('contrasena2')?.value) {
       return true;
     }
     this.alertService.ok('ERROR', 'Las contraseñas no coinciden ').subscribe();
     return false;
   }
 
+  checkValidPass(): boolean {
+    if (this.isLengthValid && this.hasUppercase && this.hasNumber && this.hasSpecialCharacter) {
+      return true;
+    }
+    this.alertService.ok('ERROR', 'Las contraseñas no son validas ').subscribe();
+    return false;
+  }
 
   submit(): void {
     const checkId = this.checkValidId();
-    const checkPolitics = this.checkValidPolitics();
+    const checkValidPass = this.checkValidPass();
     const checkIncoincidentes = this.checkValidContrasena();
 
-    if (!checkId || !checkPolitics || !checkIncoincidentes) {
+    if (!checkId || !checkValidPass || !checkIncoincidentes) {
       return
     }
 
     this.alertService.confirm('Registrar', 'Desea registrar el bedel?').subscribe(() => {
-      console.log(this.bedelForm.value)
+      console.log(this.bedelForm.value) // TODO insertar endpoint de guardado
     });
 
   }
