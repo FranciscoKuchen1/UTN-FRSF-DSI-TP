@@ -4,16 +4,16 @@
     <img src="assets/utn-icon.png" class="logo-home" alt="icono utn">
   </div>
 
-  <div class="header-buttons" [ngSwitch]="user.rol">
+  <div class="header-buttons" [ngSwitch]="user.rol?.id">
 
     <button mat-button mat-stroked-button (click)="redirect('')">Inicio</button>
 
-    <div *ngSwitchCase="'administrador'">
+    <div *ngSwitchCase="1">
       <button mat-button mat-stroked-button (click)="redirect('buscar-bedel')">Buscar bedel</button>
       <button mat-button mat-stroked-button (click)="redirect('registrar-bedel')">Registrar bedel</button>
     </div>
 
-    <div *ngSwitchCase="'bedel'">
+    <div *ngSwitchCase="2">
 
       <button mat-button mat-stroked-button [matMenuTriggerFor]="registrarReserva">Registrar reserva</button>
 
@@ -53,15 +53,12 @@
         {{ user.apellido | titlecase }}, {{ user.nombre| titlecase }}
       </div>
       <div class="header-user-rol">
-        {{ user.rol | titlecase }}
+        {{ (user.rol?.name | titlecase) || 'Invalid role' }}
       </div>
     </div>
-    <ng-container *ngIf="user.sexo !== 1">
-      <img src="assets/user-icon-mujer.png" class="logo-mujer" alt="icono mujer">
-    </ng-container>
 
-    <ng-container *ngIf="user.sexo === 1">
-      <img src="assets/user-icon-hombre.png" class="logo-hombre" alt="icono hombre">
+    <ng-container *ngIf="user">
+      <img src="assets/user-icon.png" class="logo-hombre" alt="icono">
     </ng-container>
 
   </div>

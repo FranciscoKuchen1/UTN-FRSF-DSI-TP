@@ -20,12 +20,14 @@ import { ListadoReservasDiaComponent } from './paginas/bedel/listado-reservas-di
 import { ListadoReservasCursoComponent } from './paginas/bedel/listado-reservas-curso/listado-reservas-curso.component';
 import {MatCardModule} from "@angular/material/card";
 import {MatInputModule} from "@angular/material/input";
-import {ReactiveFormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {MatSelectModule} from "@angular/material/select";
 import { AlertComponent } from './components/alert/alert.component';
 import {MatDialogModule} from "@angular/material/dialog";
 import {ReplaceLineBreaksPipe} from "./pipes/replaceLineBreaks.pipe";
 import {MatListModule} from "@angular/material/list";
+import { LoginComponent } from './components/login/login.component';
+import {MatRadioModule} from "@angular/material/radio";
 
 
 @NgModule({
@@ -42,7 +44,8 @@ import {MatListModule} from "@angular/material/list";
     ListadoReservasDiaComponent,
     ListadoReservasCursoComponent,
     AlertComponent,
-    ReplaceLineBreaksPipe
+    ReplaceLineBreaksPipe,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
@@ -57,7 +60,9 @@ import {MatListModule} from "@angular/material/list";
     ReactiveFormsModule,
     MatSelectModule,
     MatDialogModule,
-    MatListModule
+    MatListModule,
+    MatRadioModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

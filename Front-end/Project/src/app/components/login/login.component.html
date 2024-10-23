@@ -1,0 +1,33 @@
+<mat-card class="login-mat-card">
+  <mat-card-content>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Usuario</mat-label>
+      <input matInput [(ngModel)]="username">
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Contraseña</mat-label>
+      <input matInput [(ngModel)]="pass">
+    </mat-form-field>
+
+    <mat-label class="center">Tipo de cuenta:</mat-label>
+
+    <br>
+
+    <div class="account-types">
+      <mat-radio-group [(ngModel)]="rol">
+        <mat-radio-button *ngFor="let type of types" [value]="type">
+          {{type.name | titlecase}}
+        </mat-radio-button>
+      </mat-radio-group>
+    </div>
+
+    <br>
+
+    <div class="center">
+        <button mat-button mat-raised-button color="primary" (click)="submit()" [disabled]="rol === undefined">Ingresar</button>
+    </div>
+
+  </mat-card-content>
+</mat-card>

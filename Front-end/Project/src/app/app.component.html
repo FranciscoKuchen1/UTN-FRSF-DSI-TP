@@ -1,6 +1,10 @@
-<div class="container">
+<ng-container *ngIf="!logged">
+  <tp-login (loginResult)="isLogin($event)"></tp-login>
+</ng-container>
+
+<div class="container" *ngIf="logged">
   <header class="header">
-    <tp-header [user]="{nombre: 'Nombre', apellido: 'Apellido', rol: 'administrador', sexo: 1}"></tp-header>
+    <tp-header [user]="user!"></tp-header>
     <mat-divider></mat-divider>
   </header>
 

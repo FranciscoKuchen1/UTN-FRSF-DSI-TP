@@ -1,6 +1,9 @@
+import {NameId} from "./name-id";
+
 export interface User {
-  nombre: string;
-  apellido: string;
-  rol: string;
-  sexo?: number;
+  user?: string;
+  pass?: string;
+  nombre?: string;
+  apellido?: string;
+  rol?: NameId;
 }
