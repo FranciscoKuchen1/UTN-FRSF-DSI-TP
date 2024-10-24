@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {User} from "../../interfaces/user";
 import {Router} from "@angular/router";
 
@@ -10,12 +10,16 @@ import {Router} from "@angular/router";
 export class HeaderComponent {
 
   @Input() user!: User;
+  @Output() logout = new EventEmitter();
 
   constructor(private router: Router) {}
 
-
   redirect(url: string): void{
     this.router.navigate([url]);
+  }
+
+  disconect(): void{
+    this.logout.emit();
   }
 
 }

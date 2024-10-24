@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import {filter, Observable} from "rxjs";
 import {MatDialog, MatDialogRef} from "@angular/material/dialog";
-import {AlertData} from "../interfaces/alertData";
-import {AlertComponent} from "../components/alert/alert.component";
+import {AlertData} from "../../interfaces/alertData";
+import {AlertComponent} from "../../components/alert/alert.component";
 
 @Injectable({
   providedIn: 'root'

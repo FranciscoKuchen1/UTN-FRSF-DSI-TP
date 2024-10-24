@@ -46,21 +46,23 @@
 
   </div>
 
-  <div class="header-user">
 
-    <div class="header-user-names">
-      <div>
-        {{ user.apellido | titlecase }}, {{ user.nombre| titlecase }}
+  <button mat-button class="header-user" [matMenuTriggerFor]="options">
+    <div class="header-user-complete">
+      <div class="header-user-names">
+        <div>
+          {{ user.apellido | titlecase }}, {{ user.nombre| titlecase }}
+        </div>
+        <div class="header-user-rol">
+          {{ (user.rol?.name | titlecase) || 'Invalid role' }}
+        </div>
       </div>
-      <div class="header-user-rol">
-        {{ (user.rol?.name | titlecase) || 'Invalid role' }}
-      </div>
+      <img class="header-user-icon" src="assets/user-icon.png" alt="icono">
     </div>
 
-    <ng-container *ngIf="user">
-      <img src="assets/user-icon.png" class="logo-hombre" alt="icono">
-    </ng-container>
-
-  </div>
+    <mat-menu #options="matMenu" xPosition="before">
+      <button mat-menu-item (click)="disconect()">Logout</button>
+    </mat-menu>
+  </button>
 
 </mat-toolbar>

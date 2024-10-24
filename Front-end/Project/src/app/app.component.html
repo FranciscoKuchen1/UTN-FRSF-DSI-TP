@@ -1,10 +1,10 @@
 <ng-container *ngIf="!logged">
-  <tp-login (loginResult)="isLogin($event)"></tp-login>
+  <tp-login (loginResult)="login($event)"></tp-login>
 </ng-container>
 
 <div class="container" *ngIf="logged">
   <header class="header">
-    <tp-header [user]="user!"></tp-header>
+    <tp-header [user]="user!" (logout)="logout()"></tp-header>
     <mat-divider></mat-divider>
   </header>
 

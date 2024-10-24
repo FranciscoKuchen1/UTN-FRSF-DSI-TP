@@ -10,7 +10,7 @@ import {
 } from "@angular/forms";
 import {Router} from "@angular/router";
 import {Turnos} from "../../../interfaces/turnos";
-import {AlertService} from "../../../services/alert.service";
+import {AlertService} from "../../../services/alert/alert.service";
 
 @Component({
   selector: 'app-registrar-bedel',
