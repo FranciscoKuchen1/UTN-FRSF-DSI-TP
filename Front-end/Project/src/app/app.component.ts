@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {User} from "./interfaces/user";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-root',
@@ -10,6 +11,8 @@ export class AppComponent implements OnInit{
 
   logged: boolean | null;
   user: User | null;
+
+  constructor(private router: Router) {}
 
   ngOnInit() : void{
     this.logged = this.getLogged();
@@ -29,6 +32,7 @@ export class AppComponent implements OnInit{
   }
 
   logout(): void{
+    this.redirect('/');
     this.setLogged(false);
     this.setUser({});
 
@@ -52,5 +56,9 @@ export class AppComponent implements OnInit{
   getUser(): User | null {
     const storedValue = sessionStorage.getItem('user');
     return storedValue ? JSON.parse(storedValue) : null;
+  }
+
+  redirect(url: string): void{
+    this.router.navigate([url]);
   }
 }
