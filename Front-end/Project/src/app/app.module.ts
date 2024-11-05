@@ -28,6 +28,7 @@ import {ReplaceLineBreaksPipe} from "./pipes/replaceLineBreaks.pipe";
 import {MatListModule} from "@angular/material/list";
 import { LoginComponent } from './components/login/login.component';
 import {MatRadioModule} from "@angular/material/radio";
+import { HttpClientModule } from '@angular/common/http';
 
 
 @NgModule({
@@ -62,7 +63,8 @@ import {MatRadioModule} from "@angular/material/radio";
     MatDialogModule,
     MatListModule,
     MatRadioModule,
-    FormsModule
+    FormsModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

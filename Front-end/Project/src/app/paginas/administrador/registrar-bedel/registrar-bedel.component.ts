@@ -11,6 +11,7 @@ import {
 import {Router} from "@angular/router";
 import {Turnos} from "../../../interfaces/turnos";
 import {AlertService} from "../../../services/alert/alert.service";
+import {HttpClient} from "@angular/common/http";
 
 @Component({
   selector: 'app-registrar-bedel',
@@ -28,11 +29,11 @@ export class RegistrarBedelComponent {
   hasNumber = false;
   hasSpecialCharacter = false;
 
-
   constructor(
     private formbuilder: FormBuilder,
     private router: Router,
-    private alertService: AlertService
+    private alertService: AlertService,
+    private http: HttpClient,
   ) {
     this.bedelForm = this.formbuilder.group({
       id: [null, Validators.required],
@@ -98,10 +99,6 @@ export class RegistrarBedelComponent {
     return contrasena1 === contrasena2 ? null : {passwordsMismatch: true};
   }
 
-  checkValidId(): boolean {
-    return true; //TODO insertar endpoint de validacion de id de usuario
-  }
-
   checkValidContrasena(): boolean {
     if (this.bedelForm.get('contrasena1')?.value === this.bedelForm.get('contrasena2')?.value) {
       return true;
@@ -119,16 +116,29 @@ export class RegistrarBedelComponent {
   }
 
   submit(): void {
-    const checkId = this.checkValidId();
     const checkValidPass = this.checkValidPass();
     const checkIncoincidentes = this.checkValidContrasena();
 
-    if (!checkId || !checkValidPass || !checkIncoincidentes) {
+    if (!checkValidPass || !checkIncoincidentes) {
       return
     }
 
     this.alertService.confirm('Registrar', 'Desea registrar el bedel?').subscribe(() => {
+
       console.log(this.bedelForm.value) // TODO insertar endpoint de guardado
+
+      this.http.post<any>('http://localhost:8080/api/bedeles/registrar-bedel', this.bedelForm.value).subscribe({
+          error: (value) => {
+            if (value.status === 500) {
+              this.alertService.ok('ERROR', 'El id de usuario ya existe.');
+              this.bedelForm.get('id')?.reset();
+            }
+          },
+          complete: () => {
+            console.log('Bedel insertado correctamente');
+          }
+        }
+      )
     });
 
   }
