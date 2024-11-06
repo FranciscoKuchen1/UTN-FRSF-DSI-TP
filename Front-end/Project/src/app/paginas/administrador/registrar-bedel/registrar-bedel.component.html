@@ -25,13 +25,13 @@
 
         <mat-form-field appearance="outline">
           <mat-label>Turno en el trabajo</mat-label>
-          <mat-select formControlName="turno">
+          <mat-select formControlName="tipoTurno">
             <div *ngFor="let turno of turnos">
               <mat-option [value]="turno.id">{{turno.name}}</mat-option>
             </div>
           </mat-select>
 
-          <button *ngIf="bedelForm.get('turno')?.value !== null" mat-icon-button matSuffix (click)="bedelForm.get('turno')?.reset(); $event.stopPropagation()">
+          <button *ngIf="bedelForm.get('tipoTurno')?.value !== null" mat-icon-button matSuffix (click)="bedelForm.get('tipoTurno')?.reset(); $event.stopPropagation()">
             <mat-icon>close</mat-icon>
           </button>
         </mat-form-field>

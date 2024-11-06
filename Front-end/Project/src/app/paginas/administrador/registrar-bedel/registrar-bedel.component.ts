@@ -39,7 +39,7 @@ export class RegistrarBedelComponent {
       id: [null, Validators.required],
       nombre: [null, Validators.required],
       apellido: [null, Validators.required],
-      turno: [null, Validators.required],
+      tipoTurno: [null, Validators.required],
       contrasena: [null, this.passValidator()],
       confirmacionContrasena: [null, this.passValidator()]
     }, {validators: this.passMatchValidator});
