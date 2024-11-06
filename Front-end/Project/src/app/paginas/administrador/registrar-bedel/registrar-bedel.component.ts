@@ -21,7 +21,7 @@ import {HttpClient} from "@angular/common/http";
 export class RegistrarBedelComponent {
 
   bedelForm: UntypedFormGroup;
-  turnos: Turnos[] = [{id: 0, name: 'Mañana'}, {id: 1, name: 'Tarde'}, {id: 3, name: 'Noche'}];
+  turnos: Turnos[] = [{id: 0, name: 'Mañana'}, {id: 1, name: 'Tarde'}, {id: 2, name: 'Noche'}];
 
   isLengthValid = false;
   isSamePass = false;
