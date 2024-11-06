@@ -1,0 +1,26 @@
+version: '3.8'
+services:
+  postgres:
+    image: postgres:16.4
+    environment:
+      - POSTGRES_DB=project
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=P4ssword!
+    ports:
+      - 5433:5432
+    networks:
+      - app-network
+
+  pgadmin:
+    image: dpage/pgadmin4
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=admin@domain.com
+      - PGADMIN_DEFAULT_PASSWORD=admin
+    ports:
+      - 8081:80
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
