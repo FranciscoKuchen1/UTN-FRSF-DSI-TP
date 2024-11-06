@@ -40,8 +40,8 @@ export class RegistrarBedelComponent {
       nombre: [null, Validators.required],
       apellido: [null, Validators.required],
       turno: [null, Validators.required],
-      contrasena1: [null, this.passValidator()],
-      contrasena2: [null, this.passValidator()]
+      contrasena: [null, this.passValidator()],
+      confirmacionContrasena: [null, this.passValidator()]
     }, {validators: this.passMatchValidator});
   }
 
@@ -56,8 +56,8 @@ export class RegistrarBedelComponent {
   }
 
   checkPasswordCriteria(): void {
-    const value1 = this.bedelForm.get('contrasena1')?.value;
-    const value2 = this.bedelForm.get('contrasena2')?.value;
+    const value1 = this.bedelForm.get('contrasena')?.value;
+    const value2 = this.bedelForm.get('confirmacionContrasena')?.value;
 
     this.isLengthValid = (value1.length >= 6 && value1.length <= 20);
     this.hasUppercase = /[A-Z]/.test(value1);
@@ -93,14 +93,14 @@ export class RegistrarBedelComponent {
   }
 
   passMatchValidator(form: FormGroup): ValidationErrors | null {
-    const contrasena1 = form.get('contrasena1')?.value;
-    const contrasena2 = form.get('contrasena2')?.value;
+    const contrasena1 = form.get('contrasena')?.value;
+    const contrasena2 = form.get('confirmacionContrasena')?.value;
 
     return contrasena1 === contrasena2 ? null : {passwordsMismatch: true};
   }
 
   checkValidContrasena(): boolean {
-    if (this.bedelForm.get('contrasena1')?.value === this.bedelForm.get('contrasena2')?.value) {
+    if (this.bedelForm.get('contrasena')?.value === this.bedelForm.get('confirmacionContrasena')?.value) {
       return true;
     }
     this.alertService.ok('ERROR', 'Las contraseñas no coinciden ').subscribe();

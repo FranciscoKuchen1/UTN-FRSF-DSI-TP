@@ -40,7 +40,7 @@
       <div class="columns">
         <mat-form-field appearance="outline">
           <mat-label>Contraseña</mat-label>
-          <input matInput type="password" formControlName="contrasena1" #pass1 (input)="checkPasswordCriteria()">
+          <input matInput type="password" formControlName="contrasena" #pass1 (input)="checkPasswordCriteria()">
 
           <mat-error *ngIf="!isLengthValid">Debe tener de 6 a 20 caracteres.</mat-error>
           <mat-error *ngIf="!hasUppercase">Debe contener al menos una letra mayuscula.</mat-error>
@@ -56,7 +56,7 @@
 
         <mat-form-field appearance="outline">
           <mat-label>Confirmar contraseña</mat-label>
-          <input matInput type="password" formControlName="contrasena2" #pass2 (input)="checkPasswordCriteria()">
+          <input matInput type="password" formControlName="confirmacionContrasena" #pass2 (input)="checkPasswordCriteria()">
 
           <!--<mat-error *ngIf="!isLengthValid">Debe tener de 6 a 20 caracteres.</mat-error>
           <mat-error *ngIf="!hasUppercase">Debe contener al menos una letra mayuscula.</mat-error>
