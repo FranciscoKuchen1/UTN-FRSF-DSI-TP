@@ -125,16 +125,19 @@ export class RegistrarBedelComponent {
 
     this.alertService.confirm('Registrar', 'Desea registrar el bedel?').subscribe(() => {
 
-      console.log(this.bedelForm.value) // TODO insertar endpoint de guardado
+      console.log('hacia el back: ',this.bedelForm.value);
 
       this.http.post<any>('http://localhost:8080/api/bedeles/registrar-bedel', this.bedelForm.value).subscribe({
           error: (value) => {
+            console.log('este es el error: ',value);
             if (value.status === 500) {
               this.alertService.ok('ERROR', 'El id de usuario ya existe.');
               this.bedelForm.get('id')?.reset();
             }
           },
           complete: () => {
+            this.bedelForm.reset();
+            this.bedelForm.clearValidators();
             console.log('Bedel insertado correctamente');
           }
         }
