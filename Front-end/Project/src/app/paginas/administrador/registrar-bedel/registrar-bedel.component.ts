@@ -36,7 +36,7 @@ export class RegistrarBedelComponent {
     private http: HttpClient,
   ) {
     this.bedelForm = this.formbuilder.group({
-      id: [null, Validators.required],
+      idRegistro: [null, Validators.required],
       nombre: [null, Validators.required],
       apellido: [null, Validators.required],
       tipoTurno: [null, Validators.required],
@@ -127,12 +127,12 @@ export class RegistrarBedelComponent {
 
       console.log('hacia el back: ',this.bedelForm.value);
 
-      this.http.post<any>('http://localhost:8080/api/bedeles/registrar-bedel', this.bedelForm.value).subscribe({
+      this.http.post<any>('http://localhost:8080/api/bedeles', this.bedelForm.value).subscribe({
           error: (value) => {
             console.log('este es el error: ',value);
-            if (value.status === 500) {
-              this.alertService.ok('ERROR', 'El id de usuario ya existe.');
-              this.bedelForm.get('id')?.reset();
+            if (value.status === 400) {
+              this.alertService.ok('ERROR', value.message);
+              this.bedelForm.get('idRegistro')?.reset();
             }
           },
           complete: () => {

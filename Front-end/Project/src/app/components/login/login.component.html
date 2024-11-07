@@ -17,7 +17,7 @@
 
     <div class="account-types">
       <mat-radio-group [(ngModel)]="rol">
-        <mat-radio-button *ngFor="let type of types" [value]="type">
+        <mat-radio-button *ngFor="let type of types" [value]="type" [color]="'primary'">
           {{type.name | titlecase}}
         </mat-radio-button>
       </mat-radio-group>

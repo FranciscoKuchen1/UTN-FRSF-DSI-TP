@@ -9,6 +9,13 @@ body {
   margin: 0;
   font-family: Roboto, "Helvetica Neue", sans-serif;
   background-color: #e5e5e5;
+
+  app-root tp-login{
+    justify-content: center;
+    display: flex;
+    align-items: center;
+    height: 100%;
+  }
 }
 
 .container {
@@ -19,7 +26,7 @@ body {
 
 .content {
   flex: 1;
-  padding: 20px;
+  padding: 5vw;
 }
 
 .columns{
@@ -49,8 +56,6 @@ mat-card{
 
 mat-card.pantalla-mat-card{
   height: auto;
-  margin-right: 50px;
-  margin-left: 50px;
 
   mat-card-content{
     height: 100%;
