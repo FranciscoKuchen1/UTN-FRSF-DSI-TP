@@ -131,7 +131,7 @@ export class RegistrarBedelComponent {
           error: (value) => {
             console.log('este es el error: ',value);
             if (value.status === 400) {
-              this.alertService.ok('ERROR', value.message);
+              this.alertService.ok('ERROR', value.error.values());
               this.bedelForm.get('idRegistro')?.reset();
             }
           },
