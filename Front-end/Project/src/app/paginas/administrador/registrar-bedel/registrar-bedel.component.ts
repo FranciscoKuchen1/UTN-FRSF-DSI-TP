@@ -136,7 +136,7 @@ export class RegistrarBedelComponent {
 
               if (typeof value.error === 'object') {
                 for (const [field, message] of Object.entries(value.error)) {
-                  errorMessages += `${message}\n`;
+                  errorMessages += `${message}.\n`;
                 }
               }
               this.alertService.ok('ERROR', errorMessages);
