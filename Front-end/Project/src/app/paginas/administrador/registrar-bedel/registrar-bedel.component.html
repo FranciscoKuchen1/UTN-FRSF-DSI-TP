@@ -76,7 +76,7 @@
       <button mat-button mat-raised-button (click)="close()">Cancelar</button>
 
       <div>
-        <button mat-button mat-raised-button color="primary" (click)="submit()">Registrar</button>
+        <button mat-button mat-raised-button color="primary" (click)="submit()" [disabled]="bedelForm.invalid">Registrar</button>
       </div>
     </div>
 

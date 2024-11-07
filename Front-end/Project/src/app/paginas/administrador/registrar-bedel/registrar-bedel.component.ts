@@ -125,12 +125,8 @@ export class RegistrarBedelComponent {
 
     this.alertService.confirm('Registrar', 'Desea registrar el bedel?').subscribe(() => {
 
-      console.log('hacia el back: ',this.bedelForm.value);
-
       this.http.post<any>('http://localhost:8080/api/bedeles', this.bedelForm.value).subscribe({
           error: (value) => {
-            console.log('este es el error: ',value);
-
             if (value.status === 400 && value.error) {
               let errorMessages = '';
 
