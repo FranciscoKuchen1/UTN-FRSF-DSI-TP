@@ -130,27 +130,16 @@ export class RegistrarBedelComponent {
       this.http.post<any>('http://localhost:8080/api/bedeles', this.bedelForm.value).subscribe({
           error: (value) => {
             console.log('este es el error: ',value);
-           /* if (value.status === 400) {
-              this.alertService.ok('ERROR', value.error.values());
-              this.bedelForm.get('idRegistro')?.reset();
-            }*/
 
             if (value.status === 400 && value.error) {
-              // Si el error tiene un objeto `error` con detalles, los recorremos
               let errorMessages = '';
 
-              // Si es un objeto, recorremos las claves y valores
               if (typeof value.error === 'object') {
                 for (const [field, message] of Object.entries(value.error)) {
-                  errorMessages += `${field}: ${message}\n`;  // Concatenamos los mensajes
+                  errorMessages += `${message}\n`;
                 }
               }
-
-              // Mostrar el mensaje completo con todas las claves de error
               this.alertService.ok('ERROR', errorMessages);
-              console.log('Errores: ', errorMessages);
-
-              // Limpiar el formulario o hacer otras acciones según sea necesario
               this.bedelForm.get('idRegistro')?.reset();
             }
           },
