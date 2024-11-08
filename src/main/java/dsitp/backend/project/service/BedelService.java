@@ -11,29 +11,24 @@ import dsitp.backend.project.repos.ReservaPeriodicaRepository;
 import dsitp.backend.project.util.NotFoundException;
 import dsitp.backend.project.util.ReferencedWarning;
 import java.util.List;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 @Service
-@RequiredArgsConstructor
-@Slf4j
 public class BedelService {
 
     private final BedelRepository bedelRepository;
     private final ReservaEsporadicaRepository reservaEsporadicaRepository;
     private final ReservaPeriodicaRepository reservaPeriodicaRepository;
 
-    /**
-     * public BedelService(final BedelRepository bedelRepository, final
-     * ReservaEsporadicaRepository reservaEsporadicaRepository, final
-     * ReservaPeriodicaRepository reservaPeriodicaRepository) {
-     * this.bedelRepository = bedelRepository; this.reservaEsporadicaRepository
-     * = reservaEsporadicaRepository; this.reservaPeriodicaRepository =
-     * reservaPeriodicaRepository; }
-     *
-     */
+    public BedelService(final BedelRepository bedelRepository,
+            final ReservaEsporadicaRepository reservaEsporadicaRepository,
+            final ReservaPeriodicaRepository reservaPeriodicaRepository) {
+        this.bedelRepository = bedelRepository;
+        this.reservaEsporadicaRepository = reservaEsporadicaRepository;
+        this.reservaPeriodicaRepository = reservaPeriodicaRepository;
+    }
+
     public List<BedelDTO> findAll() {
         final List<Bedel> bedels = bedelRepository.findAll(Sort.by("id"));
         return bedels.stream()
@@ -44,11 +39,6 @@ public class BedelService {
     public BedelDTO get(final Integer id) {
         return bedelRepository.findById(id)
                 .map(bedel -> mapToDTO(bedel, new BedelDTO()))
-                .orElseThrow(NotFoundException::new);
-    }
-
-    public Bedel getBedelById(final Integer id) {
-        return bedelRepository.findById(id)
                 .orElseThrow(NotFoundException::new);
     }
 
@@ -69,7 +59,7 @@ public class BedelService {
         bedelRepository.deleteById(id);
     }
 
-    public TipoTurno mapTipoTurnoToInteger(Integer tipoTurno) {
+    public TipoTurno mapIntegerToTipoTurno(Integer tipoTurno) {
 
         switch (tipoTurno) {
             case 0 -> {
@@ -89,7 +79,7 @@ public class BedelService {
 
     }
 
-    public Integer mapIntegerToTipoTurno(TipoTurno tipoTurno) {
+    public Integer mapTipoTurnoToInteger(TipoTurno tipoTurno) {
 
         switch (tipoTurno) {
             case TipoTurno.MANANA -> {
@@ -110,22 +100,27 @@ public class BedelService {
     }
 
     private BedelDTO mapToDTO(final Bedel bedel, final BedelDTO bedelDTO) {
-        bedelDTO.setId(bedel.getId());
+        bedelDTO.setIdRegistro(bedel.getIdRegistro());
         bedelDTO.setNombre(bedel.getNombre());
         bedelDTO.setApellido(bedel.getApellido());
         bedelDTO.setContrasena(bedel.getContrasena());
-        bedelDTO.setTipoTurno(mapIntegerToTipoTurno(bedel.getTipoTurno()));
+        bedelDTO.setIdRegistro(bedel.getIdRegistro());
+        bedelDTO.setTipoTurno(mapTipoTurnoToInteger(bedel.getTipoTurno()));
         return bedelDTO;
     }
 
     private Bedel mapToEntity(final BedelDTO bedelDTO, final Bedel bedel) {
-        bedel.setId(bedelDTO.getId());
         bedel.setNombre(bedelDTO.getNombre());
         bedel.setApellido(bedelDTO.getApellido());
         bedel.setContrasena(bedelDTO.getContrasena());
+        bedel.setIdRegistro(bedelDTO.getIdRegistro());
         bedel.setEliminado(false);
-        bedel.setTipoTurno(mapTipoTurnoToInteger(bedelDTO.getTipoTurno()));
+        bedel.setTipoTurno(mapIntegerToTipoTurno(bedelDTO.getTipoTurno()));
         return bedel;
+    }
+
+    public boolean idRegistroExists(final String idRegistro) {
+        return bedelRepository.existsByIdRegistroIgnoreCase(idRegistro);
     }
 
     public ReferencedWarning getReferencedWarning(final Integer id) {

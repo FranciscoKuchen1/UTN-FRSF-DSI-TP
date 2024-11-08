@@ -8,4 +8,6 @@ import org.springframework.stereotype.Repository;
 public interface BedelRepository extends JpaRepository<Bedel, Integer> {
 
     boolean existsById(Integer id);
+
+    boolean existsByIdRegistroIgnoreCase(String idRegistro);
 }

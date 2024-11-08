@@ -4,6 +4,8 @@ import dsitp.backend.project.model.TipoTurno;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import java.util.List;
@@ -26,6 +28,7 @@ public class Bedel extends Usuario {
     private Boolean eliminado;
 
     @Column
+    @Enumerated(EnumType.STRING)
     private TipoTurno tipoTurno;
 
     @OneToMany(mappedBy = "bedel", cascade = CascadeType.ALL, orphanRemoval = true)

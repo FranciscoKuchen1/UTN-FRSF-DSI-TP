@@ -6,7 +6,7 @@ import java.lang.annotation.*;
 
 @Target({ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)
-@Constraint(validatedBy = PasswordFormatValidator.class)
+@Constraint(validatedBy = PasswordPolicyValidator.class)
 public @interface ValidPassword {
 
     String message() default "La contraseña no cumple con las políticas de seguridad";
