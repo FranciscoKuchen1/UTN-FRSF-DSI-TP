@@ -29,6 +29,10 @@ import {MatListModule} from "@angular/material/list";
 import { LoginComponent } from './components/login/login.component';
 import {MatRadioModule} from "@angular/material/radio";
 import { HttpClientModule } from '@angular/common/http';
+import {MatSnackBarModule} from "@angular/material/snack-bar";
+import {MatTableModule} from "@angular/material/table";
+import {MatPaginatorModule} from "@angular/material/paginator";
+import {MatSortModule} from "@angular/material/sort";
 
 
 @NgModule({
@@ -64,7 +68,11 @@ import { HttpClientModule } from '@angular/common/http';
     MatListModule,
     MatRadioModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    MatSnackBarModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatSortModule
   ],
   providers: [],
   bootstrap: [AppComponent]

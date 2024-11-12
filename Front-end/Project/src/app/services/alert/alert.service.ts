@@ -3,13 +3,14 @@ import {filter, Observable} from "rxjs";
 import {MatDialog, MatDialogRef} from "@angular/material/dialog";
 import {AlertData} from "../../interfaces/alertData";
 import {AlertComponent} from "../../components/alert/alert.component";
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 @Injectable({
   providedIn: 'root'
 })
 export class AlertService {
 
-  constructor(private dialog: MatDialog) {}
+  constructor(private dialog: MatDialog, private snackbar: MatSnackBar) {}
 
   show(alertData: AlertData): MatDialogRef<AlertComponent> {
     return this.dialog.open(AlertComponent, {
@@ -43,6 +44,14 @@ export class AlertService {
     });
 
     return dialog.afterClosed();
+  }
+
+  snackBar(message: string, action: string = 'CERRAR'): void {
+    this.snackbar.open(message, action, {
+      duration: 5000,
+      verticalPosition: 'top',
+      panelClass: ['matSnackBarStyle']
+    });
   }
 
 }

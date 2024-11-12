@@ -103,7 +103,7 @@ export class RegistrarBedelComponent {
     if (this.bedelForm.get('contrasena')?.value === this.bedelForm.get('confirmacionContrasena')?.value) {
       return true;
     }
-    this.alertService.ok('ERROR', 'Las contraseñas no coinciden ').subscribe();
+    this.alertService.ok('ERROR', 'Las contraseñas no coinciden.').subscribe();
     return false;
   }
 
@@ -111,8 +111,17 @@ export class RegistrarBedelComponent {
     if (this.isLengthValid && this.hasUppercase && this.hasNumber && this.hasSpecialCharacter) {
       return true;
     }
-    this.alertService.ok('ERROR', 'Las contraseñas no son validas ').subscribe();
+    this.alertService.ok('ERROR', 'Las contraseñas no son validas.').subscribe();
     return false;
+  }
+
+  clear(): void{
+    if (this.bedelForm.touched){
+      this.bedelForm.reset();
+      this.bedelForm.clearValidators();
+      this.bedelForm.updateValueAndValidity();
+      this.bedelForm.setErrors(null);
+    }
   }
 
   submit(): void {
@@ -140,13 +149,11 @@ export class RegistrarBedelComponent {
             }
           },
           complete: () => {
-            this.bedelForm.reset();
-            this.bedelForm.clearValidators();
-            console.log('Bedel insertado correctamente');
+            this.alertService.snackBar('Bedel insertado correctamente.');
+            this.clear();
           }
         }
       )
     });
-
   }
 }
