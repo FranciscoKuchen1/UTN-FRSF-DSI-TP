@@ -5,6 +5,7 @@ import {MatSort} from "@angular/material/sort";
 import {FormBuilder, UntypedFormGroup} from "@angular/forms";
 import {HttpClient} from "@angular/common/http";
 import {AlertService} from "../../../services/alert/alert.service";
+import {Turnos} from "../../../interfaces/turnos";
 
 @Component({
   selector: 'app-buscar-bedel',
@@ -13,7 +14,8 @@ import {AlertService} from "../../../services/alert/alert.service";
 })
 export class BuscarBedelComponent {
 
-  displayedColumns: string[] = ['Apellido', 'Nombre', 'Turno', 'Identificador'];
+  displayedColumns: string[] = ['apellido', 'nombre', 'tipoTurno', 'idRegistro', 'options'];
+  turnos: Turnos[] = [{id: 0, name: 'Mañana'}, {id: 1, name: 'Tarde'}, {id: 2, name: 'Noche'}];
   dataSource = new MatTableDataSource();
   buscarBedelForm: UntypedFormGroup;
 
@@ -31,10 +33,20 @@ export class BuscarBedelComponent {
     })
   }
 
+  editarBedel(row: any): void{
+    console.log('edito: ', row)
+  }
+
+  eliminarBedel(row: any): void{
+    console.log('elimino: ', row)
+  }
+
   submit(): void {
-    this.http.post<any>('http://localhost:8080/api/bedeles/buscar', this.buscarBedelForm.value).subscribe({
-        next: (value) => {
+    this.http.get('http://localhost:8080/api/bedeles', this.buscarBedelForm.value).subscribe({
+        next: (value: any) => {
           this.dataSource = new MatTableDataSource(value);
+          this.dataSource.paginator = this.paginator;
+          this.dataSource.sort = this.sort;
         },
         error: (value) => {
           if (value.status === 400 && value.error) {

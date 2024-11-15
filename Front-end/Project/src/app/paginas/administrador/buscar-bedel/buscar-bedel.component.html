@@ -28,29 +28,44 @@
       <mat-card-content>
         <table mat-table [dataSource]="dataSource" matSort>
 
-          <ng-container matColumnDef="Apellido">
+          <ng-container matColumnDef="apellido">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Apellido</th>
             <td mat-cell *matCellDef="let row"> {{ row.apellido }}</td>
           </ng-container>
 
-          <ng-container matColumnDef="Nombre">
+          <ng-container matColumnDef="nombre">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Nombre</th>
             <td mat-cell *matCellDef="let row"> {{ row.nombre }}</td>
           </ng-container>
 
-          <ng-container matColumnDef="Turno">
+          <ng-container matColumnDef="tipoTurno">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Turno</th>
-            <td mat-cell *matCellDef="let row"> {{ row.turno }}</td>
+            <td mat-cell *matCellDef="let row"> {{ this.turnos[row.tipoTurno].name }}</td>
           </ng-container>
 
-          <ng-container matColumnDef="Identificador">
+          <ng-container matColumnDef="idRegistro">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Identificador</th>
-            <td mat-cell *matCellDef="let row"> {{ row.identificador }}</td>
+            <td mat-cell *matCellDef="let row"> {{ row.idRegistro }}</td>
           </ng-container>
 
           <ng-container matColumnDef="options">
-            <th mat-header-cell *matHeaderCellDef ></th>
-            <td mat-cell *matCellDef="let row"> opcionesss</td>
+            <th mat-header-cell *matHeaderCellDef></th>
+            <td mat-cell *matCellDef="let row">
+              <button mat-icon-button [matMenuTriggerFor]="menu">
+                <mat-icon>more_vert</mat-icon>
+              </button>
+
+              <mat-menu #menu="matMenu">
+                <button mat-menu-item (click)="editarBedel(row)">
+                  <mat-icon>edit</mat-icon>
+                  <span>Editar</span>
+                </button>
+                <button mat-menu-item (click)="eliminarBedel(row)">
+                  <mat-icon>delete</mat-icon>
+                  <span>Eliminar</span>
+                </button>
+              </mat-menu>
+            </td>
           </ng-container>
 
           <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
