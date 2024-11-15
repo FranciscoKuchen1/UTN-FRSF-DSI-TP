@@ -55,7 +55,7 @@ public class BedelResource {
     }
 
     @GetMapping("/tipoTurno/{tipoTurno}")
-    public ResponseEntity<List<BedelDTO>> getBedelesByTipoTurno(@PathVariable(name = "tipoTurno") Integer tipoTurno) {
+    public ResponseEntity<List<BedelDTO>> getBedelesByTipoTurno(@PathVariable(name = "tipoTurno") TipoTurno tipoTurno) {
         return ResponseEntity.ok(bedelService.getBedelesByTipoTurno(tipoTurno));
     }
 
@@ -81,7 +81,7 @@ public class BedelResource {
         return ResponseEntity.ok(id);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/{id}/permanente")
     @ApiResponse(responseCode = "204")
     public ResponseEntity<Void> deleteBedel(@PathVariable(name = "id") final Integer id) {
         final ReferencedWarning referencedWarning = bedelService.getReferencedWarning(id);
@@ -92,14 +92,14 @@ public class BedelResource {
         return ResponseEntity.noContent().build();
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/{idRegistro}")
     @ApiResponse(responseCode = "204")
-    public ResponseEntity<Void> deleteBedelLogica(@PathVariable(name = "id") final Integer id) {
-        final ReferencedWarning referencedWarning = bedelService.getReferencedWarning(id);
+    public ResponseEntity<Void> deleteBedelLogica(@PathVariable(name = "idRegistro") final String idRegistro) {
+        final ReferencedWarning referencedWarning = bedelService.getReferencedWarning(idRegistro);
         if (referencedWarning != null) {
             throw new ReferencedException(referencedWarning);
         }
-        // bedelService.update();
+        bedelService.deleteLogico(idRegistro);
         return ResponseEntity.noContent().build();
     }
 

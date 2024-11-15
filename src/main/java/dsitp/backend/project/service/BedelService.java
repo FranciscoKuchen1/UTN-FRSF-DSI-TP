@@ -49,9 +49,8 @@ public class BedelService {
                 .toList();
     }
 
-    public List<BedelDTO> getBedelesByTipoTurno(Integer tipoTurno) {
-        TipoTurno tipoTurnoToFind = mapIntegerToTipoTurno(tipoTurno);
-        final List<Bedel> bedeles = bedelRepository.findByTipoTurno(tipoTurnoToFind);
+    public List<BedelDTO> getBedelesByTipoTurno(TipoTurno tipoTurno) {
+        final List<Bedel> bedeles = bedelRepository.findByTipoTurno(tipoTurno);
         return bedeles.stream()
                 .map(bedel -> mapToDTO(bedel, new BedelDTO()))
                 .toList();
@@ -84,6 +83,13 @@ public class BedelService {
 
     public void delete(final Integer id) {
         bedelRepository.deleteById(id);
+    }
+
+    public void deleteLogico(final String idRegistro) {
+        Bedel bedel = bedelRepository.findByIdRegistro(idRegistro)
+                .orElseThrow(NotFoundException::new);
+        bedel.setEliminado(true);
+        bedelRepository.save(bedel);
     }
 
     public TipoTurno mapIntegerToTipoTurno(Integer tipoTurno) {
@@ -153,6 +159,25 @@ public class BedelService {
     public ReferencedWarning getReferencedWarning(final Integer id) {
         final ReferencedWarning referencedWarning = new ReferencedWarning();
         final Bedel bedel = bedelRepository.findById(id)
+                .orElseThrow(NotFoundException::new);
+        final ReservaEsporadica bedelReservaEsporadica = reservaEsporadicaRepository.findFirstByBedel(bedel);
+        if (bedelReservaEsporadica != null) {
+            referencedWarning.setKey("bedel.reserva.bedel.referenced");
+            referencedWarning.addParam(bedelReservaEsporadica.getId());
+            return referencedWarning;
+        }
+        final ReservaPeriodica bedelReservaPeriodica = reservaPeriodicaRepository.findFirstByBedel(bedel);
+        if (bedelReservaPeriodica != null) {
+            referencedWarning.setKey("bedel.reserva.bedel.referenced");
+            referencedWarning.addParam(bedelReservaPeriodica.getId());
+            return referencedWarning;
+        }
+        return null;
+    }
+
+    public ReferencedWarning getReferencedWarning(final String idRegistro) {
+        final ReferencedWarning referencedWarning = new ReferencedWarning();
+        final Bedel bedel = bedelRepository.findByIdRegistro(idRegistro)
                 .orElseThrow(NotFoundException::new);
         final ReservaEsporadica bedelReservaEsporadica = reservaEsporadicaRepository.findFirstByBedel(bedel);
         if (bedelReservaEsporadica != null) {

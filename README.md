@@ -8,7 +8,6 @@ Creo que en el mismo projecto podemos tener tanto archivos de Java como de Angul
 
 Para investigar sobre Spring Boot recomiento (Capitulo 2): https://howtodoinjava.com/spring-boot/spring-boot/
 
-
 ## Para importar proyecto de Java
 Primero descargar ZIP desde GitHub (DAR A CODE Y HTTP/SSH/... -> ZIP)
 ### En NetBeans
@@ -17,7 +16,8 @@ File -> Import Project -> From ZIP
 ### En IntelliJ IDEA
 File o Open -> Seleccionar ZIP descargado -> Open
 
-
+### Para acceder a la UI de Swagger
+Acceder a [SwaggerUI](http://localhost:8080/swagger-ui/index.html)
 
 This app was created with Bootify.io - tips on working with the code [can be found here](https://bootify.io/next-steps/).
 
