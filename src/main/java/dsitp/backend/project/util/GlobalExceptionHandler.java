@@ -39,4 +39,12 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errors);
     }
 
+    @ExceptionHandler(BedelReferencedException.class)
+    public ResponseEntity<Map<String, Object>> handleBedelReferencedException(BedelReferencedException ex) {
+        Map<String, Object> response = new HashMap<>();
+        response.put("message", ex.getMessage());
+        response.put("reservaId", ex.getReservaId());
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(response);
+    }
+
 }

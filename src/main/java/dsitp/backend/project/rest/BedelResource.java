@@ -1,6 +1,8 @@
 package dsitp.backend.project.rest;
 
+import dsitp.backend.project.domain.Bedel;
 import dsitp.backend.project.model.BedelDTO;
+import dsitp.backend.project.model.TipoTurno;
 import dsitp.backend.project.service.BedelService;
 import dsitp.backend.project.util.ReferencedException;
 import dsitp.backend.project.util.ReferencedWarning;
@@ -21,6 +23,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -44,6 +47,22 @@ public class BedelResource {
     @GetMapping("/{id}")
     public ResponseEntity<BedelDTO> getBedel(@PathVariable(name = "id") final Integer id) {
         return ResponseEntity.ok(bedelService.get(id));
+    }
+
+    @GetMapping("/apellido/{apellido}")
+    public ResponseEntity<List<BedelDTO>> getBedelesByApellido(@PathVariable(name = "apellido") String apellido) {
+        return ResponseEntity.ok(bedelService.getBedelesByApellido(apellido));
+    }
+
+    @GetMapping("/tipoTurno/{tipoTurno}")
+    public ResponseEntity<List<BedelDTO>> getBedelesByTipoTurno(@PathVariable(name = "tipoTurno") Integer tipoTurno) {
+        return ResponseEntity.ok(bedelService.getBedelesByTipoTurno(tipoTurno));
+    }
+
+    @GetMapping("/buscar")
+    public ResponseEntity<List<Bedel>> getBedeles(@RequestParam(required = false) TipoTurno tipoTurno, @RequestParam(required = false) String apellido) {
+        List<Bedel> bedeles = bedelService.findBedeles(tipoTurno, apellido);
+        return ResponseEntity.ok(bedeles);
     }
 
     @PostMapping
@@ -70,6 +89,17 @@ public class BedelResource {
             throw new ReferencedException(referencedWarning);
         }
         bedelService.delete(id);
+        return ResponseEntity.noContent().build();
+    }
+
+    @DeleteMapping("/{id}")
+    @ApiResponse(responseCode = "204")
+    public ResponseEntity<Void> deleteBedelLogica(@PathVariable(name = "id") final Integer id) {
+        final ReferencedWarning referencedWarning = bedelService.getReferencedWarning(id);
+        if (referencedWarning != null) {
+            throw new ReferencedException(referencedWarning);
+        }
+        // bedelService.update();
         return ResponseEntity.noContent().build();
     }
 
