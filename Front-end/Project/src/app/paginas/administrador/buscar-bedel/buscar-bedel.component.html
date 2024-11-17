@@ -13,8 +13,16 @@
         </mat-form-field>
 
         <mat-form-field appearance="outline">
-          <mat-label>Turno</mat-label>
-          <input matInput formControlName="turno">
+          <mat-label>Turno en el trabajo</mat-label>
+          <mat-select formControlName="turno">
+            <div *ngFor="let turno of turnos">
+              <mat-option [value]="turno.id">{{turno.name}}</mat-option>
+            </div>
+          </mat-select>
+
+          <button *ngIf="buscarBedelForm.get('turno')?.value !== null" mat-icon-button matSuffix (click)="buscarBedelForm.get('turno')?.reset(); $event.stopPropagation()">
+            <mat-icon>close</mat-icon>
+          </button>
         </mat-form-field>
 
         <button mat-button mat-raised-button class="search-button" color="primary" (click)="submit()">Buscar</button>

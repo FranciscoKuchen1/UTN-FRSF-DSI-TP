@@ -1,6 +1,7 @@
 <mat-card class="pantalla-mat-card">
   <mat-card-content>
-    <h1>Registro de bedel:</h1>
+    <h1 *ngIf="!id">Registro de bedel:</h1>
+    <h1 *ngIf="id">Editar bedel:</h1>
 
     <br>
 

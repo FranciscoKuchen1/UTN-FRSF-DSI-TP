@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {
   AbstractControl,
   FormBuilder,
@@ -8,20 +8,24 @@ import {
   ValidatorFn,
   Validators
 } from "@angular/forms";
-import {Router} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {Turnos} from "../../../interfaces/turnos";
 import {AlertService} from "../../../services/alert/alert.service";
 import {HttpClient} from "@angular/common/http";
+import {CanComponentDeactivate, CanDeactivateType} from "../../../guards/canDeactivate/can-deactivate.guard";
+import {Subject} from "rxjs";
 
 @Component({
-  selector: 'app-registrar-bedel',
-  templateUrl: './registrar-bedel.component.html',
-  styleUrls: ['./registrar-bedel.component.scss']
+  selector: 'app-registrar-editar-bedel',
+  templateUrl: './registrar-editar-bedel.component.html',
+  styleUrls: ['./registrar-editar-bedel.component.scss']
 })
-export class RegistrarBedelComponent {
+export class RegistrarEditarBedelComponent implements OnInit, CanComponentDeactivate{
 
   bedelForm: UntypedFormGroup;
   turnos: Turnos[] = [{id: 0, name: 'Mañana'}, {id: 1, name: 'Tarde'}, {id: 2, name: 'Noche'}];
+  id: string | null = null;
+  formChanged: boolean;
 
   isLengthValid = false;
   isSamePass = false;
@@ -34,6 +38,7 @@ export class RegistrarBedelComponent {
     private router: Router,
     private alertService: AlertService,
     private http: HttpClient,
+    private route: ActivatedRoute,
   ) {
     this.bedelForm = this.formbuilder.group({
       idRegistro: [null, Validators.required],
@@ -45,11 +50,51 @@ export class RegistrarBedelComponent {
     }, {validators: this.passMatchValidator});
   }
 
+  ngOnInit() {
+    this.route.paramMap.subscribe(params => {
+      this.id = params.get('id');
+    });
+
+    if (this.id) {
+      this.http.get(`http://localhost:8080/api/bedeles/${this.id}`).subscribe({
+        next: (value: any) => {
+          this.bedelForm.patchValue(value);
+          this.bedelForm.get('idRegistro')?.disable();
+        },
+        error: () => {
+          this.alertService.ok('ERROR', 'Error en la edicion de bedel.').subscribe();
+          this.redirect('buscar-bedel');
+        }
+      })
+    }
+
+    this.bedelForm.valueChanges.subscribe((value)=>{
+      this.formChanged = !!value;
+    })
+  }
+
+  canDeactivate(): CanDeactivateType {
+    if(this.formChanged) {
+      const deactivateSubject = new Subject<boolean>();
+      this.alertService.confirm('Cancelar', 'Desea cancelar el registro de bedel?').subscribe((status) => {
+        if(status){
+          deactivateSubject.next(true);
+        }else{
+          deactivateSubject.next(false);
+        }
+      });
+      return deactivateSubject;
+    } else {
+      return true;
+    }
+  }
+
   redirect(url: string) {
     this.router.navigate([url]);
   }
 
   close(): void {
+    this.formChanged = false;
     this.alertService.confirm('Cancelar', 'Desea cancelar el registro de bedel?').subscribe(() => {
       this.redirect('');
     });
@@ -115,8 +160,8 @@ export class RegistrarBedelComponent {
     return false;
   }
 
-  clear(): void{
-    if (this.bedelForm.touched){
+  clear(): void {
+    if (this.bedelForm.touched) {
       this.bedelForm.reset();
       this.bedelForm.clearValidators();
       this.bedelForm.updateValueAndValidity();

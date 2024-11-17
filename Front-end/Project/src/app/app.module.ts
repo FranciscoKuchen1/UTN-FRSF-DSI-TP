@@ -12,7 +12,7 @@ import {MatMenuModule} from "@angular/material/menu";
 import {MatToolbarModule} from "@angular/material/toolbar";
 import { HomeComponent } from './paginas/home/home.component';
 import { BuscarBedelComponent } from './paginas/administrador/buscar-bedel/buscar-bedel.component';
-import { RegistrarBedelComponent } from './paginas/administrador/registrar-bedel/registrar-bedel.component';
+import { RegistrarEditarBedelComponent } from './paginas/administrador/registrar-editar-bedel/registrar-editar-bedel.component';
 import { RegistrarReservaPeriodicaComponent } from './paginas/bedel/registrar-reserva-periodica/registrar-reserva-periodica.component';
 import { RegistrarReservaEsporadicaComponent } from './paginas/bedel/registrar-reserva-esporadica/registrar-reserva-esporadica.component';
 import { BuscarAulaComponent } from './paginas/bedel/buscar-aula/buscar-aula.component';
@@ -42,7 +42,7 @@ import {MatSortModule} from "@angular/material/sort";
     HeaderComponent,
     HomeComponent,
     BuscarBedelComponent,
-    RegistrarBedelComponent,
+    RegistrarEditarBedelComponent,
     RegistrarReservaPeriodicaComponent,
     RegistrarReservaEsporadicaComponent,
     BuscarAulaComponent,

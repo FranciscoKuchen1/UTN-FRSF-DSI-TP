@@ -1,11 +1,11 @@
 import {Turnos} from "./turnos";
 
 export interface Bedel {
-  id: string,
+  idRegistro: string,
   nombre: string,
   apellido: string,
-  turno: Turnos,
-  contrasena1: string,
-  contrasena2: string,
+  tipoTurno: Turnos,
+  contrasena: string,
+  confirmacionContrasena: string,
 
 }

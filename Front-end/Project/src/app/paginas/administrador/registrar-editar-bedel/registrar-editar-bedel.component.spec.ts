@@ -1,16 +1,16 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { RegistrarBedelComponent } from './registrar-bedel.component';
+import { RegistrarEditarBedelComponent } from './registrar-editar-bedel.component';
 
 describe('RegistrarBedelComponent', () => {
-  let component: RegistrarBedelComponent;
-  let fixture: ComponentFixture<RegistrarBedelComponent>;
+  let component: RegistrarEditarBedelComponent;
+  let fixture: ComponentFixture<RegistrarEditarBedelComponent>;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [RegistrarBedelComponent]
+      declarations: [RegistrarEditarBedelComponent]
     });
-    fixture = TestBed.createComponent(RegistrarBedelComponent);
+    fixture = TestBed.createComponent(RegistrarEditarBedelComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
