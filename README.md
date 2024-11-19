@@ -6,7 +6,7 @@ Por configuracion ver: ```project/src/main/resources``` (archivos .yml), ```proj
 
 Creo que en el mismo projecto podemos tener tanto archivos de Java como de Angular. 
 
-Para investigar sobre Spring Boot recomiento (Capitulo 2): https://howtodoinjava.com/spring-boot/spring-boot/
+Para investigar sobre Spring Boot recomiendo (Capitulo 2): https://howtodoinjava.com/spring-boot/spring-boot/
 
 ## Para importar proyecto de Java
 Primero descargar ZIP desde GitHub (DAR A CODE Y HTTP/SSH/... -> ZIP)

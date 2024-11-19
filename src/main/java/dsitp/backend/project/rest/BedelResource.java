@@ -1,8 +1,6 @@
 package dsitp.backend.project.rest;
 
-import dsitp.backend.project.domain.Bedel;
 import dsitp.backend.project.model.BedelDTO;
-import dsitp.backend.project.model.TipoTurno;
 import dsitp.backend.project.service.BedelService;
 import dsitp.backend.project.util.ReferencedException;
 import dsitp.backend.project.util.ReferencedWarning;
@@ -40,29 +38,24 @@ public class BedelResource {
     }
 
     @GetMapping
-    public ResponseEntity<List<BedelDTO>> getAllBedels() {
-        return ResponseEntity.ok(bedelService.findAll());
+    public ResponseEntity<List<BedelDTO>> getBedeles(@RequestParam(required = false) Integer tipoTurno, @RequestParam(required = false) String apellido) {
+        List<BedelDTO> bedelesDTO = bedelService.findBedeles(tipoTurno, apellido);
+        return ResponseEntity.ok(bedelesDTO);
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<BedelDTO> getBedel(@PathVariable(name = "id") final Integer id) {
-        return ResponseEntity.ok(bedelService.get(id));
+    @GetMapping("/{idRegistro}")
+    public ResponseEntity<BedelDTO> getBedel(@PathVariable(name = "idRegistro") final String idRegistro) {
+        return ResponseEntity.ok(bedelService.getBedelByIdRegistro(idRegistro));
     }
 
-    @GetMapping("/apellido/{apellido}")
+    @GetMapping("/{apellido}")
     public ResponseEntity<List<BedelDTO>> getBedelesByApellido(@PathVariable(name = "apellido") String apellido) {
         return ResponseEntity.ok(bedelService.getBedelesByApellido(apellido));
     }
 
-    @GetMapping("/tipoTurno/{tipoTurno}")
-    public ResponseEntity<List<BedelDTO>> getBedelesByTipoTurno(@PathVariable(name = "tipoTurno") TipoTurno tipoTurno) {
+    @GetMapping("/{tipoTurno}")
+    public ResponseEntity<List<BedelDTO>> getBedelesByTipoTurno(@PathVariable(name = "tipoTurno") Integer tipoTurno) {
         return ResponseEntity.ok(bedelService.getBedelesByTipoTurno(tipoTurno));
-    }
-
-    @GetMapping("/buscar")
-    public ResponseEntity<List<Bedel>> getBedeles(@RequestParam(required = false) TipoTurno tipoTurno, @RequestParam(required = false) String apellido) {
-        List<Bedel> bedeles = bedelService.findBedeles(tipoTurno, apellido);
-        return ResponseEntity.ok(bedeles);
     }
 
     @PostMapping
@@ -79,17 +72,6 @@ public class BedelResource {
             @RequestBody @Valid final BedelDTO bedelDTO) {
         bedelService.update(id, bedelDTO);
         return ResponseEntity.ok(id);
-    }
-
-    @DeleteMapping("/{id}/permanente")
-    @ApiResponse(responseCode = "204")
-    public ResponseEntity<Void> deleteBedel(@PathVariable(name = "id") final Integer id) {
-        final ReferencedWarning referencedWarning = bedelService.getReferencedWarning(id);
-        if (referencedWarning != null) {
-            throw new ReferencedException(referencedWarning);
-        }
-        bedelService.delete(id);
-        return ResponseEntity.noContent().build();
     }
 
     @DeleteMapping("/{idRegistro}")

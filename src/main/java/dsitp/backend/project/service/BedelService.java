@@ -42,29 +42,43 @@ public class BedelService {
                 .orElseThrow(NotFoundException::new);
     }
 
-    public List<BedelDTO> getBedelesByApellido(String apellido) {
+    public List<BedelDTO> getBedelesByApellido(final String apellido) {
         final List<Bedel> bedeles = bedelRepository.findByApellido(apellido);
         return bedeles.stream()
                 .map(bedel -> mapToDTO(bedel, new BedelDTO()))
                 .toList();
     }
 
-    public List<BedelDTO> getBedelesByTipoTurno(TipoTurno tipoTurno) {
-        final List<Bedel> bedeles = bedelRepository.findByTipoTurno(tipoTurno);
+    public List<BedelDTO> getBedelesByTipoTurno(final Integer tipoTurno) {
+        final List<Bedel> bedeles = bedelRepository.findByTipoTurno(mapIntegerToTipoTurno(tipoTurno));
         return bedeles.stream()
                 .map(bedel -> mapToDTO(bedel, new BedelDTO()))
                 .toList();
     }
 
-    public List<Bedel> findBedeles(TipoTurno tipoTurno, String apellido) {
+    public BedelDTO getBedelByIdRegistro(final String idRegistro) {
+        return bedelRepository.findByIdRegistro(idRegistro)
+                .map(bedel -> mapToDTO(bedel, new BedelDTO()))
+                .orElseThrow(NotFoundException::new);
+    }
+
+    public List<BedelDTO> findBedeles(Integer tipoTurno, String apellido) {
         if (tipoTurno != null && apellido != null) {
-            return bedelRepository.findByTipoTurnoAndApellido(tipoTurno, apellido);
+            return bedelRepository.findByTipoTurnoAndApellido(mapIntegerToTipoTurno(tipoTurno), apellido).stream()
+                    .map(bedel -> mapToDTO(bedel, new BedelDTO()))
+                    .toList();
         } else if (tipoTurno != null) {
-            return bedelRepository.findByTipoTurno(tipoTurno);
+            return bedelRepository.findByTipoTurno(mapIntegerToTipoTurno(tipoTurno)).stream()
+                    .map(bedel -> mapToDTO(bedel, new BedelDTO()))
+                    .toList();
         } else if (apellido != null) {
-            return bedelRepository.findByApellido(apellido);
+            return bedelRepository.findByApellido(apellido).stream()
+                    .map(bedel -> mapToDTO(bedel, new BedelDTO()))
+                    .toList();
         } else {
-            return bedelRepository.findAll();
+            return bedelRepository.findAll().stream()
+                    .map(bedel -> mapToDTO(bedel, new BedelDTO()))
+                    .toList();
         }
     }
 
@@ -154,25 +168,6 @@ public class BedelService {
 
     public boolean idRegistroExists(final String idRegistro) {
         return bedelRepository.existsByIdRegistroIgnoreCase(idRegistro);
-    }
-
-    public ReferencedWarning getReferencedWarning(final Integer id) {
-        final ReferencedWarning referencedWarning = new ReferencedWarning();
-        final Bedel bedel = bedelRepository.findById(id)
-                .orElseThrow(NotFoundException::new);
-        final ReservaEsporadica bedelReservaEsporadica = reservaEsporadicaRepository.findFirstByBedel(bedel);
-        if (bedelReservaEsporadica != null) {
-            referencedWarning.setKey("bedel.reserva.bedel.referenced");
-            referencedWarning.addParam(bedelReservaEsporadica.getId());
-            return referencedWarning;
-        }
-        final ReservaPeriodica bedelReservaPeriodica = reservaPeriodicaRepository.findFirstByBedel(bedel);
-        if (bedelReservaPeriodica != null) {
-            referencedWarning.setKey("bedel.reserva.bedel.referenced");
-            referencedWarning.addParam(bedelReservaPeriodica.getId());
-            return referencedWarning;
-        }
-        return null;
     }
 
     public ReferencedWarning getReferencedWarning(final String idRegistro) {
