@@ -1,10 +1,10 @@
-import {Turnos} from "./turnos";
+import {Select} from "./select";
 
 export interface Bedel {
   idRegistro: string,
   nombre: string,
   apellido: string,
-  tipoTurno: Turnos,
+  tipoTurno: Select,
   contrasena: string,
   confirmacionContrasena: string,
 

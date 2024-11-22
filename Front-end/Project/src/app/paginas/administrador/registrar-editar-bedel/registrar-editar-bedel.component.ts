@@ -9,7 +9,7 @@ import {
   Validators
 } from "@angular/forms";
 import {ActivatedRoute, Router} from "@angular/router";
-import {Turnos} from "../../../interfaces/turnos";
+import {Select} from "../../../interfaces/select";
 import {AlertService} from "../../../services/alert/alert.service";
 import {HttpClient} from "@angular/common/http";
 import {CanComponentDeactivate, CanDeactivateType} from "../../../guards/canDeactivate/can-deactivate.guard";
@@ -23,7 +23,7 @@ import {Subject} from "rxjs";
 export class RegistrarEditarBedelComponent implements OnInit, CanComponentDeactivate{
 
   bedelForm: UntypedFormGroup;
-  turnos: Turnos[] = [{id: 0, name: 'Mañana'}, {id: 1, name: 'Tarde'}, {id: 2, name: 'Noche'}];
+  turnos: Select[] = [{id: 0, name: 'Mañana'}, {id: 1, name: 'Tarde'}, {id: 2, name: 'Noche'}];
   id: string | null = null;
   formChanged: boolean;
 
@@ -161,12 +161,10 @@ export class RegistrarEditarBedelComponent implements OnInit, CanComponentDeacti
   }
 
   clear(): void {
-    if (this.bedelForm.touched) {
       this.bedelForm.reset();
       this.bedelForm.clearValidators();
       this.bedelForm.updateValueAndValidity();
       this.bedelForm.setErrors(null);
-    }
   }
 
   submit(): void {
@@ -195,6 +193,7 @@ export class RegistrarEditarBedelComponent implements OnInit, CanComponentDeacti
           },
           complete: () => {
             this.alertService.snackBar('Bedel insertado correctamente.');
+            this.formChanged = false;
             this.clear();
           }
         }

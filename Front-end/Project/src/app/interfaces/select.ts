@@ -1,4 +1,4 @@
-export interface Turnos{
+export interface Select {
   id: number;
   name: string;
 }

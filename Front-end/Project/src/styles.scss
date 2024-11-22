@@ -50,6 +50,11 @@ mat-form-field{
   }
 }
 
+.button-right{
+  display: flex;
+  justify-content: end;
+}
+
 mat-card{
   padding: 3%;
 }

@@ -1,5 +1,85 @@
 <mat-card class="pantalla-mat-card">
   <mat-card-content>
-    <h1>listado-reservas-curso works!</h1>
+    <h1>Listado de reserva por curso:</h1>
+
+    <br>
+
+    <form [formGroup]="listadoReservaCursolForm">
+      <div class="columns">
+
+        <mat-form-field appearance="outline">
+          <mat-label>Catedra/Seminario/curso</mat-label>
+          <mat-select formControlName="nombreCatedra">
+            <div *ngFor="let catedra of catedras">
+              <mat-option [value]="catedra.id">{{ catedra.name }}</mat-option>
+            </div>
+          </mat-select>
+
+          <button *ngIf="listadoReservaCursolForm.get('nombreCatedra')?.value !== null" mat-icon-button matSuffix
+                  (click)="listadoReservaCursolForm.get('nombreCatedra')?.reset(); $event.stopPropagation()">
+            <mat-icon>close</mat-icon>
+          </button>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Año</mat-label>
+          <input matInput formControlName="anio" mask="0000" placeholder="Ej: 2024">
+        </mat-form-field>
+
+        <button mat-button mat-raised-button class="search-button" color="primary" (click)="submit()">Buscar</button>
+
+      </div>
+    </form>
+
+    <br>
+
+    <mat-card appearance="outlined" class="borderTable">
+      <mat-card-content>
+        <table mat-table [dataSource]="dataSource" matSort>
+
+          <ng-container matColumnDef="Día de reserva">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Día de reserva</th>
+            <td mat-cell *matCellDef="let row"></td>
+          </ng-container>
+
+          <ng-container matColumnDef="Hora de inicio">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Hora de inicio</th>
+            <td mat-cell *matCellDef="let row"></td>
+          </ng-container>
+
+          <ng-container matColumnDef="Duración">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Duración</th>
+            <td mat-cell *matCellDef="let row"></td>
+          </ng-container>
+
+          <ng-container matColumnDef="Aula">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Aula</th>
+            <td mat-cell *matCellDef="let row"></td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+        </table>
+      </mat-card-content>
+
+      <div [hidden]="!!dataSource.data.length" class="no-data">
+        No hay resultados.
+      </div>
+
+      <mat-divider></mat-divider>
+
+      <div [hidden]="!(!!dataSource.data.length)">
+        <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+      </div>
+
+    </mat-card>
+
+    <br>
+
+    <div class="button-right">
+      <button mat-button mat-raised-button color="primary" (click)="imprimir()" [disabled]="dataSource.data.length === 0">Imprimir</button>
+    </div>
+
   </mat-card-content>
 </mat-card>

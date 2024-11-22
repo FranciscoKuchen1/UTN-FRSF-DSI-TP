@@ -25,7 +25,7 @@ const routes: Routes = [
     path: 'registrar-bedel',
     component: RegistrarEditarBedelComponent,
     canActivate: [authGuard],
-    canDeactivate: [canDeactivateGuard],
+    //canDeactivate: [canDeactivateGuard],
     data: {expectedRol: 1}
   },
   {

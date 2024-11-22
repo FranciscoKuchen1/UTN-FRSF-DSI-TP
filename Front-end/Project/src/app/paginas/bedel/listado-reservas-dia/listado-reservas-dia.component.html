@@ -1,5 +1,118 @@
 <mat-card class="pantalla-mat-card">
   <mat-card-content>
-    <h1>listado-reservas-dia works!</h1>
+    <h1>Listado de reserva por dia:</h1>
+
+    <br>
+
+    <form [formGroup]="listadoReservaDiaForm">
+      <div class="columns">
+
+        <mat-form-field appearance="outline">
+          <mat-label>Fecha</mat-label>
+          <input matInput [matDatepicker]="picker" formControlName="fecha" readonly>
+
+          <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+
+          <button *ngIf="listadoReservaDiaForm.get('fecha')?.value !== null" mat-icon-button matSuffix
+                  (click)="listadoReservaDiaForm.get('fecha')?.reset(); $event.stopPropagation()">
+            <mat-icon>close</mat-icon>
+          </button>
+
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Tipos de aula</mat-label>
+          <mat-select formControlName="tipoAula">
+            <div *ngFor="let tipo of tiposAula">
+              <mat-option [value]="tipo.id">{{ tipo.name }}</mat-option>
+            </div>
+          </mat-select>
+
+          <button *ngIf="listadoReservaDiaForm.get('tipoAula')?.value !== null" mat-icon-button matSuffix
+                  (click)="listadoReservaDiaForm.get('tipoAula')?.reset(); $event.stopPropagation()">
+            <mat-icon>close</mat-icon>
+          </button>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Aulas</mat-label>
+          <mat-select formControlName="aulas">
+            <!--<div *ngFor="let tipo of tiposAula">
+              <mat-option [value]="tipo.id">{{ tipo.name }}</mat-option>
+            </div>-->
+          </mat-select>
+
+          <button *ngIf="listadoReservaDiaForm.get('aulas')?.value !== null" mat-icon-button matSuffix
+                  (click)="listadoReservaDiaForm.get('aulas')?.reset(); $event.stopPropagation()">
+            <mat-icon>close</mat-icon>
+          </button>
+        </mat-form-field>
+
+        <button mat-button mat-raised-button class="search-button" color="primary" (click)="submit()">Buscar</button>
+
+      </div>
+    </form>
+
+    <br>
+
+    <mat-card appearance="outlined" class="borderTable">
+      <mat-card-content>
+        <table mat-table [dataSource]="dataSource" matSort>
+
+          <ng-container matColumnDef="docente">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Docente</th>
+            <td mat-cell *matCellDef="let row"></td>
+          </ng-container>
+
+          <ng-container matColumnDef="catedra">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Catedra</th>
+            <td mat-cell *matCellDef="let row"></td>
+          </ng-container>
+
+          <ng-container matColumnDef="tipoAula">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Tipo de aula</th>
+            <td mat-cell *matCellDef="let row"></td>
+          </ng-container>
+
+          <ng-container matColumnDef="ocupacion">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Ocupacion</th>
+            <td mat-cell *matCellDef="let row"></td>
+          </ng-container>
+
+          <ng-container matColumnDef="hora inicio">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Hora de inicio</th>
+            <td mat-cell *matCellDef="let row"></td>
+          </ng-container>
+
+          <ng-container matColumnDef="hora fin">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Hora de fin</th>
+            <td mat-cell *matCellDef="let row"></td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+        </table>
+      </mat-card-content>
+
+      <div [hidden]="!!dataSource.data.length" class="no-data">
+        No hay resultados.
+      </div>
+
+      <mat-divider></mat-divider>
+
+      <div [hidden]="!(!!dataSource.data.length)">
+        <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+      </div>
+
+    </mat-card>
+
+    <br>
+
+    <div class="button-right">
+        <button mat-button mat-raised-button color="primary" (click)="imprimir()" [disabled]="dataSource.data.length === 0">Imprimir</button>
+    </div>
+
   </mat-card-content>
 </mat-card>

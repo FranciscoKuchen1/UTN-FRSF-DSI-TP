@@ -1,0 +1,24 @@
+h1{
+  text-align: center;
+}
+
+div.columns {
+  align-items: baseline;
+}
+
+.search-button{
+  max-width: 100px;
+}
+
+.no-data {
+  text-align: center;
+  vertical-align: middle;
+  font-style: italic;
+  color: gray;
+  line-height: 50px;
+}
+
+.borderTable{
+  padding: 0;
+  border-color: #9e9e9e;
+}

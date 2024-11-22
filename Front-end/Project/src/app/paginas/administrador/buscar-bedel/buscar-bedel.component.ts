@@ -5,7 +5,7 @@ import {MatSort} from "@angular/material/sort";
 import {FormBuilder, UntypedFormGroup} from "@angular/forms";
 import {HttpClient, HttpParams} from "@angular/common/http";
 import {AlertService} from "../../../services/alert/alert.service";
-import {Turnos} from "../../../interfaces/turnos";
+import {Select} from "../../../interfaces/select";
 import {Router} from "@angular/router";
 
 @Component({
@@ -16,7 +16,7 @@ import {Router} from "@angular/router";
 export class BuscarBedelComponent {
 
   displayedColumns: string[] = ['apellido', 'nombre', 'tipoTurno', 'idRegistro', 'options'];
-  turnos: Turnos[] = [{id: 0, name: 'Mañana'}, {id: 1, name: 'Tarde'}, {id: 2, name: 'Noche'}];
+  turnos: Select[] = [{id: 0, name: 'Mañana'}, {id: 1, name: 'Tarde'}, {id: 2, name: 'Noche'}];
   dataSource = new MatTableDataSource();
   buscarBedelForm: UntypedFormGroup;
 
@@ -68,7 +68,7 @@ export class BuscarBedelComponent {
 
     const queryParams = this.toQueryParams(this.buscarBedelForm.value);
 
-    this.http.get(`http://localhost:8080/api/bedeles/buscar?${queryParams}`).subscribe({
+    this.http.get(`http://localhost:8080/api/bedeles?${queryParams}`).subscribe({
         next: (value: any) => {
           this.dataSource = new MatTableDataSource(value);
           this.dataSource.paginator = this.paginator;
@@ -89,6 +89,4 @@ export class BuscarBedelComponent {
       }
     )
   }
-
-
 }
