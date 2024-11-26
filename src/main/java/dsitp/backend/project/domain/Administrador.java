@@ -1,13 +1,11 @@
 package dsitp.backend.project.domain;
 
 import jakarta.persistence.Entity;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 import org.springframework.stereotype.Component;
 
 @Entity
-@Getter
-@Setter
+@Data
 @Component
 public class Administrador extends Usuario {
 }

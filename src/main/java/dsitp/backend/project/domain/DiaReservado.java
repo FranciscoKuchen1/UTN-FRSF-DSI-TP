@@ -12,8 +12,7 @@ import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 import java.time.LocalTime;
 import java.time.OffsetDateTime;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -22,8 +21,7 @@ import org.springframework.stereotype.Component;
 @Entity
 @EntityListeners(AuditingEntityListener.class)
 @Table(name = "diaReservado")
-@Getter
-@Setter
+@Data
 @Component
 public class DiaReservado {
 

@@ -6,7 +6,11 @@ import dsitp.backend.project.util.ReferencedException;
 import dsitp.backend.project.util.ReferencedWarning;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.Size;
 import java.util.List;
+import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -38,8 +42,13 @@ public class BedelResource {
     }
 
     @GetMapping
-    public ResponseEntity<List<BedelDTO>> getBedeles(@RequestParam(required = false) Integer tipoTurno, @RequestParam(required = false) String apellido) {
+    public ResponseEntity<?> getBedeles(@Min(0) @Max(2) @RequestParam(required = false) Integer tipoTurno, @Size(max = 30) @RequestParam(required = false) String apellido) {
+        logger.info("Se buscan los bedeles por criterios");
         List<BedelDTO> bedelesDTO = bedelService.findBedeles(tipoTurno, apellido);
+        if (bedelesDTO.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NO_CONTENT)
+                    .body(Map.of("message", "No se encontraron bedeles con los criterios proporcionados"));
+        }
         return ResponseEntity.ok(bedelesDTO);
     }
 
@@ -77,10 +86,12 @@ public class BedelResource {
     @DeleteMapping("/{idRegistro}")
     @ApiResponse(responseCode = "204")
     public ResponseEntity<Void> deleteBedelLogica(@PathVariable(name = "idRegistro") final String idRegistro) {
+        logger.info("Bedel es eliminado");
         final ReferencedWarning referencedWarning = bedelService.getReferencedWarning(idRegistro);
         if (referencedWarning != null) {
             throw new ReferencedException(referencedWarning);
         }
+
         bedelService.deleteLogico(idRegistro);
         return ResponseEntity.noContent().build();
     }

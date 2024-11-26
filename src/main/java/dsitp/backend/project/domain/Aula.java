@@ -13,22 +13,20 @@ import jakarta.persistence.InheritanceType;
 import jakarta.persistence.SequenceGenerator;
 import java.time.OffsetDateTime;
 import lombok.AllArgsConstructor;
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 @Entity
-@DiscriminatorColumn(name = "tipoAula",
+@DiscriminatorColumn(name = "tipo_aula",
         discriminatorType = DiscriminatorType.INTEGER)
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @EntityListeners(AuditingEntityListener.class)
 @NoArgsConstructor
 @AllArgsConstructor
-@Getter
-@Setter
+@Data
 public abstract class Aula {
 
     @Id
@@ -55,6 +53,7 @@ public abstract class Aula {
     private Integer capacidad;
 
     @Column(length = 100)
+    // ? Usar Enum?
     private String tipoPizarron;
 
     @Column

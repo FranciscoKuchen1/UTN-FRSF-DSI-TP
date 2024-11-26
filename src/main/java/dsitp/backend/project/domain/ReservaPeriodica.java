@@ -7,14 +7,12 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 import org.springframework.stereotype.Component;
 
 @Entity
 @Table(name = "reservaPeriodica")
-@Getter
-@Setter
+@Data
 @Component
 public class ReservaPeriodica extends Reserva {
 

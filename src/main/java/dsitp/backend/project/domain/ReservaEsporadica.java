@@ -2,14 +2,12 @@ package dsitp.backend.project.domain;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 import org.springframework.stereotype.Component;
 
 @Entity
 @Table(name = "reservaEsporadica")
-@Getter
-@Setter
+@Data
 @Component
 public class ReservaEsporadica extends Reserva {
 
