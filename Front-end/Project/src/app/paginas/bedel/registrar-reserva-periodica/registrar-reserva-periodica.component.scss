@@ -1,0 +1,33 @@
+.grid-container {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 15px;
+}
+
+.grid-item {
+  padding: 5px;
+}
+
+h1{
+  text-align: center;
+}
+
+.dias-semanales{
+  display: flex;
+  align-items: baseline;
+  height: 65px;
+
+  mat-form-field{
+    scale: 0.9;
+  }
+}
+
+.label-dia{
+  display: block;
+  width: 65px;
+}
+
+.mat-horizontal-stepper-header-container{
+  pointer-events: none;
+  cursor: not-allowed;
+}

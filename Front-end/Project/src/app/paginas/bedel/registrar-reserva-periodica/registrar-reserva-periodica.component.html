@@ -1,5 +1,160 @@
 <mat-card class="pantalla-mat-card">
   <mat-card-content>
-    <h1>registrar-reserva-periodica works!</h1>
+
+    <h1>Registrar reserva periodica:</h1>
+      <mat-stepper class="mat-step">
+        <mat-step [stepControl]="registrarReservaForm">
+          <form [formGroup]="registrarReservaForm">
+            <ng-template matStepLabel>Datos:</ng-template>
+
+            <div class="grid-container">
+              <div class="primera-mitad grid-item">
+
+                <mat-form-field appearance="outline">
+                  <mat-label>Periodo</mat-label>
+                  <mat-select formControlName="periodo">
+                    <div *ngFor="let periodo of periodos">
+                      <mat-option [value]="periodo.id">{{periodo.name}}</mat-option>
+                    </div>
+                  </mat-select>
+
+                  <button *ngIf="registrarReservaForm.get('periodo')?.value !== null" mat-icon-button matSuffix
+                          (click)="registrarReservaForm.get('periodo')?.reset(); $event.stopPropagation()">
+                    <mat-icon>close</mat-icon>
+                  </button>
+                </mat-form-field>
+
+                <mat-form-field appearance="outline">
+                  <mat-label>Nombre Catedra/Seminario/Curso</mat-label>
+                  <mat-select formControlName="nombreCatedra">
+                    <div *ngFor="let catedra of nombreCatedras">
+                      <mat-option [value]="catedra.id">{{catedra.name}}</mat-option>
+                    </div>
+                  </mat-select>
+
+                  <button *ngIf="registrarReservaForm.get('nombreCatedra')?.value !== null" mat-icon-button matSuffix
+                          (click)="registrarReservaForm.get('nombreCatedra')?.reset(); $event.stopPropagation()">
+                    <mat-icon>close</mat-icon>
+                  </button>
+                </mat-form-field>
+
+                <mat-form-field appearance="outline">
+                  <mat-label>Tipo de aula</mat-label>
+                  <mat-select formControlName="tipoAula">
+                    <div *ngFor="let aula of tipoAulas">
+                      <mat-option [value]="aula.id">{{aula.name}}</mat-option>
+                    </div>
+                  </mat-select>
+
+                  <button *ngIf="registrarReservaForm.get('tipoAula')?.value !== null" mat-icon-button matSuffix
+                          (click)="registrarReservaForm.get('tipoAula')?.reset(); $event.stopPropagation()">
+                    <mat-icon>close</mat-icon>
+                  </button>
+                </mat-form-field>
+
+                <mat-form-field appearance="outline">
+                  <mat-label>Cantidad de alumnos</mat-label>
+                  <input matInput formControlName="cantidadAlumnos" mask="0*">
+                </mat-form-field>
+
+                <mat-form-field appearance="outline">
+                  <mat-label>Nombre del docente</mat-label>
+                  <mat-select formControlName="nombreDocente">
+                    <div *ngFor="let docente of nombreDocentes">
+                      <mat-option [value]="docente.id">{{docente.name}}</mat-option>
+                    </div>
+                  </mat-select>
+
+                  <button *ngIf="registrarReservaForm.get('nombreDocente')?.value !== null" mat-icon-button matSuffix
+                          (click)="registrarReservaForm.get('nombreDocente')?.reset(); $event.stopPropagation()">
+                    <mat-icon>close</mat-icon>
+                  </button>
+                </mat-form-field>
+
+                <mat-form-field appearance="outline">
+                  <mat-label>Correo electronico</mat-label>
+                  <input matInput formControlName="correoElectronico">
+                </mat-form-field>
+
+              </div>
+
+              <mat-divider [vertical]="true"></mat-divider>
+
+              <div class="segunda-mitad-periodica grid-item">
+
+                <div *ngFor="let dia of dias">
+
+                  <div class="dias-semanales">
+
+                    <mat-checkbox
+                      [checked]="dia.value"
+                      (change)="changeCheckbox(dia)"
+                      [color]="'primary'"
+                    >
+                      <mat-label class="label-dia">{{dia.name}}</mat-label>
+                    </mat-checkbox>
+
+                    <mat-form-field appearance="outline">
+                      <mat-label>Hora de inicio</mat-label>
+                      <mat-select [disabled]="!dia.value">
+                        <div *ngFor="let hora of horas">
+                          <mat-option [value]="hora.id" (onSelectionChange)="asignarHora(dia, hora, $event)">
+                            {{hora.name}}
+                          </mat-option>
+                        </div>
+                      </mat-select>
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline">
+                      <mat-label>Duracion</mat-label>
+                      <mat-select [disabled]="!dia.value">
+                        <div *ngFor="let duracion of duraciones">
+                          <mat-option [value]="duracion.id" (onSelectionChange)="asignarDuracion(dia, duracion, $event)">
+                            {{duracion.name}}
+                          </mat-option>
+                        </div>
+                      </mat-select>
+                    </mat-form-field>
+
+                  </div>
+                </div>
+                {{registrarReservaForm.value | json}}
+
+              </div>
+            </div>
+
+            <div class="cancel-confirm">
+              <button mat-button mat-raised-button matStepperPrevious (click)="close()">Cancelar</button>
+
+              <div>
+                <button mat-button mat-raised-button matStepperNext color="primary" (click)="siguiente()" [disabled]="registrarReservaForm.invalid || !todosValidos">Siguiente</button>
+              </div>
+            </div>
+
+          </form>
+        </mat-step>
+        <mat-step [stepControl]="registrarAulasForm">
+          <form [formGroup]="registrarAulasForm">
+            <ng-template matStepLabel>Aula:</ng-template>
+
+            <div class="cancel-confirm">
+              <button mat-button mat-raised-button (click)="close()">Cancelar</button>
+
+              <div>
+                <button mat-button mat-raised-button matStepperPrevious>Atras</button>
+                <button mat-button mat-raised-button matStepperNext color="primary" (click)="submit()" [disabled]="registrarAulasForm.invalid">Registrar</button>
+              </div>
+            </div>
+
+
+           <!-- <div>
+              <button mat-button matStepperPrevious>Cancelar</button>
+              <button mat-button matStepperPrevious>Atras</button>
+              <button mat-button matStepperNext>Completar</button>
+            </div>-->
+          </form>
+        </mat-step>
+      </mat-stepper>
+
   </mat-card-content>
 </mat-card>

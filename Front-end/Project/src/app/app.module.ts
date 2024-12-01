@@ -36,6 +36,8 @@ import {MatSortModule} from "@angular/material/sort";
 import {NgxMaskDirective, NgxMaskPipe, provideNgxMask} from "ngx-mask";
 import {MatDatepickerModule} from "@angular/material/datepicker";
 import {MatNativeDateModule} from "@angular/material/core";
+import {MatStepperModule} from "@angular/material/stepper";
+import {MatCheckboxModule} from "@angular/material/checkbox";
 
 
 @NgModule({
@@ -79,7 +81,9 @@ import {MatNativeDateModule} from "@angular/material/core";
     NgxMaskDirective,
     NgxMaskPipe,
     MatDatepickerModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    MatStepperModule,
+    MatCheckboxModule
   ],
   providers: [provideNgxMask()],
   bootstrap: [AppComponent]
