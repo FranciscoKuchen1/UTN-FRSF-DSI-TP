@@ -1,5 +1,222 @@
 <mat-card class="pantalla-mat-card">
   <mat-card-content>
-    <h1>registrar-reserva-esporadica works!</h1>
+
+    <h1>Registrar reserva esporadica:</h1>
+    <mat-stepper class="mat-step">
+      <mat-step [stepControl]="registrarReservaForm">
+        <form [formGroup]="registrarReservaForm">
+          <ng-template matStepLabel>Datos:</ng-template>
+
+          <div class="grid-container">
+            <div class="primera-mitad grid-item">
+
+              <mat-form-field appearance="outline">
+                <mat-label>Periodo</mat-label>
+                <mat-select formControlName="periodo">
+                  <div *ngFor="let periodo of periodos">
+                    <mat-option [value]="periodo.id">{{periodo.name}}</mat-option>
+                  </div>
+                </mat-select>
+
+                <button *ngIf="registrarReservaForm.get('periodo')?.value !== null" mat-icon-button matSuffix
+                        (click)="registrarReservaForm.get('periodo')?.reset(); $event.stopPropagation()">
+                  <mat-icon>close</mat-icon>
+                </button>
+              </mat-form-field>
+
+              <mat-form-field appearance="outline">
+                <mat-label>Nombre Catedra/Seminario/Curso</mat-label>
+                <mat-select formControlName="nombreCatedra">
+                  <div *ngFor="let catedra of nombreCatedras">
+                    <mat-option [value]="catedra.id">{{catedra.name}}</mat-option>
+                  </div>
+                </mat-select>
+
+                <button *ngIf="registrarReservaForm.get('nombreCatedra')?.value !== null" mat-icon-button matSuffix
+                        (click)="registrarReservaForm.get('nombreCatedra')?.reset(); $event.stopPropagation()">
+                  <mat-icon>close</mat-icon>
+                </button>
+              </mat-form-field>
+
+              <mat-form-field appearance="outline">
+                <mat-label>Tipo de aula</mat-label>
+                <mat-select formControlName="tipoAula">
+                  <div *ngFor="let aula of tipoAulas">
+                    <mat-option [value]="aula.id">{{aula.name}}</mat-option>
+                  </div>
+                </mat-select>
+
+                <button *ngIf="registrarReservaForm.get('tipoAula')?.value !== null" mat-icon-button matSuffix
+                        (click)="registrarReservaForm.get('tipoAula')?.reset(); $event.stopPropagation()">
+                  <mat-icon>close</mat-icon>
+                </button>
+              </mat-form-field>
+
+              <mat-form-field appearance="outline">
+                <mat-label>Cantidad de alumnos</mat-label>
+                <input matInput formControlName="cantidadAlumnos" mask="0*">
+              </mat-form-field>
+
+              <mat-form-field appearance="outline">
+                <mat-label>Nombre del docente</mat-label>
+                <mat-select formControlName="nombreDocente">
+                  <div *ngFor="let docente of nombreDocentes">
+                    <mat-option [value]="docente.id">{{docente.name}}</mat-option>
+                  </div>
+                </mat-select>
+
+                <button *ngIf="registrarReservaForm.get('nombreDocente')?.value !== null" mat-icon-button matSuffix
+                        (click)="registrarReservaForm.get('nombreDocente')?.reset(); $event.stopPropagation()">
+                  <mat-icon>close</mat-icon>
+                </button>
+              </mat-form-field>
+
+              <mat-form-field appearance="outline">
+                <mat-label>Correo electronico</mat-label>
+                <input matInput formControlName="correoElectronico">
+              </mat-form-field>
+
+            </div>
+
+            <mat-divider [vertical]="true"></mat-divider>
+
+            <div class="segunda-mitad-periodica grid-item">
+
+              <mat-form-field appearance="outline">
+                <mat-label>Fecha elegida</mat-label>
+                <input matInput [matDatepicker]="picker" placeholder="DD/MM/AAAA" formControlName="fechaAReservar" readonly>
+
+                <button *ngIf="registrarReservaForm.get('fechaAReservar')?.value !== null" mat-icon-button matSuffix
+                        (click)="registrarReservaForm.get('fechaAReservar')?.reset(); $event.stopPropagation()">
+                  <mat-icon>close</mat-icon>
+                </button>
+
+                <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker startView="multi-year"></mat-datepicker>
+              </mat-form-field>
+
+              <div class="columns">
+
+                <mat-form-field appearance="outline">
+                  <mat-label>Hora de inicio</mat-label>
+                  <mat-select formControlName="horaInicioFechaAReservar">
+                    <div *ngFor="let hora of horas">
+                      <mat-option [value]="hora.id">
+                        {{hora.name}}
+                      </mat-option>
+                    </div>
+                  </mat-select>
+                </mat-form-field>
+
+                <mat-form-field appearance="outline">
+                  <mat-label>Duracion</mat-label>
+                  <mat-select formControlName="duracionFechaAReservar">
+                    <div *ngFor="let duracion of duraciones">
+                      <mat-option [value]="duracion.id">
+                        {{duracion.name}} Mins.
+                      </mat-option>
+                    </div>
+                  </mat-select>
+                </mat-form-field>
+
+                <button class="boton-agregar" mat-button mat-raised-button color="primary"
+                        [disabled]="!disabledAgregar"
+                        (click)="agregarALista()"
+                >
+                  Agregar
+                </button>
+
+              </div>
+
+              <mat-list class="lista-fechas">
+                <div mat-subheader>Fechas reservadas:</div>
+                <mat-list-item class="list-item" *ngFor="let fecha of registrarReservaForm.get('fechasReservadas')?.value">
+                  <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+
+                    <div style="flex-grow: 1;">
+                      <div matListItemTitle>{{fecha.fecha | date: 'dd/MM/yyyy'}}</div>
+                      <div matListItemLine style="line-height: 30px;">Hora: {{fecha.hora.name}}, Duracion: {{fecha.duracion.name}} Mins.</div>
+                      <mat-divider></mat-divider>
+                    </div>
+
+                    <button mat-icon-button (click)="borrarDeLista(fecha)">
+                      <mat-icon>delete</mat-icon>
+                    </button>
+                  </div>
+
+                </mat-list-item>
+              </mat-list>
+
+             <!-- {{registrarReservaForm.value | json}}-->
+
+            </div>
+          </div>
+
+          <div class="cancel-confirm">
+            <button mat-button mat-raised-button matStepperPrevious (click)="close()">Cancelar</button>
+
+            <div>
+              <button mat-button mat-raised-button matStepperNext color="primary" (click)="siguiente()" >Siguiente</button> <!--[disabled]="registrarReservaForm.invalid || !todosValidos"-->
+            </div>
+          </div>
+
+        </form>
+      </mat-step>
+      <mat-step [stepControl]="registrarAulasForm">
+        <form [formGroup]="registrarAulasForm">
+          <ng-template matStepLabel>Aula:</ng-template>
+
+          <div class="grid-container">
+            <!--<div class="primera-mitad grid-item">
+
+              <div mat-subheader>Fechas disponibles:</div>
+
+              <mat-selection-list [multiple]="false" style="max-height: 440px; overflow-y: auto;" formControlName="fechaSeleccionada">
+                <mat-list-option *ngFor="let fecha of fechasDisponibles" [value]="fecha.fecha" [color]="'primary'">
+                  <div matListItemTitle>{{fecha.fecha}}</div> <span *ngIf="fecha.aulaSeleccionada">- {{fecha.aulaSeleccionada}}</span>
+                  <mat-icon matListItemIcon>calendar_month</mat-icon>
+                </mat-list-option>
+              </mat-selection-list>
+
+            </div>
+
+            <mat-divider [vertical]="true"></mat-divider>
+
+            <div class="segunda-mitad-periodica grid-item">
+
+              <ng-container *ngIf="fechaSeleccionada">
+
+                <div mat-subheader>Seleccionar aula para el {{fechaSeleccionada}}:</div>
+
+                <mat-selection-list [multiple]="false" formControlName="aulaSeleccionada">
+                  <mat-list-option class="aula-seleccionada" *ngFor="let aula of opcionesAulas" [value]="aula.nombre" [color]="'primary'">
+                    <span matListItemTitle>{{aula.nombre}}</span>
+                    <span matListItemLine>Ubicacion: {{aula.ubicacion}}</span>
+                    <span matListItemLine>Capacidad: {{aula.capacidad}}</span>
+                    <span matListItemLine>Caracteristicas: {{aula.caracteristicas}}</span>
+                    <br>
+                  </mat-list-option>
+                </mat-selection-list>
+
+              </ng-container>
+
+            </div>-->
+          </div>
+
+          <br>
+          <br>
+
+          <div class="cancel-confirm">
+            <button mat-button mat-raised-button (click)="close()">Cancelar</button>
+
+            <div>
+              <button mat-button mat-raised-button matStepperPrevious>Atras</button>
+              <button mat-button mat-raised-button matStepperNext color="primary" (click)="submit()" [disabled]="registrarAulasForm.invalid">Registrar</button>
+            </div>
+          </div>
+        </form>
+      </mat-step>
+    </mat-stepper>
+
   </mat-card-content>
 </mat-card>
