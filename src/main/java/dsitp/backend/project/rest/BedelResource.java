@@ -42,7 +42,8 @@ public class BedelResource {
     }
 
     @GetMapping
-    public ResponseEntity<?> getBedeles(@Min(0) @Max(2) @RequestParam(required = false) Integer tipoTurno, @Size(max = 30) @RequestParam(required = false) String apellido) {
+    @ApiResponse(responseCode = "200")
+    public ResponseEntity<?> getBedeles(@Min(0) @Max(2) @RequestParam(required = false) final Integer tipoTurno, @Size(max = 30) @RequestParam(required = false) final String apellido) {
         logger.info("Se buscan los bedeles por criterios");
         List<BedelDTO> bedelesDTO = bedelService.findBedeles(tipoTurno, apellido);
         if (bedelesDTO.isEmpty()) {
@@ -53,17 +54,21 @@ public class BedelResource {
     }
 
     @GetMapping("/{idRegistro}")
+    @ApiResponse(responseCode = "200")
     public ResponseEntity<BedelDTO> getBedel(@PathVariable(name = "idRegistro") final String idRegistro) {
+        // TODO solucionar problema http status 500
         return ResponseEntity.ok(bedelService.getBedelByIdRegistro(idRegistro));
     }
 
-    @GetMapping("/{apellido}")
-    public ResponseEntity<List<BedelDTO>> getBedelesByApellido(@PathVariable(name = "apellido") String apellido) {
+    @GetMapping("/apellido/{apellido}")
+    @ApiResponse(responseCode = "200")
+    public ResponseEntity<List<BedelDTO>> getBedelesByApellido(@PathVariable(name = "apellido") final String apellido) {
         return ResponseEntity.ok(bedelService.getBedelesByApellido(apellido));
     }
 
-    @GetMapping("/{tipoTurno}")
-    public ResponseEntity<List<BedelDTO>> getBedelesByTipoTurno(@PathVariable(name = "tipoTurno") Integer tipoTurno) {
+    @GetMapping("/tipo-turno/{tipoTurno}")
+    @ApiResponse(responseCode = "200")
+    public ResponseEntity<List<BedelDTO>> getBedelesByTipoTurno(@PathVariable(name = "tipoTurno") final Integer tipoTurno) {
         return ResponseEntity.ok(bedelService.getBedelesByTipoTurno(tipoTurno));
     }
 
@@ -77,6 +82,7 @@ public class BedelResource {
     }
 
     @PutMapping("/{id}")
+    @ApiResponse(responseCode = "200")
     public ResponseEntity<Integer> updateBedel(@PathVariable(name = "id") final Integer id,
             @RequestBody @Valid final BedelDTO bedelDTO) {
         bedelService.update(id, bedelDTO);

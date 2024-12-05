@@ -3,12 +3,14 @@ package dsitp.backend.project.domain;
 import jakarta.persistence.Column;
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.stereotype.Component;
 
 @Entity
-@DiscriminatorValue("3")
-@Data
+@DiscriminatorValue("2")
+@Getter
+@Setter
 @Component
 public class AulaMultimedio extends Aula {
 

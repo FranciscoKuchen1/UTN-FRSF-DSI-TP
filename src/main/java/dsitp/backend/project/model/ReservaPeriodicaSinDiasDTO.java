@@ -1,5 +1,6 @@
 package dsitp.backend.project.model;
 
+import dsitp.backend.project.util.Trio;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
@@ -12,7 +13,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class ReservaPeriodicaDTO {
+public class ReservaPeriodicaSinDiasDTO {
 
     @NotNull(message = "El id de la cátedra es obligatorio.")
     private Integer idCatedra;
@@ -53,6 +54,6 @@ public class ReservaPeriodicaDTO {
     private String idRegistroBedel;
 
     @NotEmpty(message = "Debe seleccionar al menos un día a reservar.")
-    private List<DiaReservadoDTO> diasReservadosDTO;
+    private List<Trio<Integer, String, String>> diasSemanaHorasDuracion;
 
 }

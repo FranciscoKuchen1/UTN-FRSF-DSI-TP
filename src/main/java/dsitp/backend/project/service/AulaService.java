@@ -4,6 +4,8 @@ import dsitp.backend.project.domain.Aula;
 import dsitp.backend.project.mapper.AulaMapper;
 import dsitp.backend.project.model.AulaDTO;
 import dsitp.backend.project.repos.AulaRepository;
+import dsitp.backend.project.repos.ReservaEsporadicaRepository;
+import dsitp.backend.project.repos.ReservaPeriodicaRepository;
 import dsitp.backend.project.util.NotFoundException;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,12 +18,16 @@ import org.springframework.transaction.annotation.Transactional;
 public class AulaService {
 
     private final AulaRepository aulaRepository;
+    private final ReservaEsporadicaRepository reservaEsporadicaRepository;
+    private final ReservaPeriodicaRepository reservaPeriodicaRepository;
     private final AulaMapper aulaMapper;
 
     @Autowired
-    public AulaService(final AulaRepository aulaRepository, final AulaMapper aulaMapper) {
+    public AulaService(final AulaRepository aulaRepository, final AulaMapper aulaMapper, ReservaEsporadicaRepository reservaEsporadicaRepository, ReservaPeriodicaRepository reservaPeriodicaRepository) {
         this.aulaRepository = aulaRepository;
         this.aulaMapper = aulaMapper;
+        this.reservaEsporadicaRepository = reservaEsporadicaRepository;
+        this.reservaPeriodicaRepository = reservaPeriodicaRepository;
     }
 
     @Transactional(readOnly = true)
@@ -35,7 +41,7 @@ public class AulaService {
 
     public List<AulaDTO> findAulas(Integer numero, Integer tipoAula, Integer capacidad) {
         if (numero != null && tipoAula != null && capacidad != null) {
-            return aulaRepository.findByNumeroAndTipoAulaAndCapacidad(numero, aulaMapper.toTipoAula(tipoAula), capacidad).stream()
+            return aulaRepository.findByNumeroAndTipoAulaAndCapacidad(numero, tipoAula, capacidad).stream()
                     .map(aula -> aulaMapper.toAulaDTO(aula))
                     .toList();
         } else if (numero != null) {
@@ -73,9 +79,9 @@ public class AulaService {
 
     public void update(final Integer numero, final AulaDTO aulaDTO) {
         Aula existingAula = aulaRepository.findById(numero)
-                .orElseThrow(() -> new IllegalArgumentException("Aula no encontrada con el número: " + numero));
+                .orElseThrow(NotFoundException::new);
         Aula updatedAula = aulaMapper.toAulaEntity(aulaDTO);
-        updatedAula.setNumero(existingAula.getNumero()); // Preserva el número original
+        updatedAula.setNumero(existingAula.getNumero());
 
         aulaRepository.save(updatedAula);
     }

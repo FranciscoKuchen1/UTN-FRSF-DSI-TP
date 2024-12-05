@@ -10,7 +10,8 @@ import jakarta.persistence.Inheritance;
 import jakarta.persistence.InheritanceType;
 import jakarta.persistence.SequenceGenerator;
 import java.time.OffsetDateTime;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -18,7 +19,8 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @Entity
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 @EntityListeners(AuditingEntityListener.class)
-@Data
+@Getter
+@Setter
 public abstract class Usuario {
 
     @Id

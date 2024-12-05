@@ -3,12 +3,14 @@ package dsitp.backend.project.domain;
 import jakarta.persistence.Column;
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.stereotype.Component;
 
 @Entity
-@DiscriminatorValue("2")
-@Data
+@DiscriminatorValue("1")
+@Getter
+@Setter
 @Component
 public class AulaInformatica extends Aula {
 

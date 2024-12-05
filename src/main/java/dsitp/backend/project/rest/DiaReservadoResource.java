@@ -28,26 +28,29 @@ public class DiaReservadoResource {
     }
 
     @GetMapping
+    @ApiResponse(responseCode = "200")
     public ResponseEntity<List<DiaReservadoDTO>> getAllDiaReservados() {
         return ResponseEntity.ok(diaReservadoService.findAll());
     }
 
     @GetMapping("/{id}")
+    @ApiResponse(responseCode = "200")
     public ResponseEntity<DiaReservadoDTO> getDiaReservado(
-            @PathVariable(name = "id") final Long id) {
+            @PathVariable(name = "id") final Integer id) {
         return ResponseEntity.ok(diaReservadoService.get(id));
     }
 
     @PostMapping
     @ApiResponse(responseCode = "201")
-    public ResponseEntity<Long> createDiaReservado(
+    public ResponseEntity<Integer> createDiaReservado(
             @RequestBody @Valid final DiaReservadoDTO diaReservadoDTO) {
-        final Long createdId = diaReservadoService.create(diaReservadoDTO);
+        final Integer createdId = diaReservadoService.create(diaReservadoDTO);
         return new ResponseEntity<>(createdId, HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Long> updateDiaReservado(@PathVariable(name = "id") final Long id,
+    @ApiResponse(responseCode = "200")
+    public ResponseEntity<Integer> updateDiaReservado(@PathVariable(name = "id") final Integer id,
             @RequestBody @Valid final DiaReservadoDTO diaReservadoDTO) {
         diaReservadoService.update(id, diaReservadoDTO);
         return ResponseEntity.ok(id);
@@ -55,7 +58,7 @@ public class DiaReservadoResource {
 
     @DeleteMapping("/{id}")
     @ApiResponse(responseCode = "204")
-    public ResponseEntity<Void> deleteDiaReservado(@PathVariable(name = "id") final Long id) {
+    public ResponseEntity<Void> deleteDiaReservado(@PathVariable(name = "id") final Integer id) {
         diaReservadoService.delete(id);
         return ResponseEntity.noContent().build();
     }

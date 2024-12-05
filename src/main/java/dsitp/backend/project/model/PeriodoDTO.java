@@ -1,16 +1,15 @@
 package dsitp.backend.project.model;
 
-import java.time.OffsetDateTime;
+import java.time.LocalDate;
 import lombok.Getter;
 import lombok.Setter;
-
 
 @Getter
 @Setter
 public class PeriodoDTO {
 
-    private Integer id;
-    private OffsetDateTime fechaInicio;
-    private OffsetDateTime fechaFin;
+    private Integer tipoPerido;
+    private LocalDate fechaInicio;
+    private LocalDate fechaFin;
 
 }

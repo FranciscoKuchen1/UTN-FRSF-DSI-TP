@@ -4,10 +4,12 @@ import dsitp.backend.project.integration.PasswordValidationRequest;
 import dsitp.backend.project.integration.PasswordValidationResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.reactive.function.client.WebClientException;
 
 @Service
+@Transactional
 public class ExternalApiService {
 
     private final WebClient webClient;
@@ -33,4 +35,6 @@ public class ExternalApiService {
             return false;
         }
     }
+
+    // TODO hacer obtener aulas y docentes
 }

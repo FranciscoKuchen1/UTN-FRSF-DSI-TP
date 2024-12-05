@@ -3,6 +3,7 @@ package dsitp.backend.project.service;
 import dsitp.backend.project.domain.Periodo;
 import dsitp.backend.project.domain.ReservaPeriodica;
 import dsitp.backend.project.model.PeriodoDTO;
+import dsitp.backend.project.model.TipoPeriodo;
 import dsitp.backend.project.repos.PeriodoRepository;
 import dsitp.backend.project.repos.ReservaEsporadicaRepository;
 import dsitp.backend.project.repos.ReservaPeriodicaRepository;
@@ -11,8 +12,10 @@ import dsitp.backend.project.util.ReferencedWarning;
 import java.util.List;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
+@Transactional
 public class PeriodoService {
 
     private final PeriodoRepository periodoRepository;
@@ -58,13 +61,14 @@ public class PeriodoService {
     }
 
     private PeriodoDTO mapToDTO(final Periodo periodo, final PeriodoDTO periodoDTO) {
-        periodoDTO.setId(periodo.getId());
+        periodoDTO.setTipoPerido(periodo.getTipoPeriodo().toInteger());
         periodoDTO.setFechaInicio(periodo.getFechaInicio());
         periodoDTO.setFechaFin(periodo.getFechaFin());
         return periodoDTO;
     }
 
     private Periodo mapToEntity(final PeriodoDTO periodoDTO, final Periodo periodo) {
+        periodo.setTipoPeriodo(TipoPeriodo.fromInteger(periodoDTO.getTipoPerido()));
         periodo.setFechaInicio(periodoDTO.getFechaInicio());
         periodo.setFechaFin(periodoDTO.getFechaFin());
         return periodo;

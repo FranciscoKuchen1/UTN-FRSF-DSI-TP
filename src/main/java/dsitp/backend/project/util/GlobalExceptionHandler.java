@@ -39,6 +39,14 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errors);
     }
 
+    @ExceptionHandler(IllegalArgumentException.class)
+    public ResponseEntity<Map<String, String>> handleIllegalArgumentException(IllegalArgumentException ex) {
+        Map<String, String> errors = new HashMap<>();
+        errors.put("message", ex.getMessage());
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errors);
+    }
+
     @ExceptionHandler(BedelReferencedException.class)
     public ResponseEntity<Map<String, Object>> handleBedelReferencedException(BedelReferencedException ex) {
         Map<String, Object> response = new HashMap<>();

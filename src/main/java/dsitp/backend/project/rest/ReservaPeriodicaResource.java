@@ -3,6 +3,8 @@ package dsitp.backend.project.rest;
 import dsitp.backend.project.domain.Bedel;
 import dsitp.backend.project.domain.Periodo;
 import dsitp.backend.project.model.ReservaPeriodicaDTO;
+import dsitp.backend.project.model.ReservaPeriodicaSinDiasDTO;
+import dsitp.backend.project.model.ReservaRespuestaDTO;
 import dsitp.backend.project.repos.BedelRepository;
 import dsitp.backend.project.repos.PeriodoRepository;
 import dsitp.backend.project.service.ReservaPeriodicaService;
@@ -40,25 +42,36 @@ public class ReservaPeriodicaResource {
     }
 
     @GetMapping
+    @ApiResponse(responseCode = "200")
     public ResponseEntity<List<ReservaPeriodicaDTO>> getAllReservaPeriodicas() {
         return ResponseEntity.ok(reservaPeriodicaService.findAll());
     }
 
     @GetMapping("/{id}")
+    @ApiResponse(responseCode = "200")
     public ResponseEntity<ReservaPeriodicaDTO> getReservaPeriodica(
             @PathVariable(name = "id") final Integer id) {
         return ResponseEntity.ok(reservaPeriodicaService.get(id));
+    }
+
+    @GetMapping("/disponibilidad")
+    @ApiResponse(responseCode = "200")
+    public ResponseEntity<ReservaRespuestaDTO> getDisponibilidadAulaReservaPeriodica(
+            @RequestBody @Valid final ReservaPeriodicaSinDiasDTO reservaPeriodicaSinDiasDTO) {
+        reservaPeriodicaService.getDisponibilidadAulaReservaPeriodica(reservaPeriodicaSinDiasDTO);
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     @PostMapping
     @ApiResponse(responseCode = "201")
     public ResponseEntity<Integer> createReservaPeriodica(
             @RequestBody @Valid final ReservaPeriodicaDTO reservaPeriodicaDTO) {
-        final Integer createdId = reservaPeriodicaService.create(reservaPeriodicaDTO);
-        return new ResponseEntity<>(createdId, HttpStatus.CREATED);
+        reservaPeriodicaService.create(reservaPeriodicaDTO);
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     @PutMapping("/{id}")
+    @ApiResponse(responseCode = "200")
     public ResponseEntity<Integer> updateReservaPeriodica(
             @PathVariable(name = "id") final Integer id,
             @RequestBody @Valid final ReservaPeriodicaDTO reservaPeriodicaDTO) {
@@ -75,6 +88,7 @@ public class ReservaPeriodicaResource {
     }
 
     @GetMapping("/periodoValues")
+    @ApiResponse(responseCode = "200")
     public ResponseEntity<Map<Integer, Integer>> getPeriodoValues() {
         return ResponseEntity.ok(periodoRepository.findAll(Sort.by("id"))
                 .stream()
@@ -82,6 +96,7 @@ public class ReservaPeriodicaResource {
     }
 
     @GetMapping("/bedelValues")
+    @ApiResponse(responseCode = "200")
     public ResponseEntity<Map<Integer, Integer>> getBedelValues() {
         return ResponseEntity.ok(bedelRepository.findAll(Sort.by("id"))
                 .stream()

@@ -40,7 +40,7 @@ After starting the application it is accessible under `localhost:8080`.
 The application can be built using the following command:
 
 ```
-mvnw clean package
+./mvnw clean package
 ```
 
 Start your application with the following command - here with the profile `production`:
@@ -48,6 +48,22 @@ Start your application with the following command - here with the profile `produ
 ```
 java -Dspring.profiles.active=production -jar ./target/project-0.0.1-SNAPSHOT.jar
 ```
+o
+
+```
+./mvnw spring-boot:run
+```
+
+Si se quiere especificar el perfil de compilación usar:
+```
+-Dspring.profiles.active=
+```
+
+## Base de Datos en PostgreSQL:
+
+Si se quiere la eliminación en casada, cambiar de:
+```ON DELETE NO ACTION``` a ```ON DELETE CASCADE```
+
 
 If required, a Docker image can be created with the Spring Boot plugin. Add `SPRING_PROFILES_ACTIVE=production` as
 environment variable when running the container.

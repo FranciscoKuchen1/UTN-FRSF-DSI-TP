@@ -17,18 +17,27 @@ public interface BedelRepository extends JpaRepository<Bedel, Integer> {
     boolean existsByIdRegistroIgnoreCase(String idRegistro);
 
     @Override
-    @Query("SELECT b FROM Bedel b WHERE b.eliminado = false")
+    @Query("SELECT b FROM Bedel b "
+            + "WHERE b.eliminado = false")
     List<Bedel> findAll();
 
-    @Query("SELECT b FROM Bedel b WHERE b.apellido = :apellido AND b.eliminado = false")
+    @Query("SELECT b FROM Bedel b "
+            + "WHERE b.apellido = :apellido "
+            + "AND b.eliminado = false")
     List<Bedel> findByApellido(String apellido);
 
-    @Query("SELECT b FROM Bedel b WHERE b.tipoTurno = :tipoTurno AND b.eliminado = false")
+    @Query("SELECT b FROM Bedel b "
+            + "WHERE b.tipoTurno = :tipoTurno "
+            + "AND b.eliminado = false")
     List<Bedel> findByTipoTurno(TipoTurno tipoTurno);
 
-    @Query("SELECT b FROM Bedel b WHERE b.tipoTurno = :tipoTurno AND b.apellido = :apellido AND b.eliminado = false")
+    @Query("SELECT b FROM Bedel b "
+            + "WHERE b.tipoTurno = :tipoTurno AND b.apellido = :apellido "
+            + "AND b.eliminado = false")
     List<Bedel> findByTipoTurnoAndApellido(TipoTurno tipoTurno, String apellido);
 
-    @Query("SELECT b FROM Bedel b WHERE b.idRegistro = :idRegistro AND b.eliminado = false")
-    Optional<Bedel> findByIdRegistro(String id);
+    @Query("SELECT b FROM Bedel b "
+            + "WHERE b.idRegistro = :idRegistro "
+            + "AND b.eliminado = false")
+    Optional<Bedel> findByIdRegistro(String idRegistro);
 }

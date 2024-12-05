@@ -40,11 +40,13 @@ public class ReservaEsporadicaResource {
     }
 
     @GetMapping
+    @ApiResponse(responseCode = "200")
     public ResponseEntity<List<ReservaEsporadicaDTO>> getAllReservaEsporadicas() {
         return ResponseEntity.ok(reservaEsporadicaService.findAll());
     }
 
     @GetMapping("/{id}")
+    @ApiResponse(responseCode = "200")
     public ResponseEntity<ReservaEsporadicaDTO> getReservaEsporadica(
             @PathVariable(name = "id") final Integer id) {
         return ResponseEntity.ok(reservaEsporadicaService.get(id));
@@ -59,6 +61,7 @@ public class ReservaEsporadicaResource {
     }
 
     @PutMapping("/{id}")
+    @ApiResponse(responseCode = "200")
     public ResponseEntity<Integer> updateReservaEsporadica(
             @PathVariable(name = "id") final Integer id,
             @RequestBody @Valid final ReservaEsporadicaDTO reservaEsporadicaDTO) {
@@ -75,6 +78,7 @@ public class ReservaEsporadicaResource {
     }
 
     @GetMapping("/periodoValues")
+    @ApiResponse(responseCode = "200")
     public ResponseEntity<Map<Integer, Integer>> getPeriodoValues() {
         return ResponseEntity.ok(periodoRepository.findAll(Sort.by("id"))
                 .stream()
@@ -82,6 +86,7 @@ public class ReservaEsporadicaResource {
     }
 
     @GetMapping("/bedelValues")
+    @ApiResponse(responseCode = "200")
     public ResponseEntity<Map<Integer, Integer>> getBedelValues() {
         return ResponseEntity.ok(bedelRepository.findAll(Sort.by("id"))
                 .stream()

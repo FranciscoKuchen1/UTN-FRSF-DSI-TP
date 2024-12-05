@@ -11,10 +11,12 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
+import java.time.LocalDate;
 import java.time.OffsetDateTime;
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -25,7 +27,8 @@ import org.springframework.stereotype.Component;
 @Entity
 @EntityListeners(AuditingEntityListener.class)
 @Table(name = "periodo")
-@Data
+@Getter
+@Setter
 @Component
 public class Periodo {
 
@@ -44,10 +47,10 @@ public class Periodo {
     private Integer id;
 
     @Column
-    private OffsetDateTime fechaInicio;
+    private LocalDate fechaInicio;
 
     @Column
-    private OffsetDateTime fechaFin;
+    private LocalDate fechaFin;
 
     @Column
     @Enumerated(EnumType.STRING)

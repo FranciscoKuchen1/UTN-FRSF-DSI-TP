@@ -2,6 +2,7 @@ package dsitp.backend.project.service;
 
 import dsitp.backend.project.domain.ReservaEsporadica;
 import dsitp.backend.project.model.ReservaEsporadicaDTO;
+import dsitp.backend.project.model.TipoAula;
 import dsitp.backend.project.repos.BedelRepository;
 import dsitp.backend.project.repos.DiaReservadoRepository;
 import dsitp.backend.project.repos.PeriodoRepository;
@@ -10,8 +11,10 @@ import dsitp.backend.project.util.NotFoundException;
 import java.util.List;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
+@Transactional
 public class ReservaEsporadicaService {
 
     private final ReservaEsporadicaRepository reservaEsporadicaRepository;
@@ -59,7 +62,6 @@ public class ReservaEsporadicaService {
 
     private ReservaEsporadicaDTO mapToDTO(final ReservaEsporadica reservaEsporadica,
             final ReservaEsporadicaDTO reservaEsporadicaDTO) {
-        reservaEsporadicaDTO.setId(reservaEsporadica.getId());
         reservaEsporadicaDTO.setIdCatedra(reservaEsporadica.getIdCatedra());
         reservaEsporadicaDTO.setNombreCatedra(reservaEsporadica.getNombreCatedra());
         reservaEsporadicaDTO.setIdDocente(reservaEsporadica.getIdDocente());
@@ -67,7 +69,7 @@ public class ReservaEsporadicaService {
         reservaEsporadicaDTO.setApellidoDocente(reservaEsporadica.getApellidoDocente());
         reservaEsporadicaDTO.setCorreoDocente(reservaEsporadica.getCorreoDocente());
         reservaEsporadicaDTO.setCantAlumnos(reservaEsporadica.getCantAlumnos());
-        reservaEsporadicaDTO.setTipoAula(reservaEsporadica.getTipoAula());
+        reservaEsporadicaDTO.setTipoAula(reservaEsporadica.getTipoAula().toInteger());
         //reservaEsporadicaDTO.setDiasReservadosDTO(reservaEsporadica.getDiasReservados());
         return reservaEsporadicaDTO;
     }
@@ -81,7 +83,7 @@ public class ReservaEsporadicaService {
         reservaEsporadica.setApellidoDocente(reservaEsporadicaDTO.getApellidoDocente());
         reservaEsporadica.setCorreoDocente(reservaEsporadicaDTO.getCorreoDocente());
         reservaEsporadica.setCantAlumnos(reservaEsporadicaDTO.getCantAlumnos());
-        reservaEsporadica.setTipoAula(reservaEsporadicaDTO.getTipoAula());
+        reservaEsporadica.setTipoAula(TipoAula.fromInteger(reservaEsporadicaDTO.getTipoAula()));
         //reservaEsporadica.setDiasReservados(diaReservadoRepository reservaEsporadicaDTO.getDiasReservadosDTO());
         return reservaEsporadica;
     }

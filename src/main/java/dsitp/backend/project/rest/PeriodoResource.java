@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-
 @RestController
 @RequestMapping(value = "/api/periodos", produces = MediaType.APPLICATION_JSON_VALUE)
 public class PeriodoResource {
@@ -31,11 +30,13 @@ public class PeriodoResource {
     }
 
     @GetMapping
+    @ApiResponse(responseCode = "200")
     public ResponseEntity<List<PeriodoDTO>> getAllPeriodos() {
         return ResponseEntity.ok(periodoService.findAll());
     }
 
     @GetMapping("/{id}")
+    @ApiResponse(responseCode = "200")
     public ResponseEntity<PeriodoDTO> getPeriodo(@PathVariable(name = "id") final Integer id) {
         return ResponseEntity.ok(periodoService.get(id));
     }
@@ -48,6 +49,7 @@ public class PeriodoResource {
     }
 
     @PutMapping("/{id}")
+    @ApiResponse(responseCode = "200")
     public ResponseEntity<Integer> updatePeriodo(@PathVariable(name = "id") final Integer id,
             @RequestBody @Valid final PeriodoDTO periodoDTO) {
         periodoService.update(id, periodoDTO);

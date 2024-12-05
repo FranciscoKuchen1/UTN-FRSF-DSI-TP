@@ -1,10 +1,12 @@
 package dsitp.backend.project.domain;
 
 import dsitp.backend.project.model.TipoAula;
+import dsitp.backend.project.validation.UniqueDayAndTime;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EntityListeners;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -17,8 +19,9 @@ import jakarta.persistence.SequenceGenerator;
 import java.time.OffsetDateTime;
 import java.util.List;
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -28,7 +31,8 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @EntityListeners(AuditingEntityListener.class)
 @NoArgsConstructor
 @AllArgsConstructor
-@Data
+@Getter
+@Setter
 public abstract class Reserva {
 
     @Id
@@ -69,10 +73,11 @@ public abstract class Reserva {
     @Column
     private TipoAula tipoAula;
 
-    @OneToMany(mappedBy = "reserva", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "reserva", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    @UniqueDayAndTime
     private List<DiaReservado> diasReservados;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_bedel")
     private Bedel bedel;
 
@@ -83,5 +88,4 @@ public abstract class Reserva {
     @LastModifiedDate
     @Column(nullable = false)
     private OffsetDateTime lastUpdated;
-
 }

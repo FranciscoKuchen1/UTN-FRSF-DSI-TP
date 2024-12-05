@@ -6,19 +6,22 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import java.util.List;
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.springframework.stereotype.Component;
 
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
 @Table(name = "bedel")
-@Data
+@Getter
+@Setter
 @Component
 public class Bedel extends Usuario {
 
@@ -29,7 +32,7 @@ public class Bedel extends Usuario {
     @Enumerated(EnumType.STRING)
     private TipoTurno tipoTurno;
 
-    @OneToMany(mappedBy = "bedel", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "bedel", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private List<Reserva> reservas;
 
 }

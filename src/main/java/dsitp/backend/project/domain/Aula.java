@@ -13,8 +13,9 @@ import jakarta.persistence.InheritanceType;
 import jakarta.persistence.SequenceGenerator;
 import java.time.OffsetDateTime;
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -26,7 +27,8 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @EntityListeners(AuditingEntityListener.class)
 @NoArgsConstructor
 @AllArgsConstructor
-@Data
+@Getter
+@Setter
 public abstract class Aula {
 
     @Id
@@ -53,7 +55,7 @@ public abstract class Aula {
     private Integer capacidad;
 
     @Column(length = 100)
-    // ? Usar Enum?
+    // TODO: ? Usar Enum?
     private String tipoPizarron;
 
     @Column

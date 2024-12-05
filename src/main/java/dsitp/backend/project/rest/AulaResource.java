@@ -32,18 +32,19 @@ public class AulaResource {
         this.aulaService = aulaService;
     }
 
-    @GetMapping
-    public ResponseEntity<List<AulaDTO>> getAllAulas() {
-        return ResponseEntity.ok(aulaService.findAll());
-    }
-
+//    @GetMapping
+//    public ResponseEntity<List<AulaDTO>> getAllAulas() {
+//        return ResponseEntity.ok(aulaService.findAll());
+//    }
     @GetMapping("/{numero}")
+    @ApiResponse(responseCode = "200")
     public ResponseEntity<AulaDTO> getAula(
             @PathVariable(name = "numero") final Integer numero) {
         return ResponseEntity.ok(aulaService.get(numero));
     }
 
     @GetMapping
+    @ApiResponse(responseCode = "200")
     public ResponseEntity<List<AulaDTO>> getAulas(@RequestParam(required = false) Integer numero, @RequestParam(required = false) Integer tipoAula, @RequestParam(required = false) Integer capacidad) {
         List<AulaDTO> aulasDTO = aulaService.findAulas(numero, tipoAula, capacidad);
         return ResponseEntity.ok(aulasDTO);
@@ -58,6 +59,7 @@ public class AulaResource {
     }
 
     @PutMapping("/{numero}")
+    @ApiResponse(responseCode = "200")
     public ResponseEntity<Integer> updateAula(
             @PathVariable(name = "numero") final Integer numero,
             @RequestBody @Valid final AulaDTO aulaDTO) {

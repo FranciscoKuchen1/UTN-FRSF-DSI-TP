@@ -5,6 +5,7 @@ import dsitp.backend.project.domain.ReservaEsporadica;
 import dsitp.backend.project.domain.ReservaPeriodica;
 import dsitp.backend.project.mapper.BedelMapper;
 import dsitp.backend.project.model.BedelDTO;
+import dsitp.backend.project.model.TipoTurno;
 import dsitp.backend.project.repos.BedelRepository;
 import dsitp.backend.project.repos.ReservaEsporadicaRepository;
 import dsitp.backend.project.repos.ReservaPeriodicaRepository;
@@ -16,8 +17,10 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
+@Transactional
 public class BedelService {
 
     private final BedelRepository bedelRepository;
@@ -54,25 +57,26 @@ public class BedelService {
     }
 
     public List<BedelDTO> getBedelesByTipoTurno(final Integer tipoTurno) {
-        final List<Bedel> bedeles = bedelRepository.findByTipoTurno(bedelMapper.toTipoTurno(tipoTurno));
+        final List<Bedel> bedeles = bedelRepository.findByTipoTurno(TipoTurno.fromInteger(tipoTurno));
         return bedeles.stream()
                 .map(bedel -> bedelMapper.toBedelDTO(bedel))
                 .toList();
     }
 
     public BedelDTO getBedelByIdRegistro(final String idRegistro) {
-        return bedelRepository.findByIdRegistro(idRegistro)
+        return bedelRepository
+                .findByIdRegistro(idRegistro)
                 .map(bedel -> bedelMapper.toBedelDTO(bedel))
                 .orElseThrow(NotFoundException::new);
     }
 
     public List<BedelDTO> findBedeles(Integer tipoTurno, String apellido) {
         if (tipoTurno != null && apellido != null) {
-            return bedelRepository.findByTipoTurnoAndApellido(bedelMapper.toTipoTurno(tipoTurno), apellido).stream()
+            return bedelRepository.findByTipoTurnoAndApellido(TipoTurno.fromInteger(tipoTurno), apellido).stream()
                     .map(bedel -> bedelMapper.toBedelDTO(bedel))
                     .toList();
         } else if (tipoTurno != null) {
-            return bedelRepository.findByTipoTurno(bedelMapper.toTipoTurno(tipoTurno)).stream()
+            return bedelRepository.findByTipoTurno(TipoTurno.fromInteger(tipoTurno)).stream()
                     .map(bedel -> bedelMapper.toBedelDTO(bedel))
                     .toList();
         } else if (apellido != null) {
