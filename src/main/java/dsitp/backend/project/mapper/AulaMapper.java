@@ -12,13 +12,13 @@ import dsitp.backend.project.model.AulaSolapadaDTO;
 import dsitp.backend.project.model.ReservaSolapadaDTO;
 import java.util.HashMap;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
-@Component
+@Service
 public class AulaMapper {
 
-    private ReservaEsporadicaMapper reservaEsporadicaMapper;
-    private ReservaPeriodicaMapper reservaPeriodicaMapper;
+    private final ReservaEsporadicaMapper reservaEsporadicaMapper;
+    private final ReservaPeriodicaMapper reservaPeriodicaMapper;
 
     @Autowired
     public AulaMapper(ReservaEsporadicaMapper reservaEsporadicaMapper, ReservaPeriodicaMapper reservaPeriodicaMapper) {

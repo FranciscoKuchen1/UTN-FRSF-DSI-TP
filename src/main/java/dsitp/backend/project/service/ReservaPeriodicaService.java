@@ -16,19 +16,19 @@ import dsitp.backend.project.model.ReservaPeriodicaDTO;
 import dsitp.backend.project.model.ReservaPeriodicaSinDiasDTO;
 import dsitp.backend.project.model.ReservaRespuestaDTO;
 import dsitp.backend.project.repos.AulaRepository;
-import dsitp.backend.project.repos.BedelRepository;
 import dsitp.backend.project.repos.DiaReservadoRepository;
-import dsitp.backend.project.repos.PeriodoRepository;
 import dsitp.backend.project.repos.ReservaPeriodicaRepository;
 import dsitp.backend.project.util.NotFoundException;
 import java.time.Duration;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -39,17 +39,14 @@ public class ReservaPeriodicaService {
 
     private final ReservaPeriodicaRepository reservaPeriodicaRepository;
     private final DiaReservadoRepository diaReservadoRepository;
-    private final PeriodoRepository periodoRepository;
-    private final BedelRepository bedelRepository;
     private final AulaRepository aulaRepository;
     private final ReservaPeriodicaMapper reservaPeriodicaMapper;
-    private final AulaMapper aulaMapper;
     private final DiaReservadoMapper diaReservadoMapper;
+    private final AulaMapper aulaMapper;
 
-    public ReservaPeriodicaService(final ReservaPeriodicaRepository reservaPeriodicaRepository, final PeriodoRepository periodoRepository, final BedelRepository bedelRepository, final ReservaPeriodicaMapper reservaPeriodicaMapper, final AulaRepository aulaRepository, final AulaMapper aulaMapper, final DiaReservadoRepository diaReservadoRepository, final DiaReservadoMapper diaReservadoMapper) {
+    @Autowired
+    public ReservaPeriodicaService(final ReservaPeriodicaRepository reservaPeriodicaRepository, final AulaRepository aulaRepository, final DiaReservadoRepository diaReservadoRepository, final ReservaPeriodicaMapper reservaPeriodicaMapper, final DiaReservadoMapper diaReservadoMapper, final AulaMapper aulaMapper) {
         this.reservaPeriodicaRepository = reservaPeriodicaRepository;
-        this.periodoRepository = periodoRepository;
-        this.bedelRepository = bedelRepository;
         this.reservaPeriodicaMapper = reservaPeriodicaMapper;
         this.aulaRepository = aulaRepository;
         this.aulaMapper = aulaMapper;
@@ -101,14 +98,14 @@ public class ReservaPeriodicaService {
             }
         }
 
-        // TODO: ordenar por capacidad antes de devolver
+        aulasDisponibles.sort(Comparator.comparing(AulaDTO::getCapacidad).reversed());
+
         return aulasDisponibles;
     }
 
     private Boolean verificarDisponibilidad(Aula aula, DiaReservado diaReservado) {
 
         List<DiaReservado> diasReservados = diaReservadoRepository.findOverlappingDays(aula.getNumero(), diaReservado.getFechaReserva(), diaReservado.getHoraInicio(), diaReservado.getHoraInicio().plusMinutes(diaReservado.getDuracion()));
-        // Validar si los días y horarios ingresados no solapan con reservas existentes
 
         return diasReservados.isEmpty();
     }
@@ -182,7 +179,7 @@ public class ReservaPeriodicaService {
 
     public Integer create(final ReservaPeriodicaDTO reservaPeriodicaDTO) {
         final ReservaPeriodica reservaPeriodica = reservaPeriodicaMapper.toReservaPeriodicaEntity(reservaPeriodicaDTO);
-//        mapToEntity(reservaPeriodicaDTO, reservaPeriodica);
+
         return reservaPeriodicaRepository.save(reservaPeriodica).getId();
     }
 
@@ -197,6 +194,14 @@ public class ReservaPeriodicaService {
     }
 
     public void delete(final Integer id) {
+        final ReservaPeriodica existingReservaPeriodica = reservaPeriodicaRepository.findById(id)
+                .orElseThrow(NotFoundException::new);
+
+        existingReservaPeriodica.setBedel(null);
+        existingReservaPeriodica.setDiasReservados(null);
+        existingReservaPeriodica.setPeriodo(null);
+        reservaPeriodicaRepository.save(existingReservaPeriodica);
+
         reservaPeriodicaRepository.deleteById(id);
     }
 

@@ -22,7 +22,7 @@ public class ReservaPeriodicaSinDiasDTO {
     @Size(max = 100, message = "El nombre de la cátedra no debe superar los 100 caracteres.")
     private String nombreCatedra;
 
-    @NotBlank(message = "El id del docente es obligatorio.")
+    @NotNull(message = "El id del docente es obligatorio.")
     private Integer idDocente;
 
     @NotBlank(message = "El nombre del docente es obligatorio.")
@@ -42,17 +42,16 @@ public class ReservaPeriodicaSinDiasDTO {
     @NotNull(message = "La cantidad de alumnos es obligatoria.")
     private Integer cantAlumnos;
 
-    // TODO: ?? Correcto?
     @NotNull(message = "El tipo de aula es obligatorio.")
     private Integer tipoAula;
 
-    // TODO: ?? Correcto?
     @NotNull(message = "El tipo del periodo es obligatorio.")
     private Integer tipoPeriodo;
 
     @NotBlank(message = "El idRegistro del bedel es obligatorio.")
     private String idRegistroBedel;
 
+    // TODO: ver de cambiar Duracion de String a Integer
     @NotEmpty(message = "Debe seleccionar al menos un día a reservar.")
     private List<Trio<Integer, String, String>> diasSemanaHorasDuracion;
 

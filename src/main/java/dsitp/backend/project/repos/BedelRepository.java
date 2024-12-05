@@ -4,40 +4,29 @@ import dsitp.backend.project.domain.Bedel;
 import dsitp.backend.project.model.TipoTurno;
 import java.util.List;
 import java.util.Optional;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 @Repository
 public interface BedelRepository extends JpaRepository<Bedel, Integer> {
 
-    @Override
-    boolean existsById(Integer id);
+    Boolean existsByIdAndEliminadoFalse(Integer id);
 
-    boolean existsByIdRegistroIgnoreCase(String idRegistro);
+    Boolean existsByIdRegistroIgnoreCaseAndEliminadoFalse(String idRegistro);
 
-    @Override
-    @Query("SELECT b FROM Bedel b "
-            + "WHERE b.eliminado = false")
-    List<Bedel> findAll();
+    Boolean existsByContrasenaAndEliminadoFalse(String contrasena);
 
-    @Query("SELECT b FROM Bedel b "
-            + "WHERE b.apellido = :apellido "
-            + "AND b.eliminado = false")
-    List<Bedel> findByApellido(String apellido);
+    List<Bedel> findByEliminadoFalse(Sort sort);
 
-    @Query("SELECT b FROM Bedel b "
-            + "WHERE b.tipoTurno = :tipoTurno "
-            + "AND b.eliminado = false")
-    List<Bedel> findByTipoTurno(TipoTurno tipoTurno);
+    List<Bedel> findByEliminadoFalse();
 
-    @Query("SELECT b FROM Bedel b "
-            + "WHERE b.tipoTurno = :tipoTurno AND b.apellido = :apellido "
-            + "AND b.eliminado = false")
-    List<Bedel> findByTipoTurnoAndApellido(TipoTurno tipoTurno, String apellido);
+    List<Bedel> findByApellidoAndEliminadoFalse(String apellido);
 
-    @Query("SELECT b FROM Bedel b "
-            + "WHERE b.idRegistro = :idRegistro "
-            + "AND b.eliminado = false")
-    Optional<Bedel> findByIdRegistro(String idRegistro);
+    List<Bedel> findByTipoTurnoAndEliminadoFalse(TipoTurno tipoTurno);
+
+    List<Bedel> findByTipoTurnoAndApellidoAndEliminadoFalse(TipoTurno tipoTurno, String apellido);
+
+    Optional<Bedel> findByIdRegistroAndEliminadoFalse(String idRegistro);
+
 }

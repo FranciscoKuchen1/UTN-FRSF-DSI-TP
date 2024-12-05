@@ -54,7 +54,7 @@ public class ReservaPeriodicaResource {
         return ResponseEntity.ok(reservaPeriodicaService.get(id));
     }
 
-    @GetMapping("/disponibilidad")
+    @PostMapping("/disponibilidad")
     @ApiResponse(responseCode = "200")
     public ResponseEntity<ReservaRespuestaDTO> getDisponibilidadAulaReservaPeriodica(
             @RequestBody @Valid final ReservaPeriodicaSinDiasDTO reservaPeriodicaSinDiasDTO) {
@@ -98,7 +98,7 @@ public class ReservaPeriodicaResource {
     @GetMapping("/bedelValues")
     @ApiResponse(responseCode = "200")
     public ResponseEntity<Map<Integer, Integer>> getBedelValues() {
-        return ResponseEntity.ok(bedelRepository.findAll(Sort.by("id"))
+        return ResponseEntity.ok(bedelRepository.findByEliminadoFalse(Sort.by("id"))
                 .stream()
                 .collect(CustomCollectors.toSortedMap(Bedel::getId, Bedel::getId)));
     }

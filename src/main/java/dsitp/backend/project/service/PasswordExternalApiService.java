@@ -6,20 +6,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.reactive.function.client.WebClient;
-import org.springframework.web.reactive.function.client.WebClientException;
 
 @Service
 @Transactional
-public class ExternalApiService {
+public class PasswordExternalApiService {
 
     private final WebClient webClient;
 
     @Autowired
-    public ExternalApiService(WebClient.Builder webClientBuilder) {
-        this.webClient = webClientBuilder.baseUrl("https://sistema-externo.com/api").build();
+    public PasswordExternalApiService(WebClient.Builder webClientBuilder) {
+        this.webClient = webClientBuilder.baseUrl("https://passwordexternalclient.com/api").build();
     }
 
-    public boolean validatePassword(String contrasena) {
+    public Boolean validatePassword(String contrasena) {
         try {
             PasswordValidationRequest request = new PasswordValidationRequest(contrasena);
             PasswordValidationResponse response = webClient.post()
@@ -30,11 +29,9 @@ public class ExternalApiService {
                     .block();
 
             return response != null && response.isValid();
-        } catch (WebClientException e) {
-
-            return false;
+        } catch (Exception ex) {
+            throw new RuntimeException("No se pudo obtener el docente", ex);
         }
     }
 
-    // TODO hacer obtener aulas y docentes
 }

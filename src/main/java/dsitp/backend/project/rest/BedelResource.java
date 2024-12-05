@@ -56,7 +56,7 @@ public class BedelResource {
     @GetMapping("/{idRegistro}")
     @ApiResponse(responseCode = "200")
     public ResponseEntity<BedelDTO> getBedel(@PathVariable(name = "idRegistro") final String idRegistro) {
-        // TODO solucionar problema http status 500
+        // TODO: solucionar problema http status 500
         return ResponseEntity.ok(bedelService.getBedelByIdRegistro(idRegistro));
     }
 

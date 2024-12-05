@@ -14,7 +14,7 @@ public class Trio<T1, T2, T3> {
     private T2 horaInicio;
     private T3 duracion;
 
-    public static boolean containsFirst(List<Trio<Integer, String, String>> list, Integer target) {
+    public static Boolean containsFirst(List<Trio<Integer, String, String>> list, Integer target) {
         return list.stream()
                 .anyMatch(trio -> trio.getDia().equals(target));
     }

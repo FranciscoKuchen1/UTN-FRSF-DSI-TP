@@ -43,14 +43,15 @@ public class ReservaEsporadicaMapper {
         reservaEsporadica.setCantAlumnos(reservaEsporadicaDTO.getCantAlumnos());
         reservaEsporadica.setTipoAula(TipoAula.fromInteger(reservaEsporadicaDTO.getTipoAula()));
 
-        // TODO: Mapear los días reservados
-        Bedel bedel = bedelRepository.findByIdRegistro(reservaEsporadicaDTO.getIdRegistroBedel())
+        Bedel bedel = bedelRepository.findByIdRegistroAndEliminadoFalse(reservaEsporadicaDTO.getIdRegistroBedel())
                 .orElseThrow(() -> new NotFoundException("Bedel no encontrado"));
         reservaEsporadica.setBedel(bedel);
 
         List<DiaReservado> diasReservados = new ArrayList<>();
         for (DiaReservadoDTO diaReservadoDTO : reservaEsporadicaDTO.getDiasReservadosDTO()) {
-            diasReservados.add(diaReservadoMapper.toDiaReservadoEntity(diaReservadoDTO));
+            DiaReservado diaReservado = diaReservadoMapper.toDiaReservadoEntity(diaReservadoDTO);
+            diaReservado.setReserva(reservaEsporadica);
+            diasReservados.add(diaReservado);
         }
 
         reservaEsporadica.setDiasReservados(diasReservados);
@@ -88,15 +89,6 @@ public class ReservaEsporadicaMapper {
         reservaEsporadicaDTO.setTipoAula(reservaEsporadica.getTipoAula().toInteger());
         reservaEsporadicaDTO.setIdRegistroBedel(reservaEsporadica.getBedel().getIdRegistro());
 
-        // TODO: Mapear los días reservados
-//        List<Trio<Integer, String, String>> diasSemanaHorasDuracion = reservaEsporadica.getDiasReservados().stream()
-//                .map(diaReservado -> new Trio<>(
-//                (int) diaReservado.getFechaReserva().toEpochDay(),
-//                diaReservado.getHoraInicio().toString(),
-//                diaReservado.getDuracion().toString()
-//        ))
-//                .collect(Collectors.toList());
-//        reservaEsporadicaDTO.setDiasSemanaHorasDuracion(diasSemanaHorasDuracion);
         List<DiaReservadoDTO> diasReservadosDTO = new ArrayList<>();
         for (DiaReservado diaReservado : reservaEsporadica.getDiasReservados()) {
             diasReservadosDTO.add(diaReservadoMapper.toDiaReservadoDTO(diaReservado));

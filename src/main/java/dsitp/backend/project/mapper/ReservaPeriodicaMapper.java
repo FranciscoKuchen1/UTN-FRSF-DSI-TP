@@ -33,13 +33,15 @@ public class ReservaPeriodicaMapper {
     private final BedelRepository bedelRepository;
     private final DiaReservadoMapper diaReservadoMapper;
     private final Validator reservaPeriodicaValidator;
+    private final Validator diaReservadoValidator;
 
     @Autowired
-    public ReservaPeriodicaMapper(PeriodoRepository periodoRepository, DiaReservadoMapper diaReservadoMapper, Validator reservaPeriodicaValidator, BedelRepository bedelRepository) {
+    public ReservaPeriodicaMapper(final PeriodoRepository periodoRepository, final BedelRepository bedelRepository, final DiaReservadoMapper diaReservadoMapper, final Validator reservaPeriodicaValidator, final Validator diaReservadoValidator) {
         this.periodoRepository = periodoRepository;
+        this.bedelRepository = bedelRepository;
         this.diaReservadoMapper = diaReservadoMapper;
         this.reservaPeriodicaValidator = reservaPeriodicaValidator;
-        this.bedelRepository = bedelRepository;
+        this.diaReservadoValidator = diaReservadoValidator;
     }
 
     public ReservaPeriodica toReservaPeriodicaEntityDisponibilidad(ReservaPeriodicaSinDiasDTO reservaPeriodicaSinDiasDTO) {
@@ -65,7 +67,7 @@ public class ReservaPeriodicaMapper {
         );
         reservaPeriodica.setDiasReservados(diasReservados);
 
-        Bedel bedel = bedelRepository.findByIdRegistro(reservaPeriodicaSinDiasDTO.getIdRegistroBedel())
+        Bedel bedel = bedelRepository.findByIdRegistroAndEliminadoFalse(reservaPeriodicaSinDiasDTO.getIdRegistroBedel())
                 .orElseThrow(() -> new NotFoundException("Bedel no encontrado"));
         reservaPeriodica.setBedel(bedel);
 
@@ -105,12 +107,15 @@ public class ReservaPeriodicaMapper {
 
         List<DiaReservado> diasReservados = new ArrayList<>();
         for (DiaReservadoDTO diaReservadoDTO : reservaPeriodicaDTO.getDiasReservadosDTO()) {
-            diasReservados.add(diaReservadoMapper.toDiaReservadoEntity(diaReservadoDTO));
+            DiaReservado diaReservado = diaReservadoMapper.toDiaReservadoEntity(diaReservadoDTO);
+            diaReservado.setReserva(reservaPeriodica);
+            diasReservados.add(diaReservado);
+
         }
 
         reservaPeriodica.setDiasReservados(diasReservados);
 
-        Bedel bedel = bedelRepository.findByIdRegistro(reservaPeriodicaDTO.getIdRegistroBedel())
+        Bedel bedel = bedelRepository.findByIdRegistroAndEliminadoFalse(reservaPeriodicaDTO.getIdRegistroBedel())
                 .orElseThrow(() -> new NotFoundException("Bedel no encontrado"));
         reservaPeriodica.setBedel(bedel);
 
@@ -170,21 +175,39 @@ public class ReservaPeriodicaMapper {
         List<DiaReservado> diasReservados = new ArrayList<>();
 
         LocalDate fechaActual = fechaInicio;
+        if (fechaInicio.isBefore(LocalDate.now())) {
+            fechaActual = LocalDate.now();
+        }
         while (!fechaActual.isAfter(fechaFin)) {
             DayOfWeek diaSemana = fechaActual.getDayOfWeek();
             Integer idDiaSemana = diaSemana.getValue() % 7;
-            // NOTE: si hay 2 domingos, se toma el primero, por ejemplo
+            // NOTE: si hay 2 lunes, se toma el primero, por ejemplo
             if (Trio.containsFirst(diasSemanaHorasDuracion, idDiaSemana)) {
                 Trio<Integer, String, String> trio = Trio.findByFirst(diasSemanaHorasDuracion, idDiaSemana);
                 LocalTime horaInicio = LocalTime.parse(trio.getHoraInicio(), DateTimeFormatter.ofPattern("HH:mm"));
                 Integer duracion = Integer.valueOf(trio.getDuracion());
-                // TODO: ver si mejorar
-                DiaReservadoDTO diaReservadoDTO = new DiaReservadoDTO();
-                diaReservadoDTO.setFechaReserva(fechaActual);
-                diaReservadoDTO.setHoraInicio(horaInicio);
-                diaReservadoDTO.setDuracion(duracion);
 
-                DiaReservado diaReservado = diaReservadoMapper.toDiaReservadoEntity(diaReservadoDTO);
+                DiaReservado diaReservado = new DiaReservado();
+                diaReservado.setFechaReserva(fechaActual);
+                diaReservado.setHoraInicio(horaInicio);
+                diaReservado.setDuracion(duracion);
+
+                BindingResult bindingResult = new BeanPropertyBindingResult(diaReservado, "diaReservado");
+                diaReservadoValidator.validate(diaReservado, bindingResult);
+
+                if (bindingResult.hasErrors()) {
+
+                    StringBuilder errorMessages = new StringBuilder();
+                    bindingResult.getAllErrors().forEach(error -> {
+                        String errorMessage = error.getDefaultMessage();
+                        if (errorMessage != null) {
+                            errorMessages.append(errorMessage);
+                        }
+                    });
+
+                    throw new IllegalArgumentException(errorMessages.toString());
+                }
+
                 diaReservado.setReserva(reservaPeriodica);
                 diasReservados.add(diaReservado);
             }

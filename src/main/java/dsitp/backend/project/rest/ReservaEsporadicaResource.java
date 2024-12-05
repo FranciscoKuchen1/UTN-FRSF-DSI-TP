@@ -3,6 +3,7 @@ package dsitp.backend.project.rest;
 import dsitp.backend.project.domain.Bedel;
 import dsitp.backend.project.domain.Periodo;
 import dsitp.backend.project.model.ReservaEsporadicaDTO;
+import dsitp.backend.project.model.ReservaRespuestaDTO;
 import dsitp.backend.project.repos.BedelRepository;
 import dsitp.backend.project.repos.PeriodoRepository;
 import dsitp.backend.project.service.ReservaEsporadicaService;
@@ -52,6 +53,14 @@ public class ReservaEsporadicaResource {
         return ResponseEntity.ok(reservaEsporadicaService.get(id));
     }
 
+    @PostMapping("/disponibilidad")
+    @ApiResponse(responseCode = "200")
+    public ResponseEntity<ReservaRespuestaDTO> getDisponibilidadAulaReservaPeriodica(
+            @RequestBody @Valid final ReservaEsporadicaDTO reservaEsporadicaDTO) {
+        reservaEsporadicaService.getDisponibilidadAulaReservaEsporadica(reservaEsporadicaDTO);
+        return ResponseEntity.status(HttpStatus.CREATED).build();
+    }
+
     @PostMapping
     @ApiResponse(responseCode = "201")
     public ResponseEntity<Integer> createReservaEsporadica(
@@ -88,7 +97,7 @@ public class ReservaEsporadicaResource {
     @GetMapping("/bedelValues")
     @ApiResponse(responseCode = "200")
     public ResponseEntity<Map<Integer, Integer>> getBedelValues() {
-        return ResponseEntity.ok(bedelRepository.findAll(Sort.by("id"))
+        return ResponseEntity.ok(bedelRepository.findByEliminadoFalse(Sort.by("id"))
                 .stream()
                 .collect(CustomCollectors.toSortedMap(Bedel::getId, Bedel::getId)));
     }

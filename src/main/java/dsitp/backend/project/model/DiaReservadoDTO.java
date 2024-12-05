@@ -20,19 +20,19 @@ public class DiaReservadoDTO {
     @NotNull(message = "La fecha de reserva es obligatoria.")
     private LocalDate fechaReserva;
 
-    @Schema(type = "string", example = "60")
-    @ValidDuration
-    @Positive
-    @NotNull(message = "La duración es obligatoria.")
-    // TODO: ver tipo de dato, si cambiar?
-    private Integer duracion;
-
     @Schema(type = "string", example = "18:30")
     @NotNull(message = "La hora de inicio es obligatoria.")
     private LocalTime horaInicio;
 
-    @NotNull(message = "El id del aula es obligatorio.")
-    // TODO: ver de donde obtener
-    private Integer aulaId;
+    @Schema(type = "string", example = "60")
+    @ValidDuration
+    @Positive
+    @NotNull(message = "La duración es obligatoria.")
+    // TODO: JSON front ver tipo de dato, si cambiar en JSON front?
+    private Integer duracion;
+
+//    @NotNull(message = "El id del aula es obligatorio.")
+    // TODO: JSON front ver de donde obtener
+    private Integer idAula;
 
 }

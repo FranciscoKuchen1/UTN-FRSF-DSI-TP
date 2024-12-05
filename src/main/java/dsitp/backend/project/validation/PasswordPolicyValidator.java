@@ -1,6 +1,6 @@
 package dsitp.backend.project.validation;
 
-import dsitp.backend.project.service.ExternalApiService;
+import dsitp.backend.project.service.PasswordExternalApiService;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 import java.util.ArrayList;
@@ -11,11 +11,11 @@ import org.springframework.stereotype.Component;
 @Component
 public class PasswordPolicyValidator implements ConstraintValidator<ValidPassword, String> {
 
-    private final ExternalApiService externalApiService;
+    private final PasswordExternalApiService passwordExternalApiService;
 
     @Autowired
-    public PasswordPolicyValidator(ExternalApiService externalApiService) {
-        this.externalApiService = externalApiService;
+    public PasswordPolicyValidator(PasswordExternalApiService passwordExternalApiService) {
+        this.passwordExternalApiService = passwordExternalApiService;
     }
 
     @Override
@@ -24,10 +24,10 @@ public class PasswordPolicyValidator implements ConstraintValidator<ValidPasswor
             return false;
         }
 
-        // boolean isValid = externalApiService.validatePassword(contrasena);
+        // Boolean isValid = externalApiService.validatePassword(contrasena);
         List<String> errores = new ArrayList<>();
 
-        boolean isValid = true;
+        Boolean isValid = true;
 
         if (contrasena.length() < 6) {
             isValid = false;

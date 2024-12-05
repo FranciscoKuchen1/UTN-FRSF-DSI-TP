@@ -16,7 +16,6 @@ import org.springframework.stereotype.Component;
 @Component
 public class ReservaPeriodica extends Reserva {
 
-    // TODO sacar tipoPeriodo, este ya esta en periodo
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_periodo")
     private Periodo periodo;
