@@ -7,6 +7,7 @@ import {Select} from "../../../interfaces/select";
 import {Dia} from "../../../interfaces/dias";
 import {Aula} from "../../../interfaces/aula";
 import {Fecha} from "../../../interfaces/fecha";
+import {Docente} from "../../../interfaces/docente";
 
 @Component({
   selector: 'app-registrar-reserva-periodica',
@@ -20,9 +21,13 @@ export class RegistrarReservaPeriodicaComponent implements OnInit{
   registrarAulasForm: UntypedFormGroup;
 
   periodos: Select[] = [{id: 0, name: 'Primer cuatrimestre'}, {id: 1, name: 'Segundo cuatrimestre'}, {id: 2, name: 'Anual'}];
-  nombreCatedras: Select[] = [{id: 0, name: 'Catedra 1'}, {id: 1, name: 'Catedra 2'}, {id: 2, name: 'Catedra 3'}];
-  tipoAulas: Select[] = [{id: 0, name: 'Multimedios'}, {id: 1, name: 'Aula informatica'}, {id: 2, name: 'Aula sin recursos adicionales'}];
-  nombreDocentes: Select[] = [{id: 0, name: 'Docente 1'}, {id: 1, name: 'Docente 2'}, {id: 2, name: 'Docente 3'}];
+  nombreCatedras: Select[] = [{id: 1, name: 'Análisis Numérico'}, {id: 2, name: 'Física II'}, {id: 3, name: 'Probabilidad y Estadística'}];
+  tipoAulas: Select[] = [{id: 0, name: 'Aula sin recursos adicionales'}, {id: 1, name: 'Aula informatica'}, {id: 2, name: 'Multimedios'}];
+  docentes: Docente[] = [
+    {id: 1, nombre: 'Juan', apellido: 'Perez' , correo: 'jperez@gmail.com'},
+    {id: 2, nombre: 'María', apellido: 'Gomez', correo: 'gomezmaria88@outlook.com'},
+    {id: 3, nombre: 'Carlos', apellido: 'Lopez', correo: 'carloslopezk@hotmail.com'}
+  ];
   horas: Select[] = [
     {id: 0, name: '00:00'},
     {id: 1, name: '00:30'},
@@ -78,6 +83,10 @@ export class RegistrarReservaPeriodicaComponent implements OnInit{
     {id: 1, name: '60'},
     {id: 2, name: '90'},
     {id: 3, name: '120'},
+    {id: 4, name: '150'},
+    {id: 5, name: '180'},
+    {id: 6, name: '210'},
+    {id: 7, name: '240'},
   ];
   dias: Dia[] = [
     {id: 7, name: 'Domingo', value: false, hora: null, duracion: null},
@@ -158,12 +167,17 @@ export class RegistrarReservaPeriodicaComponent implements OnInit{
     private router: Router,
   ) {
     this.registrarReservaForm = this.formBuilder.group({
-      periodo: [null, Validators.required],
-      nombreCatedra: [null, Validators.required],
+      tipoPeriodo: [null, Validators.required],
+      catedra: [null, Validators.required],
+      idCatedra: [null],
+      nombreCatedra: [null],
       tipoAula: [null, Validators.required],
       cantidadAlumnos: [null, Validators.required],
-      nombreDocente: [null, Validators.required],
-      correoElectronico: [null, [Validators.required, Validators.email]],
+      docente: [null, Validators.required],
+      idDocente: [null],
+      nombreDocente: [null],
+      apellidoDocente: [null],
+      correoDocente: [null, [Validators.required, Validators.email]],
       diasReservados: [null, Validators.required],
     })
 
@@ -174,12 +188,40 @@ export class RegistrarReservaPeriodicaComponent implements OnInit{
   }
 
   ngOnInit() {
-    this.registrarAulasForm.get('fechaSeleccionada')?.valueChanges.subscribe({
+    /*this.registrarAulasForm.get('fechaSeleccionada')?.valueChanges.subscribe({
       next: (value)=> {
         if(value){
           this.fechaSeleccionada = value;
           const [aulasDisponibles] = this.fechasDisponibles.filter(data => data.fecha === value);
           this.aulasDisponiblesPorFecha = aulasDisponibles.aulasDisponibles;
+        }
+      }
+    });*/
+
+    this.registrarReservaForm.get('docente')?.valueChanges.subscribe({
+      next: (value)=> {
+        if(value){
+         this.registrarReservaForm.get('idDocente')?.patchValue(value.id);
+         this.registrarReservaForm.get('nombreDocente')?.patchValue(value.nombre);
+         this.registrarReservaForm.get('apellidoDocente')?.patchValue(value.apellido);
+         this.registrarReservaForm.get('correoDocente')?.patchValue(value.correo);
+        }else{
+          this.registrarReservaForm.get('idDocente')?.reset();
+          this.registrarReservaForm.get('nombreDocente')?.reset();
+          this.registrarReservaForm.get('apellidoDocente')?.reset();
+          this.registrarReservaForm.get('correoDocente')?.reset();
+        }
+      }
+    });
+
+    this.registrarReservaForm.get('catedra')?.valueChanges.subscribe({
+      next: (value)=> {
+        if(value){
+          this.registrarReservaForm.get('idCatedra')?.patchValue(value.id);
+          this.registrarReservaForm.get('nombreCatedra')?.patchValue(value.name);
+        }else{
+          this.registrarReservaForm.get('idCatedra')?.reset();
+          this.registrarReservaForm.get('nombreCatedra')?.reset();
         }
       }
     });
@@ -209,7 +251,7 @@ export class RegistrarReservaPeriodicaComponent implements OnInit{
 
   asignarHora(dia: Dia, hora: Select, $event: any): void{
     if($event.isUserInput){
-      dia.hora = hora;
+      dia.hora = hora.name;
 
       const dias = this.dias.filter(value => value.value && value.duracion)
       this.registrarReservaForm.get('diasReservados')?.patchValue(dias);
@@ -220,7 +262,7 @@ export class RegistrarReservaPeriodicaComponent implements OnInit{
 
   asignarDuracion(dia: Dia, duracion: Select, $event: any): void{
     if($event.isUserInput){
-      dia.duracion = duracion;
+      dia.duracion = duracion.name;
 
       const dias = this.dias.filter(value => value.value && value.hora)
       this.registrarReservaForm.get('diasReservados')?.patchValue(dias);
@@ -240,9 +282,23 @@ export class RegistrarReservaPeriodicaComponent implements OnInit{
   }
 
   siguiente(): void{
-    //todo, no mandar los datos de nombre ni de value
-    console.log('dias seleccionados: ', this.registrarReservaForm.value)
+    const temp = this.registrarReservaForm.get('diasReservados')?.value;
 
+    const newArr = temp.map((obj: Dia) => {
+      const { value, name, ...rest } = obj;
+      return rest;
+    });
+
+    this.registrarReservaForm.get('diasReservados')?.patchValue(newArr);
+
+    this.http.post<any>('http://localhost:8080/api/reservasPeriodicas/disponibilidad', this.registrarReservaForm.value).subscribe({
+        error: (value) => {
+          console.log('error: ', value)
+        },
+        complete: () => {
+          console.log('entro bien')
+        }
+      });
   }
 
   submit(): void{

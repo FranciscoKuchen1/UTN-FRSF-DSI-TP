@@ -12,28 +12,28 @@
 
                 <mat-form-field appearance="outline">
                   <mat-label>Periodo</mat-label>
-                  <mat-select formControlName="periodo">
+                  <mat-select formControlName="tipoPeriodo">
                     <div *ngFor="let periodo of periodos">
                       <mat-option [value]="periodo.id">{{periodo.name}}</mat-option>
                     </div>
                   </mat-select>
 
-                  <button *ngIf="registrarReservaForm.get('periodo')?.value !== null" mat-icon-button matSuffix
-                          (click)="registrarReservaForm.get('periodo')?.reset(); $event.stopPropagation()">
+                  <button *ngIf="registrarReservaForm.get('tipoPeriodo')?.value !== null" mat-icon-button matSuffix
+                          (click)="registrarReservaForm.get('tipoPeriodo')?.reset(); $event.stopPropagation()">
                     <mat-icon>close</mat-icon>
                   </button>
                 </mat-form-field>
 
                 <mat-form-field appearance="outline">
                   <mat-label>Nombre Catedra/Seminario/Curso</mat-label>
-                  <mat-select formControlName="nombreCatedra">
+                  <mat-select formControlName="catedra">
                     <div *ngFor="let catedra of nombreCatedras">
-                      <mat-option [value]="catedra.id">{{catedra.name}}</mat-option>
+                      <mat-option [value]="catedra">{{catedra.name}}</mat-option>
                     </div>
                   </mat-select>
 
-                  <button *ngIf="registrarReservaForm.get('nombreCatedra')?.value !== null" mat-icon-button matSuffix
-                          (click)="registrarReservaForm.get('nombreCatedra')?.reset(); $event.stopPropagation()">
+                  <button *ngIf="registrarReservaForm.get('catedra')?.value !== null" mat-icon-button matSuffix
+                          (click)="registrarReservaForm.get('catedra')?.reset(); $event.stopPropagation()">
                     <mat-icon>close</mat-icon>
                   </button>
                 </mat-form-field>
@@ -59,21 +59,23 @@
 
                 <mat-form-field appearance="outline">
                   <mat-label>Nombre del docente</mat-label>
-                  <mat-select formControlName="nombreDocente">
-                    <div *ngFor="let docente of nombreDocentes">
-                      <mat-option [value]="docente.id">{{docente.name}}</mat-option>
+                  <mat-select formControlName="docente">
+                    <div *ngFor="let docente of docentes">
+                      <mat-option [value]="docente">{{docente.apellido | uppercase}}, {{docente.nombre}}</mat-option>
                     </div>
                   </mat-select>
 
-                  <button *ngIf="registrarReservaForm.get('nombreDocente')?.value !== null" mat-icon-button matSuffix
-                          (click)="registrarReservaForm.get('nombreDocente')?.reset(); $event.stopPropagation()">
+                  <button *ngIf="registrarReservaForm.get('docente')?.value !== null" mat-icon-button matSuffix
+                          (click)="registrarReservaForm.get('docente')?.reset(); $event.stopPropagation()">
                     <mat-icon>close</mat-icon>
                   </button>
                 </mat-form-field>
 
+
+
                 <mat-form-field appearance="outline">
                   <mat-label>Correo electronico</mat-label>
-                  <input matInput formControlName="correoElectronico">
+                  <input matInput formControlName="correoDocente">
                 </mat-form-field>
 
               </div>
@@ -118,7 +120,7 @@
 
                   </div>
                 </div>
-                <!--{{registrarReservaForm.value | json}}-->
+                {{registrarReservaForm.value | json}}
 
               </div>
             </div>
@@ -127,7 +129,12 @@
               <button mat-button mat-raised-button matStepperPrevious (click)="close()">Cancelar</button>
 
               <div>
-                <button mat-button mat-raised-button matStepperNext color="primary" (click)="siguiente()" >Siguiente</button> <!--[disabled]="registrarReservaForm.invalid || !todosValidos"-->
+                <button mat-button mat-raised-button matStepperNext color="primary"
+                        (click)="siguiente()"
+                        [disabled]="registrarReservaForm.invalid || !todosValidos"
+                >
+                  Siguiente
+                </button>
               </div>
             </div>
 
@@ -138,7 +145,7 @@
             <ng-template matStepLabel>Aula:</ng-template>
 
             <div class="grid-container">
-              <div class="primera-mitad grid-item">
+              <div class="primera-mitad grid-item border-list">
 
                 <div mat-subheader>Fechas disponibles:</div>
 
@@ -153,11 +160,11 @@
 
               <mat-divider [vertical]="true"></mat-divider>
 
-              <div class="segunda-mitad-periodica grid-item">
+              <div class="segunda-mitad-periodica grid-item border-list">
 
                 <ng-container *ngIf="fechaSeleccionada">
 
-                  <div mat-subheader>Seleccionar aula para el {{fechaSeleccionada}}:</div>
+                  <div mat-subheader>Aulas disponibles para el {{fechaSeleccionada}}:</div>
 
                   <mat-selection-list [multiple]="false" formControlName="aulaSeleccionada">
                     <mat-list-option class="aula-seleccionada" *ngFor="let aula of opcionesAulas" [value]="aula.nombre" [color]="'primary'">

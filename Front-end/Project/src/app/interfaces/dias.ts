@@ -4,6 +4,6 @@ export interface Dia{
   id: number,
   name: string,
   value: boolean,
-  hora: Select | null,
-  duracion: Select | null,
+  hora: string | null,
+  duracion: string | null,
 }
