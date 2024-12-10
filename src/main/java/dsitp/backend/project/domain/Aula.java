@@ -1,16 +1,8 @@
 package dsitp.backend.project.domain;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.DiscriminatorColumn;
-import jakarta.persistence.DiscriminatorType;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EntityListeners;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Inheritance;
-import jakarta.persistence.InheritanceType;
-import jakarta.persistence.SequenceGenerator;
+import dsitp.backend.project.model.TipoPizarron;
+import jakarta.persistence.*;
+
 import java.time.OffsetDateTime;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -54,9 +46,9 @@ public abstract class Aula {
     @Column
     private Integer capacidad;
 
-    @Column(length = 100)
-    // TODO: ? Usar Enum?
-    private String tipoPizarron;
+    @Column
+    @Enumerated(EnumType.STRING)
+    private TipoPizarron tipoPizarron;
 
     @Column
     private Boolean tieneAireAcondicionado;

@@ -73,19 +73,20 @@ public class ReservaPeriodicaService {
         reservaRespuestaDTO.setDiasDisponibles(new ArrayList<>());
         reservaRespuestaDTO.setDiasConSolapamiento(new ArrayList<>());
         List<Aula> aulas = aulaRepository.findByTipoAulaAndCapacidad(reservaPeriodica.getCantAlumnos(), reservaPeriodica.getTipoAula().toInteger());
-        for (DiaReservado diaReservado : reservaPeriodica.getDiasReservados()) {
-            List<AulaDTO> aulasDisponibles = obtenerDisponibilidad(aulas, diaReservado);
-            if (!aulasDisponibles.isEmpty()) {
-                DiaDisponibilidadDTO diaDisponibilidadDTO = new DiaDisponibilidadDTO();
-                diaDisponibilidadDTO.setDiaReservado(diaReservadoMapper.toDiaReservadoDTO(diaReservado));
-                diaDisponibilidadDTO.setAulasDisponibles(aulasDisponibles);
-                reservaRespuestaDTO.getDiasDisponibles().add(diaDisponibilidadDTO);
-            } else {
-                // TODO: cambiar
-                DiaSolapamientoDTO diaSolapamientoDTO = new DiaSolapamientoDTO();
-                diaSolapamientoDTO.setDiaReservado(diaReservadoMapper.toDiaReservadoDTO(diaReservado));
-                diaSolapamientoDTO.setAulasConSolapamiento(obtenerAulasConMenorSuperposicion(aulas, diaReservado));
-                reservaRespuestaDTO.getDiasConSolapamiento().add(diaSolapamientoDTO);
+        if (!aulas.isEmpty()){
+            for (DiaReservado diaReservado : reservaPeriodica.getDiasReservados()) {
+                List<AulaDTO> aulasDisponibles = obtenerDisponibilidad(aulas, diaReservado);
+                if (!aulasDisponibles.isEmpty()) {
+                    DiaDisponibilidadDTO diaDisponibilidadDTO = new DiaDisponibilidadDTO();
+                    diaDisponibilidadDTO.setDiaReservado(diaReservadoMapper.toDiaReservadoDTO(diaReservado));
+                    diaDisponibilidadDTO.setAulasDisponibles(aulasDisponibles);
+                    reservaRespuestaDTO.getDiasDisponibles().add(diaDisponibilidadDTO);
+                } else {
+                    DiaSolapamientoDTO diaSolapamientoDTO = new DiaSolapamientoDTO();
+                    diaSolapamientoDTO.setDiaReservado(diaReservadoMapper.toDiaReservadoDTO(diaReservado));
+                    diaSolapamientoDTO.setAulasConSolapamiento(obtenerAulasConMenorSuperposicion(aulas, diaReservado));
+                    reservaRespuestaDTO.getDiasConSolapamiento().add(diaSolapamientoDTO);
+                }
             }
         }
 

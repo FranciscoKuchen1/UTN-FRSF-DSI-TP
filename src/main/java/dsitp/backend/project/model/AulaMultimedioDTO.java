@@ -18,8 +18,7 @@ public class AulaMultimedioDTO {
 
     private Integer capacidad;
 
-    @Size(max = 100)
-    private String tipoPizarron;
+    private Integer tipoPizarron;
 
     private Boolean tieneAireAcondicionado;
 

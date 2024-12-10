@@ -16,7 +16,7 @@ public class AulaDTO {
 
     private Integer capacidad;
 
-    private String tipoPizarron;
+    private Integer tipoPizarron;
 
     private Boolean tieneAireAcondicionado;
 

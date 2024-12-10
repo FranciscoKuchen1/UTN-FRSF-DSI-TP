@@ -11,6 +11,8 @@ import dsitp.backend.project.model.AulaDTO;
 import dsitp.backend.project.model.AulaSolapadaDTO;
 import dsitp.backend.project.model.ReservaSolapadaDTO;
 import java.util.HashMap;
+
+import dsitp.backend.project.model.TipoPizarron;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -36,7 +38,7 @@ public class AulaMapper {
         aulaDTO.setNombre(aula.getNombre());
         aulaDTO.setPiso(aula.getPiso());
         aulaDTO.setCapacidad(aula.getCapacidad());
-        aulaDTO.setTipoPizarron(aula.getTipoPizarron());
+        aulaDTO.setTipoPizarron(aula.getTipoPizarron().toInteger());
         aulaDTO.setTieneAireAcondicionado(aula.getTieneAireAcondicionado());
         aulaDTO.setAtributosEspecificos(new HashMap<>());
 
@@ -99,7 +101,7 @@ public class AulaMapper {
         aula.setNombre(aulaDTO.getNombre());
         aula.setPiso(aulaDTO.getPiso());
         aula.setCapacidad(aulaDTO.getCapacidad());
-        aula.setTipoPizarron(aulaDTO.getTipoPizarron());
+        aula.setTipoPizarron(TipoPizarron.fromInteger(aulaDTO.getTipoPizarron()));
         aula.setTieneAireAcondicionado(aulaDTO.getTieneAireAcondicionado());
 
         return aula;
@@ -109,7 +111,7 @@ public class AulaMapper {
         AulaSolapadaDTO aulaSolapadaDTO = new AulaSolapadaDTO();
         aulaSolapadaDTO.setAula(toAulaDTO(aula));
 
-        ReservaSolapadaDTO reservaSolapadaDTO = null;
+        ReservaSolapadaDTO reservaSolapadaDTO;
         switch (reserva) {
             case ReservaPeriodica reservaPeriodica ->
                 reservaSolapadaDTO = reservaPeriodicaMapper.toReservaSolapadaDTO(reservaPeriodica);

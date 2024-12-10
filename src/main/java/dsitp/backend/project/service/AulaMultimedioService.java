@@ -2,6 +2,7 @@ package dsitp.backend.project.service;
 
 import dsitp.backend.project.domain.AulaMultimedio;
 import dsitp.backend.project.model.AulaMultimedioDTO;
+import dsitp.backend.project.model.TipoPizarron;
 import dsitp.backend.project.repos.AulaMultimedioRepository;
 import dsitp.backend.project.util.NotFoundException;
 import java.util.List;
@@ -55,7 +56,7 @@ public class AulaMultimedioService {
         aulaMultimedioDTO.setNombre(aulaMultimedio.getNombre());
         aulaMultimedioDTO.setPiso(aulaMultimedio.getPiso());
         aulaMultimedioDTO.setCapacidad(aulaMultimedio.getCapacidad());
-        aulaMultimedioDTO.setTipoPizarron(aulaMultimedio.getTipoPizarron());
+        aulaMultimedioDTO.setTipoPizarron(aulaMultimedio.getTipoPizarron().toInteger());
         aulaMultimedioDTO.setTieneAireAcondicionado(aulaMultimedio.getTieneAireAcondicionado());
         aulaMultimedioDTO.setTieneTelevisor(aulaMultimedio.getTieneTelevisor());
         aulaMultimedioDTO.setTieneCanon(aulaMultimedio.getTieneCanon());
@@ -69,7 +70,7 @@ public class AulaMultimedioService {
         aulaMultimedio.setNombre(aulaMultimedioDTO.getNombre());
         aulaMultimedio.setPiso(aulaMultimedioDTO.getPiso());
         aulaMultimedio.setCapacidad(aulaMultimedioDTO.getCapacidad());
-        aulaMultimedio.setTipoPizarron(aulaMultimedioDTO.getTipoPizarron());
+        aulaMultimedio.setTipoPizarron(TipoPizarron.fromInteger(aulaMultimedioDTO.getTipoPizarron()));
         aulaMultimedio.setTieneAireAcondicionado(aulaMultimedioDTO.getTieneAireAcondicionado());
         aulaMultimedio.setTieneTelevisor(aulaMultimedioDTO.getTieneTelevisor());
         aulaMultimedio.setTieneCanon(aulaMultimedioDTO.getTieneCanon());

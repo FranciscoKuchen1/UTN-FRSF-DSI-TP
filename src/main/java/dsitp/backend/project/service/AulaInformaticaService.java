@@ -2,6 +2,7 @@ package dsitp.backend.project.service;
 
 import dsitp.backend.project.domain.AulaInformatica;
 import dsitp.backend.project.model.AulaInformaticaDTO;
+import dsitp.backend.project.model.TipoPizarron;
 import dsitp.backend.project.repos.AulaInformaticaRepository;
 import dsitp.backend.project.util.NotFoundException;
 import java.util.List;
@@ -55,7 +56,7 @@ public class AulaInformaticaService {
         aulaInformaticaDTO.setNombre(aulaInformatica.getNombre());
         aulaInformaticaDTO.setPiso(aulaInformatica.getPiso());
         aulaInformaticaDTO.setCapacidad(aulaInformatica.getCapacidad());
-        aulaInformaticaDTO.setTipoPizarron(aulaInformatica.getTipoPizarron());
+        aulaInformaticaDTO.setTipoPizarron(aulaInformatica.getTipoPizarron().toInteger());
         aulaInformaticaDTO.setTieneAireAcondicionado(aulaInformatica.getTieneAireAcondicionado());
         aulaInformaticaDTO.setCantidadPCs(aulaInformatica.getCantidadPCs());
         aulaInformaticaDTO.setTieneCanon(aulaInformatica.getTieneCanon());
@@ -67,7 +68,7 @@ public class AulaInformaticaService {
         aulaInformatica.setNombre(aulaInformaticaDTO.getNombre());
         aulaInformatica.setPiso(aulaInformaticaDTO.getPiso());
         aulaInformatica.setCapacidad(aulaInformaticaDTO.getCapacidad());
-        aulaInformatica.setTipoPizarron(aulaInformaticaDTO.getTipoPizarron());
+        aulaInformatica.setTipoPizarron(TipoPizarron.fromInteger(aulaInformaticaDTO.getTipoPizarron()));
         aulaInformatica.setTieneAireAcondicionado(aulaInformaticaDTO.getTieneAireAcondicionado());
         aulaInformatica.setCantidadPCs(aulaInformaticaDTO.getCantidadPCs());
         aulaInformatica.setTieneCanon(aulaInformaticaDTO.getTieneCanon());

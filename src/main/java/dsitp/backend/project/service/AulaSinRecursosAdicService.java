@@ -2,6 +2,7 @@ package dsitp.backend.project.service;
 
 import dsitp.backend.project.domain.AulaSinRecursosAdic;
 import dsitp.backend.project.model.AulaSinRecursosAdicDTO;
+import dsitp.backend.project.model.TipoPizarron;
 import dsitp.backend.project.repos.AulaSinRecursosAdicRepository;
 import dsitp.backend.project.util.NotFoundException;
 import java.util.List;
@@ -56,7 +57,7 @@ public class AulaSinRecursosAdicService {
         aulaSinRecursosAdicDTO.setNombre(aulaSinRecursosAdic.getNombre());
         aulaSinRecursosAdicDTO.setPiso(aulaSinRecursosAdic.getPiso());
         aulaSinRecursosAdicDTO.setCapacidad(aulaSinRecursosAdic.getCapacidad());
-        aulaSinRecursosAdicDTO.setTipoPizarron(aulaSinRecursosAdic.getTipoPizarron());
+        aulaSinRecursosAdicDTO.setTipoPizarron(aulaSinRecursosAdic.getTipoPizarron().toInteger());
         aulaSinRecursosAdicDTO.setTieneAireAcondicionado(aulaSinRecursosAdic.getTieneAireAcondicionado());
         aulaSinRecursosAdicDTO.setTieneVentiladores(aulaSinRecursosAdic.getTieneVentiladores());
         return aulaSinRecursosAdicDTO;
@@ -67,7 +68,7 @@ public class AulaSinRecursosAdicService {
         aulaSinRecursosAdic.setNombre(aulaSinRecursosAdicDTO.getNombre());
         aulaSinRecursosAdic.setPiso(aulaSinRecursosAdicDTO.getPiso());
         aulaSinRecursosAdic.setCapacidad(aulaSinRecursosAdicDTO.getCapacidad());
-        aulaSinRecursosAdic.setTipoPizarron(aulaSinRecursosAdicDTO.getTipoPizarron());
+        aulaSinRecursosAdic.setTipoPizarron(TipoPizarron.fromInteger(aulaSinRecursosAdicDTO.getTipoPizarron()));
         aulaSinRecursosAdic.setTieneAireAcondicionado(aulaSinRecursosAdicDTO.getTieneAireAcondicionado());
         aulaSinRecursosAdic.setTieneVentiladores(aulaSinRecursosAdicDTO.getTieneVentiladores());
         return aulaSinRecursosAdic;
