@@ -178,6 +178,7 @@ public class ReservaPeriodicaMapper {
         if (fechaInicio.isBefore(LocalDate.now())) {
             fechaActual = LocalDate.now();
         }
+        // TODO: cambiar a como está en el diagrama
         while (!fechaActual.isAfter(fechaFin)) {
             DayOfWeek diaSemana = fechaActual.getDayOfWeek();
             Integer idDiaSemana = diaSemana.getValue() % 7;

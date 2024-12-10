@@ -55,19 +55,21 @@ public class ReservaEsporadicaService {
     public List<ReservaEsporadicaDTO> findAll() {
         final List<ReservaEsporadica> reservaEsporadicas = reservaEsporadicaRepository.findAll(Sort.by("id"));
         return reservaEsporadicas.stream()
-                .map(reservaEsporadica -> reservaEsporadicaMapper.toReservaEsporadicaDTO(reservaEsporadica))
+                .map(reservaEsporadicaMapper::toReservaEsporadicaDTO)
                 .toList();
     }
 
     public ReservaEsporadicaDTO get(final Integer id) {
         return reservaEsporadicaRepository.findById(id)
-                .map(reservaEsporadica -> reservaEsporadicaMapper.toReservaEsporadicaDTO(reservaEsporadica))
+                .map(reservaEsporadicaMapper::toReservaEsporadicaDTO)
                 .orElseThrow(NotFoundException::new);
     }
 
     public ReservaRespuestaDTO getDisponibilidadAulaReservaEsporadica(final ReservaEsporadicaDTO reservaEsporadicaDTO) {
         final ReservaEsporadica reservaEsporadica = reservaEsporadicaMapper.toReservaEsporadicaEntity(reservaEsporadicaDTO);
         ReservaRespuestaDTO reservaRespuestaDTO = new ReservaRespuestaDTO();
+        reservaRespuestaDTO.setDiasDisponibles(new ArrayList<>());
+        reservaRespuestaDTO.setDiasConSolapamiento(new ArrayList<>());
         List<Aula> aulas = aulaRepository.findByTipoAulaAndCapacidad(reservaEsporadica.getCantAlumnos(), reservaEsporadica.getTipoAula().toInteger());
         for (DiaReservado diaReservado : reservaEsporadica.getDiasReservados()) {
             List<AulaDTO> aulasDisponibles = obtenerDisponibilidad(aulas, diaReservado);
@@ -75,10 +77,12 @@ public class ReservaEsporadicaService {
                 DiaDisponibilidadDTO diaDisponibilidadDTO = new DiaDisponibilidadDTO();
                 diaDisponibilidadDTO.setDiaReservado(diaReservadoMapper.toDiaReservadoDTO(diaReservado));
                 diaDisponibilidadDTO.setAulasDisponibles(aulasDisponibles);
+                reservaRespuestaDTO.getDiasDisponibles().add(diaDisponibilidadDTO);
             } else {
                 DiaSolapamientoDTO diaSolapamientoDTO = new DiaSolapamientoDTO();
                 diaSolapamientoDTO.setDiaReservado(diaReservadoMapper.toDiaReservadoDTO(diaReservado));
                 diaSolapamientoDTO.setAulasConSolapamiento(obtenerAulasConMenorSuperposicion(aulas, diaReservado));
+                reservaRespuestaDTO.getDiasConSolapamiento().add(diaSolapamientoDTO);
             }
         }
 
@@ -123,7 +127,7 @@ public class ReservaEsporadicaService {
                     diaReservado.getHoraInicio().plusMinutes(diaReservado.getDuracion())
             );
 
-            Optional<DiaReservado> diaConMayorSuperposicionOptional = Optional.ofNullable(null);
+            Optional<DiaReservado> diaConMayorSuperposicionOptional = Optional.empty();
 
             Long maxHorasSuperpuestas = 0L;
 

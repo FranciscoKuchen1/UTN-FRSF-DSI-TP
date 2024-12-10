@@ -58,8 +58,8 @@ public class ReservaPeriodicaResource {
     @ApiResponse(responseCode = "200")
     public ResponseEntity<ReservaRespuestaDTO> getDisponibilidadAulaReservaPeriodica(
             @RequestBody @Valid final ReservaPeriodicaSinDiasDTO reservaPeriodicaSinDiasDTO) {
-        reservaPeriodicaService.getDisponibilidadAulaReservaPeriodica(reservaPeriodicaSinDiasDTO);
-        return ResponseEntity.status(HttpStatus.CREATED).build();
+        ReservaRespuestaDTO reservaRespuestaDTO = reservaPeriodicaService.getDisponibilidadAulaReservaPeriodica(reservaPeriodicaSinDiasDTO);
+        return ResponseEntity.ok(reservaRespuestaDTO);
     }
 
     @PostMapping

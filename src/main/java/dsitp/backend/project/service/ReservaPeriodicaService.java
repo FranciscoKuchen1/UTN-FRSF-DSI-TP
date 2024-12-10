@@ -2,7 +2,6 @@ package dsitp.backend.project.service;
 
 import dsitp.backend.project.domain.Aula;
 import dsitp.backend.project.domain.DiaReservado;
-import dsitp.backend.project.domain.Periodo;
 import dsitp.backend.project.domain.Reserva;
 import dsitp.backend.project.domain.ReservaPeriodica;
 import dsitp.backend.project.mapper.AulaMapper;
@@ -58,37 +57,42 @@ public class ReservaPeriodicaService {
     public List<ReservaPeriodicaDTO> findAll() {
         final List<ReservaPeriodica> reservaPeriodicas = reservaPeriodicaRepository.findAll(Sort.by("id"));
         return reservaPeriodicas.stream()
-                .map(reservaPeriodica -> reservaPeriodicaMapper.toReservaPeriodicaDTO(reservaPeriodica))
+                .map(reservaPeriodicaMapper::toReservaPeriodicaDTO)
                 .toList();
     }
 
     public ReservaPeriodicaDTO get(final Integer id) {
         return reservaPeriodicaRepository.findById(id)
-                .map(reservaPeriodica -> reservaPeriodicaMapper.toReservaPeriodicaDTO(reservaPeriodica))
+                .map(reservaPeriodicaMapper::toReservaPeriodicaDTO)
                 .orElseThrow(NotFoundException::new);
     }
 
     public ReservaRespuestaDTO getDisponibilidadAulaReservaPeriodica(final ReservaPeriodicaSinDiasDTO reservaPeriodicaSinDiasDTO) {
         final ReservaPeriodica reservaPeriodica = reservaPeriodicaMapper.toReservaPeriodicaEntityDisponibilidad(reservaPeriodicaSinDiasDTO);
         ReservaRespuestaDTO reservaRespuestaDTO = new ReservaRespuestaDTO();
+        reservaRespuestaDTO.setDiasDisponibles(new ArrayList<>());
+        reservaRespuestaDTO.setDiasConSolapamiento(new ArrayList<>());
         List<Aula> aulas = aulaRepository.findByTipoAulaAndCapacidad(reservaPeriodica.getCantAlumnos(), reservaPeriodica.getTipoAula().toInteger());
         for (DiaReservado diaReservado : reservaPeriodica.getDiasReservados()) {
-            List<AulaDTO> aulasDisponibles = obtenerDisponibilidad(aulas, reservaPeriodica.getPeriodo(), diaReservado);
+            List<AulaDTO> aulasDisponibles = obtenerDisponibilidad(aulas, diaReservado);
             if (!aulasDisponibles.isEmpty()) {
                 DiaDisponibilidadDTO diaDisponibilidadDTO = new DiaDisponibilidadDTO();
                 diaDisponibilidadDTO.setDiaReservado(diaReservadoMapper.toDiaReservadoDTO(diaReservado));
                 diaDisponibilidadDTO.setAulasDisponibles(aulasDisponibles);
+                reservaRespuestaDTO.getDiasDisponibles().add(diaDisponibilidadDTO);
             } else {
+                // TODO: cambiar
                 DiaSolapamientoDTO diaSolapamientoDTO = new DiaSolapamientoDTO();
                 diaSolapamientoDTO.setDiaReservado(diaReservadoMapper.toDiaReservadoDTO(diaReservado));
-                diaSolapamientoDTO.setAulasConSolapamiento(obtenerAulasConMenorSuperposicion(aulas, reservaPeriodica.getPeriodo(), diaReservado));
+                diaSolapamientoDTO.setAulasConSolapamiento(obtenerAulasConMenorSuperposicion(aulas, diaReservado));
+                reservaRespuestaDTO.getDiasConSolapamiento().add(diaSolapamientoDTO);
             }
         }
 
         return reservaRespuestaDTO;
     }
 
-    public List<AulaDTO> obtenerDisponibilidad(List<Aula> aulas, Periodo periodo, DiaReservado diaReservado) {
+    public List<AulaDTO> obtenerDisponibilidad(List<Aula> aulas, DiaReservado diaReservado) {
         List<AulaDTO> aulasDisponibles = new ArrayList<>();
 
         for (Aula aula : aulas) {
@@ -110,7 +114,7 @@ public class ReservaPeriodicaService {
         return diasReservados.isEmpty();
     }
 
-    public List<AulaSolapadaDTO> obtenerAulasConMenorSuperposicion(List<Aula> aulas, Periodo periodo, DiaReservado diaReservado) {
+    public List<AulaSolapadaDTO> obtenerAulasConMenorSuperposicion(List<Aula> aulas, DiaReservado diaReservado) {
 
         List<AulaSolapadaDTO> aulasSolapadasDTO = new ArrayList<>();
 
@@ -126,7 +130,7 @@ public class ReservaPeriodicaService {
                     diaReservado.getHoraInicio().plusMinutes(diaReservado.getDuracion())
             );
 
-            Optional<DiaReservado> diaConMayorSuperposicionOptional = Optional.ofNullable(null);
+            Optional<DiaReservado> diaConMayorSuperposicionOptional = Optional.empty();
 
             Long maxHorasSuperpuestas = 0L;
 

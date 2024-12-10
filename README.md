@@ -19,7 +19,6 @@ File o Open -> Seleccionar ZIP descargado -> Open
 ### Para acceder a la UI de Swagger
 Acceder a [SwaggerUI](http://localhost:8080/swagger-ui/index.html)
 
-This app was created with Bootify.io - tips on working with the code [can be found here](https://bootify.io/next-steps/).
 
 ## Development
 
@@ -30,8 +29,6 @@ During development it is recommended to use the profile `local`. In IntelliJ `-D
 added in the VM options of the Run Configuration after enabling this property in "Modify options". Create your own
 `application-local.yml` file to override settings for development.
 
-Lombok must be supported by your IDE. For IntelliJ install the Lombok plugin and enable annotation processing -
-[learn more](https://bootify.io/next-steps/spring-boot-with-lombok.html).
 
 After starting the application it is accessible under `localhost:8080`.
 
@@ -69,7 +66,7 @@ If required, a Docker image can be created with the Spring Boot plugin. Add `SPR
 environment variable when running the container.
 
 ```
-mvnw spring-boot:build-image -Dspring-boot.build-image.imageName=dsitp.backend/project
+./mvnw spring-boot:build-image -Dspring-boot.build-image.imageName=dsitp.backend/project
 ```
 
 ## Further readings

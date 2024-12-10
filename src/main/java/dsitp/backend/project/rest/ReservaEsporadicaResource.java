@@ -55,10 +55,10 @@ public class ReservaEsporadicaResource {
 
     @PostMapping("/disponibilidad")
     @ApiResponse(responseCode = "200")
-    public ResponseEntity<ReservaRespuestaDTO> getDisponibilidadAulaReservaPeriodica(
+    public ResponseEntity<ReservaRespuestaDTO> getDisponibilidadAulaReservaEsporadica(
             @RequestBody @Valid final ReservaEsporadicaDTO reservaEsporadicaDTO) {
-        reservaEsporadicaService.getDisponibilidadAulaReservaEsporadica(reservaEsporadicaDTO);
-        return ResponseEntity.status(HttpStatus.CREATED).build();
+        ReservaRespuestaDTO reservaRespuestaDTO = reservaEsporadicaService.getDisponibilidadAulaReservaEsporadica(reservaEsporadicaDTO);
+        return ResponseEntity.ok(reservaRespuestaDTO);
     }
 
     @PostMapping
