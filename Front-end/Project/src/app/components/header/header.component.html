@@ -31,10 +31,10 @@
       <button mat-button mat-stroked-button [matMenuTriggerFor]="listadoReservas">Listado de reservas</button>
 
       <mat-menu #listadoReservas="matMenu" xPosition="after">
-        <button mat-menu-item (click)="redirect('listado-reserva-dia')">
+        <button mat-menu-item> <!--(click)="redirect('listado-reserva-dia')"-->
           <span>Por día</span>
         </button>
-        <button mat-menu-item (click)="redirect('listado-reserva-curso')">
+        <button mat-menu-item> <!--(click)="redirect('listado-reserva-curso')"-->
           <span>Por curso</span>
         </button>
       </mat-menu>
