@@ -191,7 +191,7 @@ export class RegistrarEditarBedelComponent implements OnInit, CanComponentDeacti
       this.alertService.confirm('Editar', 'Desea editar el bedel?').subscribe(() => {
         this.bedelForm.get('idRegistro')?.patchValue(this.id);
 
-        this.http.post<any>('http://localhost:8080/api/bedeles', this.bedelForm.value).subscribe({
+        this.http.put<any>(`http://localhost:8080/api/bedeles/${this.id}`, this.bedelForm.value).subscribe({
             error: (value) => {
               if (value.status === 400 && value.error) {
                 let errorMessages = '';
