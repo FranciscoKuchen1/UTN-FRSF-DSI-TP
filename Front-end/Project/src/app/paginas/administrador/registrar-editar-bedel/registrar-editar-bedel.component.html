@@ -76,8 +76,12 @@
     <div class="cancel-confirm">
       <button mat-button mat-raised-button (click)="close()">Cancelar</button>
 
-      <div>
+      <div *ngIf="!id">
         <button mat-button mat-raised-button color="primary" (click)="submit()" [disabled]="bedelForm.invalid">Registrar</button>
+      </div>
+
+      <div *ngIf="id">
+        <button mat-button mat-raised-button color="primary" (click)="submit()" [disabled]="bedelForm.invalid">Editar</button>
       </div>
     </div>
 

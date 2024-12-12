@@ -19,7 +19,12 @@ export class LoginComponent{
   rol: NameId;
 
   submit(): void{
-    this.user = {user: this.username, pass: this.pass, rol: this.rol , nombre: 'Nombre', apellido: 'Apellido'};
+    if(this.rol.id === 1){
+      this.user = {user: this.username, pass: this.pass, rol: this.rol , nombre: 'Fernanda', apellido: 'Sánchez'};
+    }else{
+      this.user = {user: this.username, pass: this.pass, rol: this.rol , nombre: 'Beatriz', apellido: 'Cruz'};
+    }
+
     this.loginResult.emit(this.user);
   }
 }

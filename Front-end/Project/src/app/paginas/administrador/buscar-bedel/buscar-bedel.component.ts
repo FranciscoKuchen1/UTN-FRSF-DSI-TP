@@ -1,4 +1,4 @@
-import {Component, ViewChild} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {MatTableDataSource} from "@angular/material/table";
 import {MatPaginator} from "@angular/material/paginator";
 import {MatSort} from "@angular/material/sort";
@@ -13,7 +13,7 @@ import {Router} from "@angular/router";
   templateUrl: './buscar-bedel.component.html',
   styleUrls: ['./buscar-bedel.component.scss']
 })
-export class BuscarBedelComponent {
+export class BuscarBedelComponent implements OnInit{
 
   displayedColumns: string[] = ['apellido', 'nombre', 'tipoTurno', 'idRegistro', 'options'];
   turnos: Select[] = [{id: 0, name: 'Mañana'}, {id: 1, name: 'Tarde'}, {id: 2, name: 'Noche'}];
@@ -35,12 +35,15 @@ export class BuscarBedelComponent {
     })
   }
 
+  ngOnInit() {
+    this.submit();
+  }
+
   editarBedel(row: any): void{
     this.router.navigate([`editar-bedel`, row.idRegistro]);
   }
 
   eliminarBedel(row: any): void{
-    console.log('elimino: ', row)
     this.alertService.confirm('Eliminar', 'Desea eliminar el bedel?').subscribe(() => {
       this.http.delete(`http://localhost:8080/api/bedeles/${parseInt(row.idRegistro)}`).subscribe({
           next: ()=>{},

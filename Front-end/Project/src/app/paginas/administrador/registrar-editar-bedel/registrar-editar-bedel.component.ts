@@ -60,6 +60,11 @@ export class RegistrarEditarBedelComponent implements OnInit, CanComponentDeacti
         next: (value: any) => {
           this.bedelForm.patchValue(value);
           this.bedelForm.get('idRegistro')?.disable();
+
+          this.isLengthValid = true;
+          this.hasUppercase = true;
+          this.hasNumber = true;
+          this.hasSpecialCharacter = true;
         },
         error: () => {
           this.alertService.ok('ERROR', 'Error en la edicion de bedel.').subscribe();
@@ -95,9 +100,15 @@ export class RegistrarEditarBedelComponent implements OnInit, CanComponentDeacti
 
   close(): void {
     this.formChanged = false;
-    this.alertService.confirm('Cancelar', 'Desea cancelar el registro de bedel?').subscribe(() => {
-      this.redirect('');
-    });
+    if(this.id){
+      this.alertService.confirm('Cancelar', 'Desea cancelar la edición del bedel?').subscribe(() => {
+        this.redirect('buscar-bedel');
+      });
+    }else{
+      this.alertService.confirm('Cancelar', 'Desea cancelar el registro de bedel?').subscribe(() => {
+        this.redirect('');
+      });
+    }
   }
 
   checkPasswordCriteria(): void {
@@ -175,29 +186,61 @@ export class RegistrarEditarBedelComponent implements OnInit, CanComponentDeacti
       return
     }
 
-    this.alertService.confirm('Registrar', 'Desea registrar el bedel?').subscribe(() => {
+    if(this.id){
 
-      this.http.post<any>('http://localhost:8080/api/bedeles', this.bedelForm.value).subscribe({
-          error: (value) => {
-            if (value.status === 400 && value.error) {
-              let errorMessages = '';
+      this.alertService.confirm('Editar', 'Desea editar el bedel?').subscribe(() => {
+        this.bedelForm.get('idRegistro')?.patchValue(this.id);
 
-              if (typeof value.error === 'object') {
-                for (const [field, message] of Object.entries(value.error)) {
-                  errorMessages += `${message}.\n`;
+        this.http.post<any>('http://localhost:8080/api/bedeles', this.bedelForm.value).subscribe({
+            error: (value) => {
+              if (value.status === 400 && value.error) {
+                let errorMessages = '';
+
+                if (typeof value.error === 'object') {
+                  for (const [field, message] of Object.entries(value.error)) {
+                    errorMessages += `${message}.\n`;
+                  }
                 }
+                this.alertService.ok('ERROR', errorMessages);
+                this.bedelForm.get('idRegistro')?.reset();
               }
-              this.alertService.ok('ERROR', errorMessages);
-              this.bedelForm.get('idRegistro')?.reset();
+            },
+            complete: () => {
+              this.alertService.snackBar('Bedel editado correctamente.');
+              this.formChanged = false;
+              this.clear();
+              this.redirect('buscar-bedel');
             }
-          },
-          complete: () => {
-            this.alertService.snackBar('Bedel insertado correctamente.');
-            this.formChanged = false;
-            this.clear();
           }
-        }
-      )
-    });
+        )
+      });
+
+    }else{
+
+      this.alertService.confirm('Registrar', 'Desea registrar el bedel?').subscribe(() => {
+
+        this.http.post<any>('http://localhost:8080/api/bedeles', this.bedelForm.value).subscribe({
+            error: (value) => {
+              if (value.status === 400 && value.error) {
+                let errorMessages = '';
+
+                if (typeof value.error === 'object') {
+                  for (const [field, message] of Object.entries(value.error)) {
+                    errorMessages += `${message}.\n`;
+                  }
+                }
+                this.alertService.ok('ERROR', errorMessages);
+                this.bedelForm.get('idRegistro')?.reset();
+              }
+            },
+            complete: () => {
+              this.alertService.snackBar('Bedel insertado correctamente.');
+              this.formChanged = false;
+              this.clear();
+            }
+          }
+        )
+      });
+    }
   }
 }
