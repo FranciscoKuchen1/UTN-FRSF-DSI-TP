@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
+import {Component, OnInit, ViewEncapsulation} from '@angular/core';
 import {FormBuilder, UntypedFormGroup, Validators} from "@angular/forms";
 import {HttpClient} from "@angular/common/http";
 import {AlertService} from "../../../services/alert/alert.service";
@@ -167,18 +167,19 @@ export class RegistrarReservaPeriodicaComponent implements OnInit{
     private router: Router,
   ) {
     this.registrarReservaForm = this.formBuilder.group({
+      idRegistroBedel: [1],
       tipoPeriodo: [null, Validators.required],
       catedra: [null, Validators.required],
       idCatedra: [null],
       nombreCatedra: [null],
       tipoAula: [null, Validators.required],
-      cantidadAlumnos: [null, Validators.required],
+      cantAlumnos: [null, Validators.required],
       docente: [null, Validators.required],
       idDocente: [null],
       nombreDocente: [null],
       apellidoDocente: [null],
       correoDocente: [null, [Validators.required, Validators.email]],
-      diasReservados: [null, Validators.required],
+      diasSemanaHorasDuracion: [null, Validators.required],
     })
 
     this.registrarAulasForm = this.formBuilder.group({
@@ -245,7 +246,7 @@ export class RegistrarReservaPeriodicaComponent implements OnInit{
       }
     });
 
-    this.registrarReservaForm.get('diasReservados')?.patchValue(this.dias.filter(data=> data.value));
+    this.registrarReservaForm.get('diasSemanaHorasDuracion')?.patchValue(this.dias.filter(data=> data.value));
     this.todosValidos = this.diasCompletos();
   }
 
@@ -254,7 +255,7 @@ export class RegistrarReservaPeriodicaComponent implements OnInit{
       dia.hora = hora.name;
 
       const dias = this.dias.filter(value => value.value && value.duracion)
-      this.registrarReservaForm.get('diasReservados')?.patchValue(dias);
+      this.registrarReservaForm.get('diasSemanaHorasDuracion')?.patchValue(dias);
       this.todosValidos = this.diasCompletos();
 
     }
@@ -265,7 +266,7 @@ export class RegistrarReservaPeriodicaComponent implements OnInit{
       dia.duracion = duracion.name;
 
       const dias = this.dias.filter(value => value.value && value.hora)
-      this.registrarReservaForm.get('diasReservados')?.patchValue(dias);
+      this.registrarReservaForm.get('diasSemanaHorasDuracion')?.patchValue(dias);
       this.todosValidos = this.diasCompletos();
     }
   }
@@ -282,14 +283,14 @@ export class RegistrarReservaPeriodicaComponent implements OnInit{
   }
 
   siguiente(): void{
-    const temp = this.registrarReservaForm.get('diasReservados')?.value;
+    const temp = this.registrarReservaForm.get('diasSemanaHorasDuracion')?.value;
 
     const newArr = temp.map((obj: Dia) => {
       const { value, name, ...rest } = obj;
       return rest;
     });
 
-    this.registrarReservaForm.get('diasReservados')?.patchValue(newArr);
+    this.registrarReservaForm.get('diasSemanaHorasDuracion')?.patchValue(newArr);
 
     this.http.post<any>('http://localhost:8080/api/reservasPeriodicas/disponibilidad', this.registrarReservaForm.value).subscribe({
         error: (value) => {
