@@ -52,25 +52,21 @@ public class AulaResource {
 
     @PostMapping
     @ApiResponse(responseCode = "201")
-    public ResponseEntity<Integer> createAula(
-            @RequestBody @Valid final AulaDTO aulaDTO) {
+    public ResponseEntity<Integer> createAula(@RequestBody @Valid final AulaDTO aulaDTO) {
         final Integer createdNumero = aulaService.create(aulaDTO);
-        return new ResponseEntity<>(createdNumero, HttpStatus.CREATED);
+        return ResponseEntity.status(HttpStatus.CREATED).body(createdNumero);
     }
 
     @PutMapping("/{numero}")
     @ApiResponse(responseCode = "200")
-    public ResponseEntity<Integer> updateAula(
-            @PathVariable(name = "numero") final Integer numero,
-            @RequestBody @Valid final AulaDTO aulaDTO) {
+    public ResponseEntity<Integer> updateAula(@PathVariable(name = "numero") final Integer numero, @RequestBody @Valid final AulaDTO aulaDTO) {
         aulaService.update(numero, aulaDTO);
         return ResponseEntity.ok(numero);
     }
 
     @DeleteMapping("/{numero}")
     @ApiResponse(responseCode = "204")
-    public ResponseEntity<Void> deleteAula(
-            @PathVariable(name = "numero") final Integer numero) {
+    public ResponseEntity<Void> deleteAula(@PathVariable(name = "numero") final Integer numero) {
         aulaService.delete(numero);
         return ResponseEntity.noContent().build();
     }

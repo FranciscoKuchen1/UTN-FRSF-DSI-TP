@@ -4,8 +4,8 @@ import dsitp.backend.project.model.BedelDTO;
 import dsitp.backend.project.service.BedelService;
 import dsitp.backend.project.util.ReferencedException;
 import dsitp.backend.project.util.ReferencedWarning;
+import dsitp.backend.project.validation.CreateGroup;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import jakarta.validation.Valid;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.Size;
@@ -16,7 +16,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -74,19 +73,18 @@ public class BedelResource {
 
     @PostMapping
     @ApiResponse(responseCode = "201")
-    public ResponseEntity<?> createBedel(@RequestBody @Valid final BedelDTO bedelDTO, BindingResult result) {
+    public ResponseEntity<?> createBedel(@RequestBody @Validated(CreateGroup.class) final BedelDTO bedelDTO) {
         logger.info("Nuevo bedel es creado");
-        bedelService.create(bedelDTO);
-        return ResponseEntity.status(HttpStatus.CREATED).build();
-
+        final Integer createdId = bedelService.create(bedelDTO);
+        return ResponseEntity.status(HttpStatus.CREATED).body(createdId);
     }
 
     @PutMapping("/{idRegistro}")
     @ApiResponse(responseCode = "200")
-    public ResponseEntity<?> updateBedel(@PathVariable(name = "idRegistro") final String idRegistro,
-            @RequestBody @Valid final BedelDTO bedelDTO) {
+    public ResponseEntity<Map<String, String>> updateBedel(@PathVariable(name = "idRegistro") final String idRegistro, @RequestBody final BedelDTO bedelDTO) {
         bedelService.update(idRegistro, bedelDTO);
-        return ResponseEntity.ok(idRegistro);
+        Map<String, String> response = Map.of("idRegistro", idRegistro);
+        return ResponseEntity.ok(response);
     }
 
     @DeleteMapping("/{idRegistro}")

@@ -16,7 +16,7 @@ import java.lang.annotation.Target;
 @Constraint(validatedBy = UsuarioIdRegistroUniqueValidator.class)
 public @interface UsuarioIdRegistroUnique {
 
-    String message() default "Ya existe usuario con mismo id.";
+    String message() default "Ya existe usuario con mismo idRegistros.";
 
     Class<?>[] groups() default {};
 

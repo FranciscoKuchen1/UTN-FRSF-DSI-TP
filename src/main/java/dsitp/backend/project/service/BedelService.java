@@ -18,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.validation.Validator;
 
 @Service
 @Transactional
@@ -27,13 +28,15 @@ public class BedelService {
     private final ReservaEsporadicaRepository reservaEsporadicaRepository;
     private final ReservaPeriodicaRepository reservaPeriodicaRepository;
     private final BedelMapper bedelMapper;
+    private final Validator validator;
 
     @Autowired
-    public BedelService(final BedelRepository bedelRepository, final ReservaEsporadicaRepository reservaEsporadicaRepository, final ReservaPeriodicaRepository reservaPeriodicaRepository, final BedelMapper bedelMapper) {
+    public BedelService(final BedelRepository bedelRepository, final ReservaEsporadicaRepository reservaEsporadicaRepository, final ReservaPeriodicaRepository reservaPeriodicaRepository, final BedelMapper bedelMapper, final Validator validator) {
         this.bedelRepository = bedelRepository;
         this.reservaEsporadicaRepository = reservaEsporadicaRepository;
         this.reservaPeriodicaRepository = reservaPeriodicaRepository;
         this.bedelMapper = bedelMapper;
+        this.validator = validator;
     }
 
     public List<BedelDTO> findAll() {
@@ -103,7 +106,7 @@ public class BedelService {
     public void update(final String idRegistro, final BedelDTO bedelDTO) {
         Bedel existingBedel = bedelRepository.findByIdRegistroAndEliminadoFalse(idRegistro)
                 .orElseThrow(NotFoundException::new);
-//        BeanUtils.copyProperties(updatedBedel, existingBedel, "id", "idRegistro", "reservas");
+
         existingBedel.setNombre(bedelDTO.getNombre());
         existingBedel.setApellido(bedelDTO.getApellido());
         existingBedel.setContrasena(bedelDTO.getContrasena());

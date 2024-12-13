@@ -10,6 +10,17 @@ public class PasswordMatchesValidator implements ConstraintValidator<PasswordMat
 
     @Override
     public boolean isValid(BedelDTO bedelDTO, ConstraintValidatorContext context) {
-        return bedelDTO.getContrasena() != null && bedelDTO.getContrasena().equals(bedelDTO.getConfirmacionContrasena());
+        if (bedelDTO.getContrasena() == null) {
+            return false;
+        }
+
+        if (!bedelDTO.getContrasena().equals(bedelDTO.getConfirmacionContrasena())) {
+            context.disableDefaultConstraintViolation();
+            context.buildConstraintViolationWithTemplate("La contraseña no cumple con las políticas de seguridad")
+                    .addConstraintViolation();
+            return false;
+        }
+
+        return true;
     }
 }

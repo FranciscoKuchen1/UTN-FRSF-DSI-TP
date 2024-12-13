@@ -67,7 +67,7 @@ public class ReservaEsporadicaResource {
     public ResponseEntity<Integer> createReservaEsporadica(
             @RequestBody @Valid final ReservaEsporadicaDTO reservaEsporadicaDTO) {
         final Integer createdId = reservaEsporadicaService.create(reservaEsporadicaDTO);
-        return new ResponseEntity<>(createdId, HttpStatus.CREATED);
+        return ResponseEntity.status(HttpStatus.CREATED).body(createdId);
     }
 
     @PutMapping("/{id}")

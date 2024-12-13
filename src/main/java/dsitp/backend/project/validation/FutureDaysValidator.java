@@ -13,7 +13,7 @@ public class FutureDaysValidator implements ConstraintValidator<FutureDays, List
     @Override
     public boolean isValid(List<DiaReservadoDTO> diasReservados, ConstraintValidatorContext context) {
         if (diasReservados == null || diasReservados.isEmpty()) {
-            return true;
+            return false;
         }
 
         LocalDate now = LocalDate.now();

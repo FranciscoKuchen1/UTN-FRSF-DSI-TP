@@ -45,7 +45,7 @@ public class DiaReservadoResource {
     public ResponseEntity<Integer> createDiaReservado(
             @RequestBody @Valid final DiaReservadoDTO diaReservadoDTO) {
         final Integer createdId = diaReservadoService.create(diaReservadoDTO);
-        return new ResponseEntity<>(createdId, HttpStatus.CREATED);
+        return ResponseEntity.status(HttpStatus.CREATED).body(createdId);
     }
 
     @PutMapping("/{id}")

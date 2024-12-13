@@ -43,7 +43,7 @@ public class AulaMultimedioResource {
     public ResponseEntity<Integer> createAulaMultimedio(
             @RequestBody @Valid final AulaMultimedioDTO aulaMultimedioDTO) {
         final Integer createdNumero = aulaMultimedioService.create(aulaMultimedioDTO);
-        return new ResponseEntity<>(createdNumero, HttpStatus.CREATED);
+        return ResponseEntity.status(HttpStatus.CREATED).body(createdNumero);
     }
 
     @PutMapping("/{numero}")

@@ -10,7 +10,7 @@ public class DurationValidator implements ConstraintValidator<ValidDuration, Int
     @Override
     public boolean isValid(Integer duracion, ConstraintValidatorContext context) {
         if (duracion == null) {
-            return true;
+            return false;
         }
 
         if (duracion % 30 != 0) {

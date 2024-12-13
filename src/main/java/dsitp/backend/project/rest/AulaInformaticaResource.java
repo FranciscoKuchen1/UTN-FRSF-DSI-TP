@@ -43,7 +43,7 @@ public class AulaInformaticaResource {
     public ResponseEntity<Integer> createAulaInformatica(
             @RequestBody @Valid final AulaInformaticaDTO aulaInformaticaDTO) {
         final Integer createdNumero = aulaInformaticaService.create(aulaInformaticaDTO);
-        return new ResponseEntity<>(createdNumero, HttpStatus.CREATED);
+        return ResponseEntity.status(HttpStatus.CREATED).body(createdNumero);
     }
 
     @PutMapping("/{numero}")

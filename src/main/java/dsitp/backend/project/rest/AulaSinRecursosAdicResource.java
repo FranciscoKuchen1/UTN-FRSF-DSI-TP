@@ -44,7 +44,7 @@ public class AulaSinRecursosAdicResource {
     public ResponseEntity<Integer> createAulaSinRecursosAdic(
             @RequestBody @Valid final AulaSinRecursosAdicDTO aulaSinRecursosAdicDTO) {
         final Integer createdNumero = aulaSinRecursosAdicService.create(aulaSinRecursosAdicDTO);
-        return new ResponseEntity<>(createdNumero, HttpStatus.CREATED);
+        return ResponseEntity.status(HttpStatus.CREATED).body(createdNumero);
     }
 
     @PutMapping("/{numero}")

@@ -34,7 +34,7 @@ spring:
           
   sql:
     init:
-      mode: always
+      mode: never
       
   depends_on:
       - postgres
@@ -51,3 +51,4 @@ error:
       
 springdoc:
   pathsToMatch: /, /api/**
+

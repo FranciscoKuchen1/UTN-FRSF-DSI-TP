@@ -45,7 +45,7 @@ public class PeriodoResource {
     @ApiResponse(responseCode = "201")
     public ResponseEntity<Integer> createPeriodo(@RequestBody @Valid final PeriodoDTO periodoDTO) {
         final Integer createdId = periodoService.create(periodoDTO);
-        return new ResponseEntity<>(createdId, HttpStatus.CREATED);
+        return ResponseEntity.status(HttpStatus.CREATED).body(createdId);
     }
 
     @PutMapping("/{id}")

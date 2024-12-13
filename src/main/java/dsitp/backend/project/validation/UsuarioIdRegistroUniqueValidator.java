@@ -25,21 +25,12 @@ class UsuarioIdRegistroUniqueValidator implements ConstraintValidator<UsuarioIdR
     @Override
     public boolean isValid(final String value, final ConstraintValidatorContext context) {
         if (value == null) {
-
-            return true;
+            return false;
         }
-//        @SuppressWarnings("unchecked")
-//        final Map<String, String> pathVariables
-//                = ((Map<String, String>) request.getAttribute(HandlerMapping.URI_TEMPLATE_VARIABLES_ATTRIBUTE));
-//        final String currentId = pathVariables.get("id");
-//        if (currentId != null && value.equalsIgnoreCase(bedelService.getBedelByIdRegistro(currentId).getIdRegistro()) && value.equalsIgnoreCase(administradorService.getByIdRegistro(currentId).getIdRegistro())) {
-//
-//            return true;
-//        }
 
-        if (!(bedelService.idRegistroExists(value) || administradorService.idRegistroExists(value))) {
+        if (bedelService.idRegistroExists(value) || administradorService.idRegistroExists(value)) {
             context.disableDefaultConstraintViolation();
-            context.buildConstraintViolationWithTemplate("Ya existe usuario con mismo id.")
+            context.buildConstraintViolationWithTemplate("Ya existe usuario con mismo idRegistro.")
                     .addConstraintViolation();
             return false;
         }

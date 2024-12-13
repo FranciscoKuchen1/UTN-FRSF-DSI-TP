@@ -5,6 +5,7 @@ import dsitp.backend.project.service.AdministradorService;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import jakarta.validation.Valid;
 import java.util.List;
+import java.util.Map;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -33,24 +34,23 @@ public class AdministradorResource {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<AdministradorDTO> getAdministrador(
-            @PathVariable(name = "id") final Integer id) {
+    public ResponseEntity<AdministradorDTO> getAdministrador(@PathVariable(name = "id") final Integer id) {
         return ResponseEntity.ok(administradorService.get(id));
     }
 
     @PostMapping
     @ApiResponse(responseCode = "201")
-    public ResponseEntity<Integer> createAdministrador(
-            @RequestBody @Valid final AdministradorDTO administradorDTO) {
+    public ResponseEntity<Integer> createAdministrador(@RequestBody @Valid final AdministradorDTO administradorDTO) {
         final Integer createdId = administradorService.create(administradorDTO);
-        return new ResponseEntity<>(createdId, HttpStatus.CREATED);
+        return ResponseEntity.status(HttpStatus.CREATED).body(createdId);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Integer> updateAdministrador(@PathVariable(name = "id") final Integer id,
+    public ResponseEntity<Map<String, Integer>> updateAdministrador(@PathVariable(name = "id") final Integer id,
             @RequestBody @Valid final AdministradorDTO administradorDTO) {
         administradorService.update(id, administradorDTO);
-        return ResponseEntity.ok(id);
+        Map<String, Integer> response = Map.of("id", id);
+        return ResponseEntity.ok(response);
     }
 
     @DeleteMapping("/{id}")

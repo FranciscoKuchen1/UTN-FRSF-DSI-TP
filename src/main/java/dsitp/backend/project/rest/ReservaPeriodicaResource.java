@@ -67,8 +67,8 @@ public class ReservaPeriodicaResource {
     @ApiResponse(responseCode = "201")
     public ResponseEntity<Integer> createReservaPeriodica(
             @RequestBody @Valid final ReservaPeriodicaDTO reservaPeriodicaDTO) {
-        reservaPeriodicaService.create(reservaPeriodicaDTO);
-        return ResponseEntity.status(HttpStatus.CREATED).build();
+        final Integer createdId = reservaPeriodicaService.create(reservaPeriodicaDTO);
+        return ResponseEntity.status(HttpStatus.CREATED).body(createdId);
     }
 
     @PutMapping("/{id}")
