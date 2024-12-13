@@ -12,8 +12,8 @@ import dsitp.backend.project.repos.ReservaPeriodicaRepository;
 import dsitp.backend.project.util.BedelNotFoundException;
 import dsitp.backend.project.util.NotFoundException;
 import dsitp.backend.project.util.ReferencedWarning;
+import static java.time.OffsetDateTime.now;
 import java.util.List;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
@@ -45,6 +45,12 @@ public class BedelService {
 
     public BedelDTO get(final Integer id) {
         return bedelRepository.findById(id)
+                .map(bedel -> bedelMapper.toBedelDTO(bedel))
+                .orElseThrow(NotFoundException::new);
+    }
+
+    public BedelDTO getByIdRegistro(final String idRegistro) {
+        return bedelRepository.findByIdRegistroAndEliminadoFalse(idRegistro)
                 .map(bedel -> bedelMapper.toBedelDTO(bedel))
                 .orElseThrow(NotFoundException::new);
     }
@@ -94,11 +100,16 @@ public class BedelService {
         return bedelRepository.save(bedel).getId();
     }
 
-    public void update(final Integer id, final BedelDTO bedelDTO) {
-        Bedel existingBedel = bedelRepository.findById(id)
+    public void update(final String idRegistro, final BedelDTO bedelDTO) {
+        Bedel existingBedel = bedelRepository.findByIdRegistroAndEliminadoFalse(idRegistro)
                 .orElseThrow(NotFoundException::new);
-        Bedel updatedBedel = bedelMapper.toBedelEntity(bedelDTO);
-        BeanUtils.copyProperties(updatedBedel, existingBedel, "id", "idRegistro", "reservas");
+//        BeanUtils.copyProperties(updatedBedel, existingBedel, "id", "idRegistro", "reservas");
+        existingBedel.setNombre(bedelDTO.getNombre());
+        existingBedel.setApellido(bedelDTO.getApellido());
+        existingBedel.setContrasena(bedelDTO.getContrasena());
+        existingBedel.setLastUpdated(now());
+        existingBedel.setTipoTurno(TipoTurno.fromInteger(bedelDTO.getTipoTurno()));
+
         bedelRepository.save(existingBedel);
     }
 

@@ -12,7 +12,7 @@ import dsitp.backend.project.model.AulaSolapadaDTO;
 import dsitp.backend.project.model.DiaDisponibilidadDTO;
 import dsitp.backend.project.model.DiaSolapamientoDTO;
 import dsitp.backend.project.model.ReservaEsporadicaDTO;
-import dsitp.backend.project.model.ReservaRespuestaDTO;
+import dsitp.backend.project.model.ReservaRetornoDTO;
 import dsitp.backend.project.repos.AulaRepository;
 import dsitp.backend.project.repos.DiaReservadoRepository;
 import dsitp.backend.project.repos.ReservaEsporadicaRepository;
@@ -43,7 +43,10 @@ public class ReservaEsporadicaService {
     private final AulaMapper aulaMapper;
 
     @Autowired
-    public ReservaEsporadicaService(final ReservaEsporadicaRepository reservaEsporadicaRepository, final DiaReservadoRepository diaReservadoRepository, final AulaRepository aulaRepository, final ReservaEsporadicaMapper reservaEsporadicaMapper, final DiaReservadoMapper diaReservadoMapper, final AulaMapper aulaMapper) {
+    public ReservaEsporadicaService(final ReservaEsporadicaRepository reservaEsporadicaRepository,
+            final DiaReservadoRepository diaReservadoRepository, final AulaRepository aulaRepository,
+            final ReservaEsporadicaMapper reservaEsporadicaMapper, final DiaReservadoMapper diaReservadoMapper,
+            final AulaMapper aulaMapper) {
         this.reservaEsporadicaRepository = reservaEsporadicaRepository;
         this.diaReservadoRepository = diaReservadoRepository;
         this.aulaRepository = aulaRepository;
@@ -65,12 +68,14 @@ public class ReservaEsporadicaService {
                 .orElseThrow(NotFoundException::new);
     }
 
-    public ReservaRespuestaDTO getDisponibilidadAulaReservaEsporadica(final ReservaEsporadicaDTO reservaEsporadicaDTO) {
-        final ReservaEsporadica reservaEsporadica = reservaEsporadicaMapper.toReservaEsporadicaEntity(reservaEsporadicaDTO);
-        ReservaRespuestaDTO reservaRespuestaDTO = new ReservaRespuestaDTO();
-        reservaRespuestaDTO.setDiasDisponibles(new ArrayList<>());
-        reservaRespuestaDTO.setDiasConSolapamiento(new ArrayList<>());
-        List<Aula> aulas = aulaRepository.findByTipoAulaAndCapacidad(reservaEsporadica.getCantAlumnos(), reservaEsporadica.getTipoAula().toInteger());
+    public ReservaRetornoDTO getDisponibilidadAulaReservaEsporadica(final ReservaEsporadicaDTO reservaEsporadicaDTO) {
+        final ReservaEsporadica reservaEsporadica = reservaEsporadicaMapper
+                .toReservaEsporadicaEntity(reservaEsporadicaDTO);
+        ReservaRetornoDTO reservaRetornoDTO = new ReservaRetornoDTO();
+        reservaRetornoDTO.setDiasDisponibles(new ArrayList<>());
+        reservaRetornoDTO.setDiasConSolapamiento(new ArrayList<>());
+        List<Aula> aulas = aulaRepository.findByTipoAulaAndCapacidad(reservaEsporadica.getCantAlumnos(),
+                reservaEsporadica.getTipoAula().toInteger());
         if (!aulas.isEmpty()) {
             for (DiaReservado diaReservado : reservaEsporadica.getDiasReservados()) {
                 List<AulaDTO> aulasDisponibles = obtenerDisponibilidad(aulas, diaReservado);
@@ -78,17 +83,17 @@ public class ReservaEsporadicaService {
                     DiaDisponibilidadDTO diaDisponibilidadDTO = new DiaDisponibilidadDTO();
                     diaDisponibilidadDTO.setDiaReservado(diaReservadoMapper.toDiaReservadoDTO(diaReservado));
                     diaDisponibilidadDTO.setAulasDisponibles(aulasDisponibles);
-                    reservaRespuestaDTO.getDiasDisponibles().add(diaDisponibilidadDTO);
+                    reservaRetornoDTO.getDiasDisponibles().add(diaDisponibilidadDTO);
                 } else {
                     DiaSolapamientoDTO diaSolapamientoDTO = new DiaSolapamientoDTO();
                     diaSolapamientoDTO.setDiaReservado(diaReservadoMapper.toDiaReservadoDTO(diaReservado));
                     diaSolapamientoDTO.setAulasConSolapamiento(obtenerAulasConMenorSuperposicion(aulas, diaReservado));
-                    reservaRespuestaDTO.getDiasConSolapamiento().add(diaSolapamientoDTO);
+                    reservaRetornoDTO.getDiasConSolapamiento().add(diaSolapamientoDTO);
                 }
             }
         }
 
-        return reservaRespuestaDTO;
+        return reservaRetornoDTO;
     }
 
     public List<AulaDTO> obtenerDisponibilidad(List<Aula> aulas, DiaReservado diaReservado) {
@@ -108,7 +113,9 @@ public class ReservaEsporadicaService {
 
     private Boolean verificarDisponibilidad(Aula aula, DiaReservado diaReservado) {
 
-        List<DiaReservado> diasReservados = diaReservadoRepository.findOverlappingDays(aula.getNumero(), diaReservado.getFechaReserva(), diaReservado.getHoraInicio(), diaReservado.getHoraInicio().plusMinutes(diaReservado.getDuracion()));
+        List<DiaReservado> diasReservados = diaReservadoRepository.findOverlappingDays(aula.getNumero(),
+                diaReservado.getFechaReserva(), diaReservado.getHoraInicio(),
+                diaReservado.getHoraInicio().plusMinutes(diaReservado.getDuracion()));
 
         return diasReservados.isEmpty();
     }
@@ -126,8 +133,7 @@ public class ReservaEsporadicaService {
                     aula.getNumero(),
                     diaReservado.getFechaReserva(),
                     diaReservado.getHoraInicio(),
-                    diaReservado.getHoraInicio().plusMinutes(diaReservado.getDuracion())
-            );
+                    diaReservado.getHoraInicio().plusMinutes(diaReservado.getDuracion()));
 
             Optional<DiaReservado> diaConMayorSuperposicionOptional = Optional.empty();
 
@@ -181,7 +187,8 @@ public class ReservaEsporadicaService {
     }
 
     public Integer create(final ReservaEsporadicaDTO reservaEsporadicaDTO) {
-        final ReservaEsporadica reservaEsporadica = reservaEsporadicaMapper.toReservaEsporadicaEntity(reservaEsporadicaDTO);
+        final ReservaEsporadica reservaEsporadica = reservaEsporadicaMapper
+                .toReservaEsporadicaEntity(reservaEsporadicaDTO);
 
         return reservaEsporadicaRepository.save(reservaEsporadica).getId();
     }
@@ -190,7 +197,8 @@ public class ReservaEsporadicaService {
         final ReservaEsporadica existingReservaEsporadica = reservaEsporadicaRepository.findById(id)
                 .orElseThrow(NotFoundException::new);
 
-        ReservaEsporadica updatedReservaEsporadica = reservaEsporadicaMapper.toReservaEsporadicaEntity(reservaEsporadicaDTO);
+        ReservaEsporadica updatedReservaEsporadica = reservaEsporadicaMapper
+                .toReservaEsporadicaEntity(reservaEsporadicaDTO);
 
         updatedReservaEsporadica.setId(existingReservaEsporadica.getId());
         reservaEsporadicaRepository.save(updatedReservaEsporadica);

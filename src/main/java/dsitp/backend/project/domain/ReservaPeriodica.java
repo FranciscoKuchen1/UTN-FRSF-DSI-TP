@@ -10,7 +10,7 @@ import lombok.Setter;
 import org.springframework.stereotype.Component;
 
 @Entity
-@Table(name = "reservaPeriodica")
+@Table(name = "reserva_periodica", schema = "public")
 @Getter
 @Setter
 @Component

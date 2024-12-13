@@ -19,7 +19,7 @@ import org.springframework.stereotype.Component;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "bedel")
+@Table(name = "bedel", schema = "public")
 @Getter
 @Setter
 @Component
@@ -29,7 +29,7 @@ public class Bedel extends Usuario {
     private Boolean eliminado;
 
     @Column
-    @Enumerated(EnumType.STRING)
+    @Enumerated(EnumType.ORDINAL)
     private TipoTurno tipoTurno;
 
     @OneToMany(mappedBy = "bedel", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)

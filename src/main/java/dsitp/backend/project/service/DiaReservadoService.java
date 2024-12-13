@@ -1,8 +1,10 @@
 package dsitp.backend.project.service;
 
+import dsitp.backend.project.domain.Aula;
 import dsitp.backend.project.domain.DiaReservado;
 import dsitp.backend.project.mapper.DiaReservadoMapper;
 import dsitp.backend.project.model.DiaReservadoDTO;
+import dsitp.backend.project.repos.AulaRepository;
 import dsitp.backend.project.repos.DiaReservadoRepository;
 import dsitp.backend.project.util.NotFoundException;
 import java.util.List;
@@ -15,16 +17,18 @@ import org.springframework.transaction.annotation.Transactional;
 public class DiaReservadoService {
 
     private final DiaReservadoRepository diaReservadoRepository;
+    private final AulaRepository aulaRepository;
     private final DiaReservadoMapper diaReservadoMapper;
 
-    public DiaReservadoService(final DiaReservadoRepository diaReservadoRepository, dsitp.backend.project.mapper.DiaReservadoMapper diaReservadoMapper) {
+    public DiaReservadoService(final DiaReservadoRepository diaReservadoRepository, final DiaReservadoMapper diaReservadoMapper, final AulaRepository aulaRepository) {
         this.diaReservadoRepository = diaReservadoRepository;
+        this.aulaRepository = aulaRepository;
         this.diaReservadoMapper = diaReservadoMapper;
     }
 
     public List<DiaReservadoDTO> findAll() {
-        final List<DiaReservado> diaReservadoes = diaReservadoRepository.findAll(Sort.by("id"));
-        return diaReservadoes.stream()
+        final List<DiaReservado> diaReservados = diaReservadoRepository.findAll(Sort.by("id"));
+        return diaReservados.stream()
                 .map(diaReservado -> mapToDTO(diaReservado, new DiaReservadoDTO()))
                 .toList();
     }
@@ -60,6 +64,7 @@ public class DiaReservadoService {
         diaReservadoDTO.setFechaReserva(diaReservado.getFechaReserva());
         diaReservadoDTO.setDuracion(diaReservado.getDuracion());
         diaReservadoDTO.setHoraInicio(diaReservado.getHoraInicio());
+        diaReservadoDTO.setIdAula(diaReservado.getAula().getNumero());
         return diaReservadoDTO;
     }
 
@@ -68,6 +73,9 @@ public class DiaReservadoService {
         diaReservado.setFechaReserva(diaReservadoDTO.getFechaReserva());
         diaReservado.setDuracion(diaReservadoDTO.getDuracion());
         diaReservado.setHoraInicio(diaReservadoDTO.getHoraInicio());
+        Aula aula = aulaRepository.findById(diaReservadoDTO.getIdAula())
+                .orElseThrow(() -> new NotFoundException("Aula no encontrada"));
+        diaReservado.setAula(aula);
         return diaReservado;
     }
 

@@ -22,11 +22,11 @@ import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import org.springframework.stereotype.Component;
 
-@NoArgsConstructor
-@AllArgsConstructor
 @Entity
 @EntityListeners(AuditingEntityListener.class)
-@Table(name = "periodo")
+@Table(name = "periodo", schema = "public")
+@NoArgsConstructor
+@AllArgsConstructor
 @Getter
 @Setter
 @Component
@@ -53,7 +53,7 @@ public class Periodo {
     private LocalDate fechaFin;
 
     @Column
-    @Enumerated(EnumType.STRING)
+    @Enumerated(EnumType.ORDINAL)
     private TipoPeriodo tipoPeriodo;
 
     @CreatedDate

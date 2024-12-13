@@ -4,7 +4,7 @@ import dsitp.backend.project.domain.Bedel;
 import dsitp.backend.project.domain.Periodo;
 import dsitp.backend.project.model.ReservaPeriodicaDTO;
 import dsitp.backend.project.model.ReservaPeriodicaSinDiasDTO;
-import dsitp.backend.project.model.ReservaRespuestaDTO;
+import dsitp.backend.project.model.ReservaRetornoDTO;
 import dsitp.backend.project.repos.BedelRepository;
 import dsitp.backend.project.repos.PeriodoRepository;
 import dsitp.backend.project.service.ReservaPeriodicaService;
@@ -56,10 +56,11 @@ public class ReservaPeriodicaResource {
 
     @PostMapping("/disponibilidad")
     @ApiResponse(responseCode = "200")
-    public ResponseEntity<ReservaRespuestaDTO> getDisponibilidadAulaReservaPeriodica(
+    public ResponseEntity<ReservaRetornoDTO> getDisponibilidadAulaReservaPeriodica(
             @RequestBody @Valid final ReservaPeriodicaSinDiasDTO reservaPeriodicaSinDiasDTO) {
-        ReservaRespuestaDTO reservaRespuestaDTO = reservaPeriodicaService.getDisponibilidadAulaReservaPeriodica(reservaPeriodicaSinDiasDTO);
-        return ResponseEntity.ok(reservaRespuestaDTO);
+        ReservaRetornoDTO reservaRetornoDTO = reservaPeriodicaService
+                .getDisponibilidadAulaReservaPeriodica(reservaPeriodicaSinDiasDTO);
+        return ResponseEntity.ok(reservaRetornoDTO);
     }
 
     @PostMapping

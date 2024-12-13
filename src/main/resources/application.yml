@@ -6,7 +6,9 @@ spring:
     hikari:
       connection-timeout: 30000
       maximum-pool-size: 10
+      
   jpa:
+    show-sql: true
     hibernate:
       ddl-auto: update
       dialect: org.hibernate.dialect.PostgreSQLDialect
@@ -18,9 +20,26 @@ spring:
             non_contextual_creation: true
         id:
           new_generator_mappings: true
+        format_sql: true
+        use_sql_comments: true
+    defer-datasource-initialization: true
+    
   docker:
     compose:
       lifecycle-management: start-only
+      
+  devtools:
+      livereload:
+          enabled: true
+          
+  sql:
+    init:
+      mode: always
+      
+  depends_on:
+      - postgres
+      
+      
 error:
   handling:
     http-status-in-json-response: true
@@ -28,6 +47,7 @@ error:
     full-stacktrace-http-statuses: 5xx
     log-levels:
       5xx: ERROR
+      
+      
 springdoc:
   pathsToMatch: /, /api/**
-

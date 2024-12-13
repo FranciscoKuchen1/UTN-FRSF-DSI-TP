@@ -1,0 +1,7 @@
+[
+  {
+    "route": "POST /api/reservasPeriodicas/disponibilidad",
+    "parameters": "()",
+    "status": 200
+  }
+]

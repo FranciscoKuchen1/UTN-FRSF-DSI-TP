@@ -81,12 +81,12 @@ public class BedelResource {
 
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/{idRegistro}")
     @ApiResponse(responseCode = "200")
-    public ResponseEntity<Integer> updateBedel(@PathVariable(name = "id") final Integer id,
+    public ResponseEntity<?> updateBedel(@PathVariable(name = "idRegistro") final String idRegistro,
             @RequestBody @Valid final BedelDTO bedelDTO) {
-        bedelService.update(id, bedelDTO);
-        return ResponseEntity.ok(id);
+        bedelService.update(idRegistro, bedelDTO);
+        return ResponseEntity.ok(idRegistro);
     }
 
     @DeleteMapping("/{idRegistro}")

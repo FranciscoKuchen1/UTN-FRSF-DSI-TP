@@ -6,7 +6,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class ReservaRespuestaDTO {
+public class ReservaRetornoDTO {
 
     private List<DiaDisponibilidadDTO> diasDisponibles;
     private List<DiaSolapamientoDTO> diasConSolapamiento;

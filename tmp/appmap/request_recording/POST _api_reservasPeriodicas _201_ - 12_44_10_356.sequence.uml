@@ -1,0 +1,118 @@
+@startuml
+!includeurl https://raw.githubusercontent.com/getappmap/plantuml-theme/main/appmap-theme.puml
+participant HTTP_server_requests as "HTTP server requests"
+participant rest as "rest"
+participant service as "service"
+participant mapper as "mapper"
+participant model as "model"
+participant repos as "repos"
+participant validation as "validation"
+participant Database as "Database"
+  [->HTTP_server_requests: POST /api/reservasPeriodicas <color:gray> 52 ms</color>
+  activate HTTP_server_requests
+    HTTP_server_requests->rest: createReservaPeriodica <color:gray> 41.4 ms</color>
+    activate rest
+      rest->service: create <color:gray> 30.4 ms</color>
+      activate service
+        service->mapper: toReservaPeriodicaEntity <color:gray> 6.99 ms</color>
+        activate mapper
+          mapper->model: <u>fromInteger</u> <color:gray> 0.148 ms</color>
+          activate model
+            model->model: <u>values</u> <color:gray> 0.069 ms</color>
+            activate model
+            model<--model: [Ldsitp.backend.project.model.TipoAula;
+            deactivate model
+          mapper<--model: dsitp.backend.project.model.TipoAula
+          deactivate model
+          mapper->model: <u>fromInteger</u> <color:gray> 0.0572 ms</color>
+          activate model
+            model->model: <u>values</u> <color:gray> 0.0299 ms</color>
+            activate model
+            model<--model: [Ldsitp.backend.project.model.TipoPeriodo;
+            deactivate model
+          mapper<--model: dsitp.backend.project.model.TipoPeriodo
+          deactivate model
+          mapper->repos: findActivePeriodosByTipo <color:gray> 3.37 ms</color>
+          activate repos
+            repos->Database: select p1_0.id,p1_0.date_created,p1_0.fecha_fin,p1 <color:gray> 0.158 ms</color>
+            Note right
+select
+p1_0.id,p1_0.date_created,p1_0.fecha_fin,p1_0.fecha_inicio,p1_0.last_updated,p1_0.tipo_periodo
+from periodo p1_0 where p1_0.tipo_periodo=? and p1_0.fecha_fin>=localtimestamp
+            End note
+          mapper<--repos: java.util.ArrayList
+          deactivate repos
+          Loop 2 times <color:gray> 0.0574 ms</color>
+            mapper->mapper: toDiaReservadoEntity <color:gray> 0.0574 ms</color>
+            activate mapper
+            mapper<--mapper: dsitp.backend.project.domain.DiaReservado
+            deactivate mapper
+          End
+          mapper->repos: findByIdRegistroAndEliminadoFalse <color:gray> 2.82 ms</color>
+          activate repos
+            repos->Database: select b1_0.id,b1_0.apellido,b1_0.contrasena,b1_0. <color:gray> 0.0542 ms</color>
+            Note right
+select
+b1_0.id,b1_0.apellido,b1_0.contrasena,b1_0.date_created,b1_0.id_registro,b1_0.last_updated,b1_0.nombre,b1_0.eliminado,b1_0.tipo_turno
+from bedel b1_0 where b1_0.id_registro=? and not(b1_0.eliminado)
+            End note
+            repos->Database: select r1_0.id_bedel,r1_0.id,r1_0.clazz_,r1_0.apel <color:gray> 0.0263 ms</color>
+            Note right
+select
+r1_0.id_bedel,r1_0.id,r1_0.clazz_,r1_0.apellido_docente,r1_0.cant_alumnos,r1_0.correo_docente,r1_0.date_created,r1_0.id_catedra,r1_0.id_docente,r1_0.last_updated,r1_0.nombre_catedra,r1_0.nombre_docente,r1_0.tipo_aula,p1_0.id,p1_0.date_created,p1_0.fecha_fin,p1_0.fecha_inicio,p1_0.last_updated,p1_0.tipo_periodo
+from (select id, apellido_docente, cant_alumnos, correo_docente, date_created,
+id_catedra, id_docente, last_updated, nombre_catedra, nombre_docente, tipo_aula,
+id_bedel, cast(null as integer) as id_periodo, 1 as clazz_ from
+reserva_esporadica union all select id, apellido_docente, cant_alumnos,
+correo_docente, date_created, id_catedra, id_docente, last_updated,
+nombre_catedra, nombre_docente, tipo_aula, id_bedel, id_periodo, 2 as clazz_
+from reserva_periodica) r1_0 left join periodo p1_0 on p1_0.id=r1_0.id_periodo
+where r1_0.id_bedel=?
+            End note
+            repos->Database: select dr1_0.id_reserva,dr1_0.id,a1_0.numero,a1_0. <color:gray> 0.0211 ms</color>
+            Note right
+select
+dr1_0.id_reserva,dr1_0.id,a1_0.numero,a1_0.tipo_aula,a1_0.capacidad,a1_0.date_created,a1_0.last_updated,a1_0.nombre,a1_0.piso,a1_0.tiene_aire_acondicionado,a1_0.tipo_pizarron,a1_0.cantidadpcs,a1_0.tiene_canon,a1_0.tiene_computadora,a1_0.tiene_televisor,a1_0.tiene_ventiladores,dr1_0.date_created,dr1_0.duracion,dr1_0.fecha_reserva,dr1_0.hora_inicio,dr1_0.last_updated
+from dia_reservado dr1_0 left join aula a1_0 on a1_0.numero=dr1_0.id_aula where
+dr1_0.id_reserva=?
+            End note
+          mapper<--repos: java.util.Optional
+          deactivate repos
+          mapper->validation: isValid <color:gray> 0.0527 ms</color>
+          activate validation
+          mapper<--validation: java.lang.Boolean
+          deactivate validation
+        service<--mapper: dsitp.backend.project.domain.ReservaPeriodica
+        deactivate mapper
+        Loop 3 times <color:gray> 0.0814 ms</color>
+          service->Database: select nextval('primary_sequence') <color:gray> 0.0814 ms</color>
+        End
+      rest<--service: java.lang.Integer
+      deactivate service
+      rest->validation: isValid <color:gray> 0.0243 ms</color>
+      activate validation
+      rest<--validation: java.lang.Boolean
+      deactivate validation
+      rest->Database: insert into reserva_periodica (apellido_docente,id <color:gray> 0.0401 ms</color>
+      Note right
+insert into reserva_periodica
+(apellido_docente,id_bedel,cant_alumnos,correo_docente,date_created,id_catedra,id_docente,last_updated,nombre_catedra,nombre_docente,tipo_aula,id_periodo,id)
+values (?,?,?,?,?,?,?,?,?,?,?,?,?)
+      End note
+      Loop 2 times <color:gray> 0.12 ms</color>
+        rest->validation: isValid <color:gray> 0.0317 ms</color>
+        activate validation
+        rest<--validation: java.lang.Boolean
+        deactivate validation
+        rest->Database: insert into dia_reservado (id_aula,date_created,du <color:gray> 0.088 ms</color>
+        Note right
+insert into dia_reservado
+(id_aula,date_created,duracion,fecha_reserva,hora_inicio,last_updated,id_reserva,id)
+values (?,?,?,?,?,?,?,?)
+        End note
+      End
+    HTTP_server_requests<--rest: org.springframework.http.ResponseEntity
+    deactivate rest
+  [<--HTTP_server_requests: 201
+  deactivate HTTP_server_requests
+@enduml

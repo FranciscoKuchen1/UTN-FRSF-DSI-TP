@@ -1,5 +1,6 @@
 package dsitp.backend.project.domain;
 
+import dsitp.backend.project.validation.UsuarioIdRegistroUnique;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EntityListeners;
@@ -31,6 +32,7 @@ public abstract class Usuario {
     private Integer id;
 
     @Column(unique = true, length = 20)
+    @UsuarioIdRegistroUnique
     private String idRegistro;
 
     @Column(length = 100)

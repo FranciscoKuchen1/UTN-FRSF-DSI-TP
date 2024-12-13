@@ -17,7 +17,7 @@ File -> Import Project -> From ZIP
 File o Open -> Seleccionar ZIP descargado -> Open
 
 ### Para acceder a la UI de Swagger
-Acceder a [SwaggerUI](http://localhost:8080/swagger-ui/index.html)
+Acceder a [SwaggerUI](http://localhost:8080/swagger-ui/index.html#/)
 
 
 ## Development
@@ -67,6 +67,13 @@ environment variable when running the container.
 
 ```
 ./mvnw spring-boot:build-image -Dspring-boot.build-image.imageName=dsitp.backend/project
+```
+
+Para acceder desde línea de comando (bash) usar:
+
+```
+psql -h localhost -p 5432 -U postgres -d project
+
 ```
 
 ## Further readings

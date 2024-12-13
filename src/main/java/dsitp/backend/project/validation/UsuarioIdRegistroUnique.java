@@ -13,10 +13,10 @@ import java.lang.annotation.Target;
 @Target({FIELD, METHOD, ANNOTATION_TYPE})
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
-@Constraint(validatedBy = BedelIdRegistroUniqueValidator.class)
-public @interface BedelIdRegistroUnique {
+@Constraint(validatedBy = UsuarioIdRegistroUniqueValidator.class)
+public @interface UsuarioIdRegistroUnique {
 
-    String message() default "Ya existe bedel con mismo id";
+    String message() default "Ya existe usuario con mismo id.";
 
     Class<?>[] groups() default {};
 

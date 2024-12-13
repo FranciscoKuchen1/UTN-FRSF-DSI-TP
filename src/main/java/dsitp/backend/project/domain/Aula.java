@@ -2,7 +2,6 @@ package dsitp.backend.project.domain;
 
 import dsitp.backend.project.model.TipoPizarron;
 import jakarta.persistence.*;
-
 import java.time.OffsetDateTime;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -13,10 +12,11 @@ import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 @Entity
+@EntityListeners(AuditingEntityListener.class)
+@Table(name = "aula", schema = "public")
 @DiscriminatorColumn(name = "tipo_aula",
         discriminatorType = DiscriminatorType.INTEGER)
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@EntityListeners(AuditingEntityListener.class)
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
@@ -47,7 +47,7 @@ public abstract class Aula {
     private Integer capacidad;
 
     @Column
-    @Enumerated(EnumType.STRING)
+    @Enumerated(EnumType.ORDINAL)
     private TipoPizarron tipoPizarron;
 
     @Column

@@ -31,8 +31,8 @@ public class PeriodoService {
     }
 
     public List<PeriodoDTO> findAll() {
-        final List<Periodo> periodoes = periodoRepository.findAll(Sort.by("id"));
-        return periodoes.stream()
+        final List<Periodo> periodos = periodoRepository.findAll(Sort.by("id"));
+        return periodos.stream()
                 .map(periodo -> mapToDTO(periodo, new PeriodoDTO()))
                 .toList();
     }

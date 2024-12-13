@@ -28,7 +28,7 @@ import org.springframework.stereotype.Component;
 
 @Entity
 @EntityListeners(AuditingEntityListener.class)
-@Table(name = "diaReservado")
+@Table(name = "dia_reservado", schema = "public")
 @Getter
 @Setter
 @Component

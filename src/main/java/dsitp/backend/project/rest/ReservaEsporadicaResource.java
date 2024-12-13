@@ -3,7 +3,7 @@ package dsitp.backend.project.rest;
 import dsitp.backend.project.domain.Bedel;
 import dsitp.backend.project.domain.Periodo;
 import dsitp.backend.project.model.ReservaEsporadicaDTO;
-import dsitp.backend.project.model.ReservaRespuestaDTO;
+import dsitp.backend.project.model.ReservaRetornoDTO;
 import dsitp.backend.project.repos.BedelRepository;
 import dsitp.backend.project.repos.PeriodoRepository;
 import dsitp.backend.project.service.ReservaEsporadicaService;
@@ -55,10 +55,11 @@ public class ReservaEsporadicaResource {
 
     @PostMapping("/disponibilidad")
     @ApiResponse(responseCode = "200")
-    public ResponseEntity<ReservaRespuestaDTO> getDisponibilidadAulaReservaEsporadica(
+    public ResponseEntity<ReservaRetornoDTO> getDisponibilidadAulaReservaEsporadica(
             @RequestBody @Valid final ReservaEsporadicaDTO reservaEsporadicaDTO) {
-        ReservaRespuestaDTO reservaRespuestaDTO = reservaEsporadicaService.getDisponibilidadAulaReservaEsporadica(reservaEsporadicaDTO);
-        return ResponseEntity.ok(reservaRespuestaDTO);
+        ReservaRetornoDTO reservaRetornoDTO = reservaEsporadicaService
+                .getDisponibilidadAulaReservaEsporadica(reservaEsporadicaDTO);
+        return ResponseEntity.ok(reservaRetornoDTO);
     }
 
     @PostMapping

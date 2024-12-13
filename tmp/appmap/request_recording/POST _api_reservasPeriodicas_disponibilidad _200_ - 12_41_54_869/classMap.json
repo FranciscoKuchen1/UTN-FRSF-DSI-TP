@@ -1,0 +1,292 @@
+[
+  {
+    "children": [
+      {
+        "children": [
+          {
+            "children": [
+              {
+                "children": [
+                  {
+                    "children": [
+                      {
+                        "name": "isValid",
+                        "type": "function",
+                        "static": false,
+                        "location": "src/main/java/dsitp/backend/project/validation/UniqueDayAndTimeValidator.java:20"
+                      }
+                    ],
+                    "name": "UniqueDayAndTimeValidator",
+                    "type": "class"
+                  },
+                  {
+                    "children": [
+                      {
+                        "name": "isValid",
+                        "type": "function",
+                        "static": false,
+                        "location": "src/main/java/dsitp/backend/project/validation/DurationValidator.java:12"
+                      }
+                    ],
+                    "name": "DurationValidator",
+                    "type": "class"
+                  }
+                ],
+                "name": "validation",
+                "type": "package"
+              },
+              {
+                "children": [
+                  {
+                    "children": [
+                      {
+                        "name": "toInteger",
+                        "type": "function",
+                        "static": false,
+                        "location": "src/main/java/dsitp/backend/project/model/TipoAula.java:9"
+                      },
+                      {
+                        "name": "values",
+                        "type": "function",
+                        "static": true,
+                        "location": "src/main/java/dsitp/backend/project/model/TipoAula.java:3"
+                      },
+                      {
+                        "name": "fromInteger",
+                        "type": "function",
+                        "static": true,
+                        "location": "src/main/java/dsitp/backend/project/model/TipoAula.java:13"
+                      }
+                    ],
+                    "name": "TipoAula",
+                    "type": "class"
+                  },
+                  {
+                    "children": [
+                      {
+                        "name": "fromInteger",
+                        "type": "function",
+                        "static": true,
+                        "location": "src/main/java/dsitp/backend/project/model/TipoPeriodo.java:13"
+                      },
+                      {
+                        "name": "values",
+                        "type": "function",
+                        "static": true,
+                        "location": "src/main/java/dsitp/backend/project/model/TipoPeriodo.java:3"
+                      }
+                    ],
+                    "name": "TipoPeriodo",
+                    "type": "class"
+                  }
+                ],
+                "name": "model",
+                "type": "package"
+              },
+              {
+                "children": [
+                  {
+                    "children": [
+                      {
+                        "name": "containsFirst",
+                        "type": "function",
+                        "static": true,
+                        "location": "src/main/java/dsitp/backend/project/util/Trio.java:18"
+                      },
+                      {
+                        "name": "findByFirst",
+                        "type": "function",
+                        "static": true,
+                        "location": "src/main/java/dsitp/backend/project/util/Trio.java:23"
+                      }
+                    ],
+                    "name": "Trio",
+                    "type": "class"
+                  }
+                ],
+                "name": "util",
+                "type": "package"
+              },
+              {
+                "children": [
+                  {
+                    "children": [
+                      {
+                        "name": "getDisponibilidadAulaReservaPeriodica",
+                        "type": "function",
+                        "static": false,
+                        "location": "src/main/java/dsitp/backend/project/rest/ReservaPeriodicaResource.java:61"
+                      }
+                    ],
+                    "name": "ReservaPeriodicaResource",
+                    "type": "class"
+                  }
+                ],
+                "name": "rest",
+                "type": "package"
+              },
+              {
+                "children": [
+                  {
+                    "children": [
+                      {
+                        "name": "toReservaPeriodicaEntityDisponibilidad",
+                        "type": "function",
+                        "static": false,
+                        "location": "src/main/java/dsitp/backend/project/mapper/ReservaPeriodicaMapper.java:49"
+                      },
+                      {
+                        "name": "toDiasReservados",
+                        "type": "function",
+                        "static": false,
+                        "location": "src/main/java/dsitp/backend/project/mapper/ReservaPeriodicaMapper.java:172"
+                      }
+                    ],
+                    "name": "ReservaPeriodicaMapper",
+                    "type": "class"
+                  },
+                  {
+                    "children": [
+                      {
+                        "name": "toDiaReservadoDTO",
+                        "type": "function",
+                        "static": false,
+                        "location": "src/main/java/dsitp/backend/project/mapper/DiaReservadoMapper.java:14"
+                      }
+                    ],
+                    "name": "DiaReservadoMapper",
+                    "type": "class"
+                  }
+                ],
+                "name": "mapper",
+                "type": "package"
+              },
+              {
+                "children": [
+                  {
+                    "children": [
+                      {
+                        "name": "obtenerDisponibilidad",
+                        "type": "function",
+                        "static": false,
+                        "location": "src/main/java/dsitp/backend/project/service/ReservaPeriodicaService.java:97"
+                      },
+                      {
+                        "name": "obtenerAulasConMenorSuperposicion",
+                        "type": "function",
+                        "static": false,
+                        "location": "src/main/java/dsitp/backend/project/service/ReservaPeriodicaService.java:120"
+                      },
+                      {
+                        "name": "getDisponibilidadAulaReservaPeriodica",
+                        "type": "function",
+                        "static": false,
+                        "location": "src/main/java/dsitp/backend/project/service/ReservaPeriodicaService.java:72"
+                      }
+                    ],
+                    "name": "ReservaPeriodicaService",
+                    "type": "class"
+                  }
+                ],
+                "name": "service",
+                "type": "package"
+              },
+              {
+                "children": [
+                  {
+                    "children": [
+                      {
+                        "name": "findByTipoAulaAndCapacidad",
+                        "type": "function",
+                        "static": false,
+                        "location": "src/main/java/dsitp/backend/project/repos/AulaRepository.java:-1"
+                      }
+                    ],
+                    "name": "AulaRepository",
+                    "type": "class"
+                  },
+                  {
+                    "children": [
+                      {
+                        "name": "findByIdRegistroAndEliminadoFalse",
+                        "type": "function",
+                        "static": false,
+                        "location": "src/main/java/dsitp/backend/project/repos/BedelRepository.java:-1"
+                      }
+                    ],
+                    "name": "BedelRepository",
+                    "type": "class"
+                  },
+                  {
+                    "children": [
+                      {
+                        "name": "findActivePeriodosByTipo",
+                        "type": "function",
+                        "static": false,
+                        "location": "src/main/java/dsitp/backend/project/repos/PeriodoRepository.java:-1"
+                      }
+                    ],
+                    "name": "PeriodoRepository",
+                    "type": "class"
+                  }
+                ],
+                "name": "repos",
+                "type": "package"
+              }
+            ],
+            "name": "project",
+            "type": "package"
+          }
+        ],
+        "name": "backend",
+        "type": "package"
+      }
+    ],
+    "name": "dsitp",
+    "type": "package"
+  },
+  {
+    "type": "http",
+    "name": "HTTP server requests",
+    "children": [
+      {
+        "type": "route",
+        "name": "POST /api/reservasPeriodicas/disponibilidad"
+      }
+    ]
+  },
+  {
+    "type": "database",
+    "name": "Database",
+    "children": [
+      {
+        "type": "query",
+        "name": "select p1_0.id,p1_0.date_created,p1_0.fecha_fin,p1_0.fecha_inicio,p1_0.last_updated,p1_0.tipo_periodo from periodo p1_0 where p1_0.tipo_periodo=? and p1_0.fecha_fin>=localtimestamp"
+      },
+      {
+        "type": "query",
+        "name": "select b1_0.id,b1_0.apellido,b1_0.contrasena,b1_0.date_created,b1_0.id_registro,b1_0.last_updated,b1_0.nombre,b1_0.eliminado,b1_0.tipo_turno from bedel b1_0 where b1_0.id_registro=? and not(b1_0.eliminado)"
+      },
+      {
+        "type": "query",
+        "name": "select r1_0.id_bedel,r1_0.id,r1_0.clazz_,r1_0.apellido_docente,r1_0.cant_alumnos,r1_0.correo_docente,r1_0.date_created,r1_0.id_catedra,r1_0.id_docente,r1_0.last_updated,r1_0.nombre_catedra,r1_0.nombre_docente,r1_0.tipo_aula,p1_0.id,p1_0.date_created,p1_0.fecha_fin,p1_0.fecha_inicio,p1_0.last_updated,p1_0.tipo_periodo from (select id, apellido_docente, cant_alumnos, correo_docente, date_created, id_catedra, id_docente, last_updated, nombre_catedra, nombre_docente, tipo_aula, id_bedel, cast(null as integer) as id_periodo, 1 as clazz_ from reserva_esporadica union all select id, apellido_docente, cant_alumnos, correo_docente, date_created, id_catedra, id_docente, last_updated, nombre_catedra, nombre_docente, tipo_aula, id_bedel, id_periodo, 2 as clazz_ from reserva_periodica) r1_0 left join periodo p1_0 on p1_0.id=r1_0.id_periodo where r1_0.id_bedel=?"
+      },
+      {
+        "type": "query",
+        "name": "select dr1_0.id_reserva,dr1_0.id,a1_0.numero,a1_0.tipo_aula,a1_0.capacidad,a1_0.date_created,a1_0.last_updated,a1_0.nombre,a1_0.piso,a1_0.tiene_aire_acondicionado,a1_0.tipo_pizarron,a1_0.cantidadpcs,a1_0.tiene_canon,a1_0.tiene_computadora,a1_0.tiene_televisor,a1_0.tiene_ventiladores,dr1_0.date_created,dr1_0.duracion,dr1_0.fecha_reserva,dr1_0.hora_inicio,dr1_0.last_updated from dia_reservado dr1_0 left join aula a1_0 on a1_0.numero=dr1_0.id_aula where dr1_0.id_reserva=?"
+      },
+      {
+        "type": "query",
+        "name": "SELECT * FROM aula WHERE tipo_aula = ? AND capacidad >= ?"
+      }
+    ]
+  },
+  {
+    "type": "class",
+    "children": [
+      {
+        "type": "function"
+      }
+    ]
+  }
+]

@@ -1,0 +1,12 @@
+[
+  "dsitp/backend/project/mapper/DiaReservadoMapper",
+  "dsitp/backend/project/mapper/ReservaPeriodicaMapper",
+  "dsitp/backend/project/model/TipoAula",
+  "dsitp/backend/project/model/TipoPeriodo",
+  "dsitp/backend/project/repos/BedelRepository",
+  "dsitp/backend/project/repos/PeriodoRepository",
+  "dsitp/backend/project/rest/ReservaPeriodicaResource",
+  "dsitp/backend/project/service/ReservaPeriodicaService",
+  "dsitp/backend/project/validation/DurationValidator",
+  "dsitp/backend/project/validation/UniqueDayAndTimeValidator"
+]

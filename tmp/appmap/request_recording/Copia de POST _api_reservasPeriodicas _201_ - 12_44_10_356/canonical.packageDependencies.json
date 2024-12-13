@@ -1,0 +1,46 @@
+[
+  {
+    "caller": "HTTP server requests",
+    "callee": "dsitp/backend/project/rest"
+  },
+  {
+    "caller": "dsitp/backend/project/mapper",
+    "callee": "dsitp/backend/project/model"
+  },
+  {
+    "caller": "dsitp/backend/project/mapper",
+    "callee": "dsitp/backend/project/repos"
+  },
+  {
+    "caller": "dsitp/backend/project/mapper",
+    "callee": "dsitp/backend/project/validation"
+  },
+  {
+    "caller": "dsitp/backend/project/repos",
+    "callee": "Database"
+  },
+  {
+    "caller": "dsitp/backend/project/rest",
+    "callee": ""
+  },
+  {
+    "caller": "dsitp/backend/project/rest",
+    "callee": "Database"
+  },
+  {
+    "caller": "dsitp/backend/project/rest",
+    "callee": "dsitp/backend/project/service"
+  },
+  {
+    "caller": "dsitp/backend/project/rest",
+    "callee": "dsitp/backend/project/validation"
+  },
+  {
+    "caller": "dsitp/backend/project/service",
+    "callee": "Database"
+  },
+  {
+    "caller": "dsitp/backend/project/service",
+    "callee": "dsitp/backend/project/mapper"
+  }
+]
