@@ -1,9 +1,7 @@
 import {Component, OnInit, ViewEncapsulation} from '@angular/core';
 import {FormBuilder, UntypedFormGroup, Validators} from "@angular/forms";
 import {Select} from "../../../interfaces/select";
-import {Dia} from "../../../interfaces/dias";
 import {Aula} from "../../../interfaces/aula";
-import {Fecha} from "../../../interfaces/fecha";
 import {HttpClient} from "@angular/common/http";
 import {AlertService} from "../../../services/alert/alert.service";
 import {Router} from "@angular/router";
@@ -83,64 +81,9 @@ export class RegistrarReservaEsporadicaComponent implements OnInit{
 
   disabledAgregar: boolean = false;
 
-  opcionesAulas: Aula[] = [
-    {
-      nombre: 'Nombre aula 1',
-      ubicacion: 'Ubicacion aula 1',
-      capacidad: 'Capacidad aula 1',
-      caracteristicas: 'Caracteristicas aula 1'
-    },
-    {
-      nombre: 'Nombre aula 2',
-      ubicacion: 'Ubicacion aula 2',
-      capacidad: 'Capacidad aula 2',
-      caracteristicas: 'Caracteristicas aula 2'
-    },
-    {
-      nombre: 'Nombre aula 3',
-      ubicacion: 'Ubicacion aula 3',
-      capacidad: 'Capacidad aula 3',
-      caracteristicas: 'Caracteristicas aula 3'
-    }
-  ];
+  opcionesAulas: Aula[] = [];
 
-  opcionesAulas2: Aula[] = [
-    {
-      nombre: 'Nombre aula 12',
-      ubicacion: 'Ubicacion aula 12',
-      capacidad: 'Capacidad aula 12',
-      caracteristicas: 'Caracteristicas aula 12'
-    },
-    {
-      nombre: 'Nombre aula 22',
-      ubicacion: 'Ubicacion aula 22',
-      capacidad: 'Capacidad aula 22',
-      caracteristicas: 'Caracteristicas aula 22'
-    },
-    {
-      nombre: 'Nombre aula 32',
-      ubicacion: 'Ubicacion aula 32',
-      capacidad: 'Capacidad aula 32',
-      caracteristicas: 'Caracteristicas aula 32'
-    }
-  ];
-
-
-  fechasDisponibles: Fecha[] = [
-    {fecha: '12/12/12' , aulasDisponibles: this.opcionesAulas, aulaSeleccionada: null},
-    {fecha: '13/12/12' , aulasDisponibles: this.opcionesAulas2, aulaSeleccionada: null},
-    {fecha: '14/12/12' , aulasDisponibles: this.opcionesAulas, aulaSeleccionada: null},
-    {fecha: '15/12/12' , aulasDisponibles: this.opcionesAulas2, aulaSeleccionada: null},
-    {fecha: '16/12/12' , aulasDisponibles: this.opcionesAulas, aulaSeleccionada: null},
-    {fecha: '17/12/12' , aulasDisponibles: this.opcionesAulas2, aulaSeleccionada: null},
-    {fecha: '18/12/12' , aulasDisponibles: this.opcionesAulas, aulaSeleccionada: null},
-    {fecha: '19/12/12' , aulasDisponibles: this.opcionesAulas2, aulaSeleccionada: null},
-    {fecha: '20/12/12' , aulasDisponibles: this.opcionesAulas, aulaSeleccionada: null},
-    {fecha: '21/12/12' , aulasDisponibles: this.opcionesAulas2, aulaSeleccionada: null},
-    {fecha: '22/12/12' , aulasDisponibles: this.opcionesAulas, aulaSeleccionada: null},
-    {fecha: '23/12/12' , aulasDisponibles: this.opcionesAulas2, aulaSeleccionada: null},
-    {fecha: '24/12/12' , aulasDisponibles: this.opcionesAulas, aulaSeleccionada: null},
-  ];
+  fechasDisponibles: any[];
 
   constructor(
     private formBuilder: FormBuilder,

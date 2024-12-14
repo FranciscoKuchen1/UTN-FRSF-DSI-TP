@@ -1,13 +1,13 @@
-import {Component, OnInit, ViewEncapsulation} from '@angular/core';
+import {Component, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
 import {FormBuilder, UntypedFormGroup, Validators} from "@angular/forms";
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {AlertService} from "../../../services/alert/alert.service";
 import {Router} from "@angular/router";
 import {Select} from "../../../interfaces/select";
 import {Dia} from "../../../interfaces/dias";
 import {Aula} from "../../../interfaces/aula";
-import {Fecha} from "../../../interfaces/fecha";
 import {Docente} from "../../../interfaces/docente";
+import {MatStepper} from "@angular/material/stepper";
 
 @Component({
   selector: 'app-registrar-reserva-periodica',
@@ -16,6 +16,8 @@ import {Docente} from "../../../interfaces/docente";
   encapsulation: ViewEncapsulation.None,
 })
 export class RegistrarReservaPeriodicaComponent implements OnInit{
+
+  @ViewChild(MatStepper) stepper: MatStepper;
 
   registrarReservaForm: UntypedFormGroup;
   registrarAulasForm: UntypedFormGroup;
@@ -88,6 +90,7 @@ export class RegistrarReservaPeriodicaComponent implements OnInit{
     {id: 6, name: '210'},
     {id: 7, name: '240'},
   ];
+  tiposPizarrones: Select[] = [{id: 0, name: 'Pizarron verde'}, {id: 1, name: 'Pizarron blanco'}];
   dias: Dia[] = [
     {dia: 7, name: 'Domingo', value: false, horaInicio: null, duracion: null},
     {dia: 1, name: 'Lunes', value: false, horaInicio: null, duracion: null},
@@ -97,68 +100,11 @@ export class RegistrarReservaPeriodicaComponent implements OnInit{
     {dia: 5, name: 'Viernes', value: false, horaInicio: null, duracion: null},
     {dia: 6, name: 'Sabado', value: false, horaInicio: null, duracion: null}];
   todosValidos: boolean = false;
+  disableRegistrar: boolean = false;
 
-  fechaSeleccionada: string;
-  aulasDisponiblesPorFecha: Aula[];
-
-  opcionesAulas: Aula[] = [
-    {
-      nombre: 'Nombre aula 1',
-      ubicacion: 'Ubicacion aula 1',
-      capacidad: 'Capacidad aula 1',
-      caracteristicas: 'Caracteristicas aula 1'
-    },
-    {
-      nombre: 'Nombre aula 2',
-      ubicacion: 'Ubicacion aula 2',
-      capacidad: 'Capacidad aula 2',
-      caracteristicas: 'Caracteristicas aula 2'
-    },
-    {
-      nombre: 'Nombre aula 3',
-      ubicacion: 'Ubicacion aula 3',
-      capacidad: 'Capacidad aula 3',
-      caracteristicas: 'Caracteristicas aula 3'
-    }
-  ];
-
-  opcionesAulas2: Aula[] = [
-    {
-      nombre: 'Nombre aula 12',
-      ubicacion: 'Ubicacion aula 12',
-      capacidad: 'Capacidad aula 12',
-      caracteristicas: 'Caracteristicas aula 12'
-    },
-    {
-      nombre: 'Nombre aula 22',
-      ubicacion: 'Ubicacion aula 22',
-      capacidad: 'Capacidad aula 22',
-      caracteristicas: 'Caracteristicas aula 22'
-    },
-    {
-      nombre: 'Nombre aula 32',
-      ubicacion: 'Ubicacion aula 32',
-      capacidad: 'Capacidad aula 32',
-      caracteristicas: 'Caracteristicas aula 32'
-    }
-  ];
-
-
-  fechasDisponibles: Fecha[] = [
-    {fecha: '12/12/12' , aulasDisponibles: this.opcionesAulas, aulaSeleccionada: null},
-    {fecha: '13/12/12' , aulasDisponibles: this.opcionesAulas2, aulaSeleccionada: null},
-    {fecha: '14/12/12' , aulasDisponibles: this.opcionesAulas, aulaSeleccionada: null},
-    {fecha: '15/12/12' , aulasDisponibles: this.opcionesAulas2, aulaSeleccionada: null},
-    {fecha: '16/12/12' , aulasDisponibles: this.opcionesAulas, aulaSeleccionada: null},
-    {fecha: '17/12/12' , aulasDisponibles: this.opcionesAulas2, aulaSeleccionada: null},
-    {fecha: '18/12/12' , aulasDisponibles: this.opcionesAulas, aulaSeleccionada: null},
-    {fecha: '19/12/12' , aulasDisponibles: this.opcionesAulas2, aulaSeleccionada: null},
-    {fecha: '20/12/12' , aulasDisponibles: this.opcionesAulas, aulaSeleccionada: null},
-    {fecha: '21/12/12' , aulasDisponibles: this.opcionesAulas2, aulaSeleccionada: null},
-    {fecha: '22/12/12' , aulasDisponibles: this.opcionesAulas, aulaSeleccionada: null},
-    {fecha: '23/12/12' , aulasDisponibles: this.opcionesAulas2, aulaSeleccionada: null},
-    {fecha: '24/12/12' , aulasDisponibles: this.opcionesAulas, aulaSeleccionada: null},
-  ];
+  opcionesAulas: Aula[] = [];
+  fechasDisponibles: any[];
+  fechaSeleccionada: any;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -189,16 +135,6 @@ export class RegistrarReservaPeriodicaComponent implements OnInit{
   }
 
   ngOnInit() {
-    /*this.registrarAulasForm.get('fechaSeleccionada')?.valueChanges.subscribe({
-      next: (value)=> {
-        if(value){
-          this.fechaSeleccionada = value;
-          const [aulasDisponibles] = this.fechasDisponibles.filter(data => data.fecha === value);
-          this.aulasDisponiblesPorFecha = aulasDisponibles.aulasDisponibles;
-        }
-      }
-    });*/
-
     this.registrarReservaForm.get('docente')?.valueChanges.subscribe({
       next: (value)=> {
         if(value){
@@ -226,6 +162,35 @@ export class RegistrarReservaPeriodicaComponent implements OnInit{
         }
       }
     });
+
+    this.registrarAulasForm.get('fechaSeleccionada')?.valueChanges.subscribe({
+      next: (value)=> {
+        if(value){
+          this.fechaSeleccionada = value[0];
+
+          if(this.fechaSeleccionada.diaReservado.idAula){
+            this.registrarAulasForm.get('aulaSeleccionada')?.patchValue([this.fechaSeleccionada.diaReservado.idAula]);
+          }else{
+            this.registrarAulasForm.get('aulaSeleccionada')?.reset();
+          }
+
+          this.opcionesAulas = this.fechaSeleccionada.aulasDisponibles;
+        }
+      }
+    });
+
+    this.registrarAulasForm.get('aulaSeleccionada')?.valueChanges.subscribe({
+      next: (value)=> {
+        if(value){
+          this.fechaSeleccionada.diaReservado.idAula = value[0];
+          this.verificarDisabled();
+        }
+      }
+    });
+  }
+
+  verificarDisabled(): void{
+    this.disableRegistrar = this.fechasDisponibles.every(data=> {return data.diaReservado.idAula});
   }
 
   diasCompletos(): boolean{
@@ -275,11 +240,32 @@ export class RegistrarReservaPeriodicaComponent implements OnInit{
     this.router.navigate([url]);
   }
 
-
   close(): void{
     this.alertService.confirm('Cancelar', 'Desea cancelar el registro de reserva?').subscribe(() => {
       this.redirect('');
     });
+  }
+
+  retrocederStep(): void{
+    this.registrarAulasForm.get('fechaSeleccionada')?.reset()
+    this.registrarAulasForm.get('aulaSeleccionada')?.reset()
+    this.fechaSeleccionada = null;
+    this.disableRegistrar = false;
+  }
+
+  listaCaracteristicas(aula: Aula): string{
+
+    const tipoAula = this.tipoAulas[aula.tipoAula].name ?? null;
+    const aireAcondicionado = aula.tieneAireAcondicionado ? 'Aire acondicionado' : null;
+    const tipoPizarron = this.tiposPizarrones[aula.tipoPizarron]?.name ?? null;
+
+    let result = [];
+
+    if (tipoAula) result.push(tipoAula);
+    if (aireAcondicionado) result.push(aireAcondicionado);
+    if (tipoPizarron) result.push(tipoPizarron);
+
+    return result.join(', ');
   }
 
   siguiente(): void{
@@ -298,16 +284,39 @@ export class RegistrarReservaPeriodicaComponent implements OnInit{
     this.registrarReservaForm.removeControl('catedra');
 
     this.http.post<any>('http://localhost:8080/api/reservasPeriodicas/disponibilidad', this.registrarReservaForm.value).subscribe({
+        next: (data)=> {
+          if(data.diasDisponibles.length !== 0 && data.diasConSolapamiento.length === 0){
+            this.fechasDisponibles = data.diasDisponibles;
+            this.stepper.next();
+
+          }else{
+            //todo cartel que devuelva errores
+            console.log('CARTEL DE ERROR PARA FECHAS NO DISPONIBLESSSSS');
+          }
+        },
         error: (value) => {
           console.log('error: ', value)
-        },
-        complete: () => {
-          console.log('entro bien')
         }
       });
   }
 
   submit(): void{
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json'
+    });
+
+    this.http.post<any>('http://localhost:8080/api/reservasPeriodicas', this.fechasDisponibles, {headers}).subscribe({
+      next: ()=> {
+
+      },
+      error: (value) => {
+        console.log('error: ', value)
+      },
+      complete: ()=> {
+        this.alertService.snackBar('Reserva realizada con exito.');
+        this.redirect('');
+      }
+    });
 
   }
 }

@@ -120,8 +120,6 @@
 
                   </div>
                 </div>
-                {{registrarReservaForm.value | json}}
-
               </div>
             </div>
 
@@ -129,7 +127,7 @@
               <button mat-button mat-raised-button matStepperPrevious (click)="close()">Cancelar</button>
 
               <div>
-                <button mat-button mat-raised-button matStepperNext color="primary"
+                <button mat-button mat-raised-button color="primary"
                         (click)="siguiente()"
                         [disabled]="registrarReservaForm.invalid || !todosValidos"
                 >
@@ -150,8 +148,11 @@
                 <div mat-subheader>Fechas disponibles:</div>
 
                 <mat-selection-list [multiple]="false" style="max-height: 440px; overflow-y: auto;" formControlName="fechaSeleccionada">
-                  <mat-list-option *ngFor="let fecha of fechasDisponibles" [value]="fecha.fecha" [color]="'primary'">
-                    <div matListItemTitle>{{fecha.fecha}}</div> <span *ngIf="fecha.aulaSeleccionada">- {{fecha.aulaSeleccionada}}</span>
+                  <mat-list-option *ngFor="let fecha of fechasDisponibles" [value]="fecha" [color]="'primary'">
+                    <div matListItemTitle>
+                      {{fecha.diaReservado.fechaReserva | date: 'dd/MM/yyyy'}} - {{fecha.diaReservado.horaInicio.substring(0,5)}}
+                      <span *ngIf="fecha.diaReservado.idAula"> <mat-icon class="green-check">check_small</mat-icon> </span>
+                    </div>
                     <mat-icon matListItemIcon>calendar_month</mat-icon>
                   </mat-list-option>
                 </mat-selection-list>
@@ -164,14 +165,16 @@
 
                 <ng-container *ngIf="fechaSeleccionada">
 
-                  <div mat-subheader>Aulas disponibles para el {{fechaSeleccionada}}:</div>
+                  <div mat-subheader>Aulas disponibles para el
+                    {{fechaSeleccionada.diaReservado.fechaReserva | date: 'dd/MM/yyyy'}} - {{fechaSeleccionada.diaReservado.horaInicio.substring(0,5)}}:
+                  </div>
 
                   <mat-selection-list [multiple]="false" formControlName="aulaSeleccionada">
-                    <mat-list-option class="aula-seleccionada" *ngFor="let aula of opcionesAulas" [value]="aula.nombre" [color]="'primary'">
+                    <mat-list-option class="aula-seleccionada" *ngFor="let aula of opcionesAulas" [value]="aula.numero" [color]="'primary'">
                       <span matListItemTitle>{{aula.nombre}}</span>
-                      <span matListItemLine>Ubicacion: {{aula.ubicacion}}</span>
-                      <span matListItemLine>Capacidad: {{aula.capacidad}}</span>
-                      <span matListItemLine>Caracteristicas: {{aula.caracteristicas}}</span>
+                      <span matListItemLine>Ubicacion: Piso {{aula.piso}}.</span>
+                      <span matListItemLine>Capacidad: {{aula.capacidad}} Personas.</span>
+                      <span matListItemLine>Caracteristicas: {{listaCaracteristicas(aula)}}.</span>
                       <br>
                     </mat-list-option>
                   </mat-selection-list>
@@ -188,8 +191,8 @@
               <button mat-button mat-raised-button (click)="close()">Cancelar</button>
 
               <div>
-                <button mat-button mat-raised-button matStepperPrevious>Atras</button>
-                <button mat-button mat-raised-button matStepperNext color="primary" (click)="submit()" [disabled]="registrarAulasForm.invalid">Registrar</button>
+                <button mat-button mat-raised-button matStepperPrevious (click)="retrocederStep()">Atras</button>
+                <button mat-button mat-raised-button matStepperNext color="primary" (click)="submit()" [disabled]="!disableRegistrar">Registrar</button>
               </div>
             </div>
           </form>
