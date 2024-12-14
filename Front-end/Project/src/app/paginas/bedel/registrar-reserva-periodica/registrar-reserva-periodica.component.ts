@@ -29,20 +29,6 @@ export class RegistrarReservaPeriodicaComponent implements OnInit{
     {id: 3, nombre: 'Carlos', apellido: 'Lopez', correo: 'carloslopezk@hotmail.com'}
   ];
   horas: Select[] = [
-    {id: 0, name: '00:00'},
-    {id: 1, name: '00:30'},
-    {id: 2, name: '01:00'},
-    {id: 3, name: '01:30'},
-    {id: 4, name: '02:00'},
-    {id: 5, name: '02:30'},
-    {id: 6, name: '03:00'},
-    {id: 7, name: '03:30'},
-    {id: 8, name: '04:00'},
-    {id: 9, name: '04:30'},
-    {id: 10, name: '05:00'},
-    {id: 11, name: '05:30'},
-    {id: 12, name: '06:00'},
-    {id: 13, name: '06:30'},
     {id: 14, name: '07:00'},
     {id: 15, name: '07:30'},
     {id: 16, name: '08:00'},
@@ -77,6 +63,20 @@ export class RegistrarReservaPeriodicaComponent implements OnInit{
     {id: 45, name: '22:30'},
     {id: 46, name: '23:00'},
     {id: 47, name: '23:30'},
+    {id: 0, name: '00:00'},
+    {id: 1, name: '00:30'},
+    {id: 2, name: '01:00'},
+    {id: 3, name: '01:30'},
+    {id: 4, name: '02:00'},
+    {id: 5, name: '02:30'},
+    {id: 6, name: '03:00'},
+    {id: 7, name: '03:30'},
+    {id: 8, name: '04:00'},
+    {id: 9, name: '04:30'},
+    {id: 10, name: '05:00'},
+    {id: 11, name: '05:30'},
+    {id: 12, name: '06:00'},
+    {id: 13, name: '06:30'},
   ];
   duraciones: Select[] = [
     {id: 0, name: '30'},
@@ -89,13 +89,13 @@ export class RegistrarReservaPeriodicaComponent implements OnInit{
     {id: 7, name: '240'},
   ];
   dias: Dia[] = [
-    {id: 7, name: 'Domingo', value: false, hora: null, duracion: null},
-    {id: 1, name: 'Lunes', value: false, hora: null, duracion: null},
-    {id: 2, name: 'Martes', value: false, hora: null, duracion: null},
-    {id: 3, name: 'Miercoles', value: false, hora: null, duracion: null},
-    {id: 4, name: 'Jueves', value: false, hora: null, duracion: null},
-    {id: 5, name: 'Viernes', value: false, hora: null, duracion: null},
-    {id: 6, name: 'Sabado', value: false, hora: null, duracion: null}];
+    {dia: 7, name: 'Domingo', value: false, horaInicio: null, duracion: null},
+    {dia: 1, name: 'Lunes', value: false, horaInicio: null, duracion: null},
+    {dia: 2, name: 'Martes', value: false, horaInicio: null, duracion: null},
+    {dia: 3, name: 'Miercoles', value: false, horaInicio: null, duracion: null},
+    {dia: 4, name: 'Jueves', value: false, horaInicio: null, duracion: null},
+    {dia: 5, name: 'Viernes', value: false, horaInicio: null, duracion: null},
+    {dia: 6, name: 'Sabado', value: false, horaInicio: null, duracion: null}];
   todosValidos: boolean = false;
 
   fechaSeleccionada: string;
@@ -167,7 +167,7 @@ export class RegistrarReservaPeriodicaComponent implements OnInit{
     private router: Router,
   ) {
     this.registrarReservaForm = this.formBuilder.group({
-      idRegistroBedel: [1],
+      idRegistroBedel: ['Clara'],
       tipoPeriodo: [null, Validators.required],
       catedra: [null, Validators.required],
       idCatedra: [null],
@@ -232,7 +232,7 @@ export class RegistrarReservaPeriodicaComponent implements OnInit{
     const diasActivados = this.dias.filter(data => data.value);
 
     if(diasActivados.length > 0){
-      return diasActivados.every(data => data.hora && data.duracion);
+      return diasActivados.every(data => data.horaInicio && data.duracion);
     }else{
       return false;
     }
@@ -252,7 +252,7 @@ export class RegistrarReservaPeriodicaComponent implements OnInit{
 
   asignarHora(dia: Dia, hora: Select, $event: any): void{
     if($event.isUserInput){
-      dia.hora = hora.name;
+      dia.horaInicio = hora.name;
 
       const dias = this.dias.filter(value => value.value && value.duracion)
       this.registrarReservaForm.get('diasSemanaHorasDuracion')?.patchValue(dias);
@@ -265,7 +265,7 @@ export class RegistrarReservaPeriodicaComponent implements OnInit{
     if($event.isUserInput){
       dia.duracion = duracion.name;
 
-      const dias = this.dias.filter(value => value.value && value.hora)
+      const dias = this.dias.filter(value => value.value && value.horaInicio)
       this.registrarReservaForm.get('diasSemanaHorasDuracion')?.patchValue(dias);
       this.todosValidos = this.diasCompletos();
     }
@@ -284,6 +284,8 @@ export class RegistrarReservaPeriodicaComponent implements OnInit{
 
   siguiente(): void{
     const temp = this.registrarReservaForm.get('diasSemanaHorasDuracion')?.value;
+    const tempCantAlumnos = this.registrarReservaForm.get('cantAlumnos')?.value;
+    this.registrarReservaForm.get('cantAlumnos')?.patchValue(parseInt(tempCantAlumnos));
 
     const newArr = temp.map((obj: Dia) => {
       const { value, name, ...rest } = obj;
@@ -291,6 +293,9 @@ export class RegistrarReservaPeriodicaComponent implements OnInit{
     });
 
     this.registrarReservaForm.get('diasSemanaHorasDuracion')?.patchValue(newArr);
+
+    this.registrarReservaForm.removeControl('docente');
+    this.registrarReservaForm.removeControl('catedra');
 
     this.http.post<any>('http://localhost:8080/api/reservasPeriodicas/disponibilidad', this.registrarReservaForm.value).subscribe({
         error: (value) => {

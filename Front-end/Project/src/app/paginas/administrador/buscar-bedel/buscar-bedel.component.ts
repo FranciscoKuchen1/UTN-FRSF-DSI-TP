@@ -45,7 +45,7 @@ export class BuscarBedelComponent implements OnInit{
 
   eliminarBedel(row: any): void{
     this.alertService.confirm('Eliminar', 'Desea eliminar el bedel?').subscribe(() => {
-      this.http.delete(`http://localhost:8080/api/bedeles/${parseInt(row.idRegistro)}`).subscribe({
+      this.http.delete(`http://localhost:8080/api/bedeles/${row.idRegistro}`).subscribe({
           next: ()=>{},
           complete: ()=> {
             this.submit();
@@ -73,9 +73,14 @@ export class BuscarBedelComponent implements OnInit{
 
     this.http.get(`http://localhost:8080/api/bedeles?${queryParams}`).subscribe({
         next: (value: any) => {
-          this.dataSource = new MatTableDataSource(value);
-          this.dataSource.paginator = this.paginator;
-          this.dataSource.sort = this.sort;
+          if(value){
+            this.dataSource = new MatTableDataSource(value);
+            this.dataSource.paginator = this.paginator;
+            this.dataSource.sort = this.sort;
+          }else{
+            this.dataSource = new MatTableDataSource();
+          }
+
         },
         error: (value) => {
           if (value.status === 400 && value.error) {

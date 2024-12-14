@@ -20,9 +20,9 @@ export class LoginComponent{
 
   submit(): void{
     if(this.rol.id === 1){
-      this.user = {user: this.username, pass: this.pass, rol: this.rol , nombre: 'Fernanda', apellido: 'Sánchez'};
+      this.user = {user: this.username, pass: this.pass, rol: this.rol , nombre: 'Alberto', apellido: 'Garcia'};
     }else{
-      this.user = {user: this.username, pass: this.pass, rol: this.rol , nombre: 'Beatriz', apellido: 'Cruz'};
+      this.user = {user: this.username, pass: this.pass, rol: this.rol , nombre: 'Clara', apellido: 'Fernandez'};
     }
 
     this.loginResult.emit(this.user);

@@ -1,9 +1,9 @@
 import {Select} from "./select";
 
 export interface Dia{
-  id: number,
+  dia: number,
   name: string,
   value: boolean,
-  hora: string | null,
+  horaInicio: string | null,
   duracion: string | null,
 }
