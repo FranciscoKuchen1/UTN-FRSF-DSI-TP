@@ -74,8 +74,7 @@ public class ReservaEsporadicaService {
         ReservaRetornoDTO reservaRetornoDTO = new ReservaRetornoDTO();
         reservaRetornoDTO.setDiasDisponibles(new ArrayList<>());
         reservaRetornoDTO.setDiasConSolapamiento(new ArrayList<>());
-        List<Aula> aulas = aulaRepository.findByTipoAulaAndCapacidad(reservaEsporadica.getCantAlumnos(),
-                reservaEsporadica.getTipoAula().toInteger());
+        List<Aula> aulas = aulaRepository.findByTipoAulaAndCapacidad(reservaEsporadica.getTipoAula().toInteger(), reservaEsporadica.getCantAlumnos());
         if (!aulas.isEmpty()) {
             for (DiaReservado diaReservado : reservaEsporadica.getDiasReservados()) {
                 List<AulaDTO> aulasDisponibles = obtenerDisponibilidad(aulas, diaReservado);

@@ -2,8 +2,6 @@ package dsitp.backend.project.rest;
 
 import dsitp.backend.project.model.BedelDTO;
 import dsitp.backend.project.service.BedelService;
-import dsitp.backend.project.util.ReferencedException;
-import dsitp.backend.project.util.ReferencedWarning;
 import dsitp.backend.project.validation.CreateGroup;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import jakarta.validation.constraints.Max;
@@ -91,10 +89,10 @@ public class BedelResource {
     @ApiResponse(responseCode = "204")
     public ResponseEntity<Void> deleteBedelLogica(@PathVariable(name = "idRegistro") final String idRegistro) {
         logger.info("Bedel es eliminado");
-        final ReferencedWarning referencedWarning = bedelService.getReferencedWarning(idRegistro);
-        if (referencedWarning != null) {
-            throw new ReferencedException(referencedWarning);
-        }
+//        final ReferencedWarning referencedWarning = bedelService.getReferencedWarning(idRegistro);
+//        if (referencedWarning != null) {
+//            throw new ReferencedException(referencedWarning);
+//        }
 
         bedelService.deleteLogico(idRegistro);
         return ResponseEntity.noContent().build();
