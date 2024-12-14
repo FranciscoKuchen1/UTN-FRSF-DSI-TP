@@ -15,6 +15,7 @@ spring:
     open-in-view: false
     properties:
       hibernate:
+        default_schema: public
         jdbc:
           lob:
             non_contextual_creation: true
@@ -34,7 +35,7 @@ spring:
           
   sql:
     init:
-      mode: always
+      mode: never
       
   depends_on:
       - postgres

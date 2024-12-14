@@ -123,6 +123,18 @@ public class BedelService {
     public void deleteLogico(final String idRegistro) {
         Bedel bedel = bedelRepository.findByIdRegistroAndEliminadoFalse(idRegistro)
                 .orElseThrow(BedelNotFoundException::new);
+        List<ReservaEsporadica> reservasEsporadicas = reservaEsporadicaRepository.findByBedel(bedel);
+        for (ReservaEsporadica reserva : reservasEsporadicas) {
+            reserva.setBedel(null);
+            reservaEsporadicaRepository.save(reserva);
+        }
+
+        List<ReservaPeriodica> reservasPeriodicas = reservaPeriodicaRepository.findByBedel(bedel);
+        for (ReservaPeriodica reserva : reservasPeriodicas) {
+            reserva.setBedel(null);
+            reservaPeriodicaRepository.save(reserva);
+        }
+
         bedel.setEliminado(true);
         bedelRepository.save(bedel);
     }

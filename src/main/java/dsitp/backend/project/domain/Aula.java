@@ -25,16 +25,17 @@ public abstract class Aula {
 
     @Id
     @Column(nullable = false, updatable = false)
-    @SequenceGenerator(
-            name = "primary_sequence",
-            sequenceName = "primary_sequence",
-            allocationSize = 1,
-            initialValue = 10000
-    )
-    @GeneratedValue(
-            strategy = GenerationType.SEQUENCE,
-            generator = "primary_sequence"
-    )
+//    @SequenceGenerator(
+//            name = "primary_sequence",
+//            sequenceName = "primary_sequence",
+//            allocationSize = 1,
+//            initialValue = 10000
+//    )
+//    @GeneratedValue(
+//            strategy = GenerationType.SEQUENCE,
+//            generator = "primary_sequence"
+//    )
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer numero;
 
     @Column(length = 100)

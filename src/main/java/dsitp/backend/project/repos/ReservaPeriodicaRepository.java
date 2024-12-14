@@ -22,4 +22,6 @@ public interface ReservaPeriodicaRepository extends JpaRepository<ReservaPeriodi
             + "AND d.fechaReserva BETWEEN :fechaInicio AND :fechaFin")
     List<ReservaPeriodica> findByAulaAndFechaInicioAndFechaFin(@Param("numeroAula") Integer numeroAula, @Param("fechaInicio") LocalDate fechaInicio, @Param("fechaFin") LocalDate fechaFin);
 
+    List<ReservaPeriodica> findByBedel(Bedel bedel);
+
 }

@@ -49,6 +49,7 @@ public abstract class Reserva {
             strategy = GenerationType.SEQUENCE,
             generator = "primary_sequence"
     )
+
     private Integer id;
 
     @Column
