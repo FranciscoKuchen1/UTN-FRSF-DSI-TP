@@ -9,19 +9,19 @@
       <div class="columns">
         <mat-form-field appearance="outline">
           <mat-label>Identificador de usuario</mat-label>
-          <input matInput formControlName="idRegistro">
+          <input matInput formControlName="idRegistro" maxlength="20">
         </mat-form-field>
 
         <mat-form-field appearance="outline">
           <mat-label>Nombre</mat-label>
-          <input matInput formControlName="nombre">
+          <input matInput formControlName="nombre" maxlength="25">
         </mat-form-field>
       </div>
 
       <div class="columns">
         <mat-form-field appearance="outline">
           <mat-label>Apellido</mat-label>
-          <input matInput formControlName="apellido">
+          <input matInput formControlName="apellido" maxlength="40">
         </mat-form-field>
 
         <mat-form-field appearance="outline">
@@ -41,7 +41,7 @@
       <div class="columns">
         <mat-form-field appearance="outline">
           <mat-label>Contraseña</mat-label>
-          <input matInput type="password" formControlName="contrasena" #pass1 (input)="checkPasswordCriteria()">
+          <input matInput type="password" formControlName="contrasena" #pass1 (input)="checkPasswordCriteria()" maxlength="20">
 
           <mat-error *ngIf="!isLengthValid">Debe tener de 6 a 20 caracteres.</mat-error>
           <mat-error *ngIf="!hasUppercase">Debe contener al menos una letra mayuscula.</mat-error>
@@ -57,7 +57,7 @@
 
         <mat-form-field appearance="outline">
           <mat-label>Confirmar contraseña</mat-label>
-          <input matInput type="password" formControlName="confirmacionContrasena" #pass2 (input)="checkPasswordCriteria()">
+          <input matInput type="password" formControlName="confirmacionContrasena" #pass2 (input)="checkPasswordCriteria()" maxlength="20">
 
           <!--<mat-error *ngIf="!isLengthValid">Debe tener de 6 a 20 caracteres.</mat-error>
           <mat-error *ngIf="!hasUppercase">Debe contener al menos una letra mayuscula.</mat-error>

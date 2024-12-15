@@ -9,6 +9,8 @@ import {Esporadica} from "../../../interfaces/esporadica";
 import {Docente} from "../../../interfaces/docente";
 import {MAT_DATE_FORMATS, MAT_DATE_LOCALE} from "@angular/material/core";
 import {MatStepper} from "@angular/material/stepper";
+import {MatDialog} from "@angular/material/dialog";
+import {RegistrarReservaDialogComponent} from "../registrar-reserva-dialog/registrar-reserva-dialog.component";
 
 export const MY_DATE_FORMATS = {
   parse: {
@@ -122,6 +124,7 @@ export class RegistrarReservaEsporadicaComponent implements OnInit{
     private http: HttpClient,
     private alertService: AlertService,
     private router: Router,
+    public dialog: MatDialog
   ) {
     this.registrarReservaForm = this.formBuilder.group({
       idRegistroBedel: ['Clara'],
@@ -152,6 +155,19 @@ export class RegistrarReservaEsporadicaComponent implements OnInit{
   }
 
   ngOnInit() {
+
+    /*this.registrarReservaForm.get('catedra')?.patchValue(this.nombreCatedras[0]);
+    this.registrarReservaForm.get('tipoAula')?.patchValue(2);
+    this.registrarReservaForm.get('cantAlumnos')?.patchValue(55);
+    this.registrarReservaForm.get('docente')?.patchValue(this.docentes[0]);
+    this.registrarReservaForm.get('correoDocente')?.patchValue(this.docentes[0].correo);
+    this.registrarReservaForm.get('diasReservadosDTO')?.patchValue([{fechaReserva: "2025-05-03", horaInicio: "11:00", duracion: 120}]);
+    this.registrarReservaForm.get('nombreCatedra')?.patchValue(this.nombreCatedras[0].name);
+    this.registrarReservaForm.get('nombreDocente')?.patchValue(this.docentes[0].nombre);
+    this.registrarReservaForm.get('apellidoDocente')?.patchValue(this.docentes[0].apellido);
+    this.registrarReservaForm.get('idCatedra')?.patchValue(this.nombreCatedras[0].id);
+    this.registrarReservaForm.get('idDocente')?.patchValue(this.docentes[0].id);*/
+
 
     this.registrarReservaForm.get('docente')?.valueChanges.subscribe({
       next: (value)=> {
@@ -254,6 +270,14 @@ export class RegistrarReservaEsporadicaComponent implements OnInit{
     this.router.navigate([url]);
   }
 
+  fechasNoDisponibles(value: any  ): void{
+
+    this.dialog.open(RegistrarReservaDialogComponent, {
+      width: '600px',
+      data: value,
+    });
+
+  }
 
   close(): void{
     this.alertService.confirm('Cancelar', 'Desea cancelar el registro de reserva?').subscribe(() => {
@@ -288,13 +312,6 @@ export class RegistrarReservaEsporadicaComponent implements OnInit{
     const tempCantAlumnos = this.registrarReservaForm.get('cantAlumnos')?.value;
     this.registrarReservaForm.get('cantAlumnos')?.patchValue(parseInt(tempCantAlumnos));
 
-    //this.registrarReservaForm.removeControl('docente');
-    //this.registrarReservaForm.removeControl('catedra');
-    //this.registrarReservaForm.removeControl('fechaAReservar');
-    //this.registrarReservaForm.removeControl('horaInicioFechaAReservar');
-    //this.registrarReservaForm.removeControl('duracionFechaAReservar');
-
-
     this.http.post<any>('http://localhost:8080/api/reservasEsporadicas/disponibilidad', this.registrarReservaForm.getRawValue()).subscribe({
       next: (data)=> {
         if(data.diasDisponibles.length !== 0 && data.diasConSolapamiento.length === 0){
@@ -302,8 +319,11 @@ export class RegistrarReservaEsporadicaComponent implements OnInit{
           this.stepper.next();
 
         }else{
-          //todo cartel que devuelva errores
-          console.log('CARTEL DE ERROR PARA FECHAS NO DISPONIBLESSSSS');
+          if(data.diasDisponibles.length === 0 && data.diasConSolapamiento.length === 0){
+            this.alertService.ok('Sin disponibilidad','No hay aulas disponibles para los datos ingresados.');
+          }else{
+            this.fechasNoDisponibles(data);
+          }
         }
       },
       error: (value) => {

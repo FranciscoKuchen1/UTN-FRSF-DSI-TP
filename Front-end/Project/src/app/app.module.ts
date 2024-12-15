@@ -38,6 +38,9 @@ import {MatDatepickerModule} from "@angular/material/datepicker";
 import {MatNativeDateModule} from "@angular/material/core";
 import {MatStepperModule} from "@angular/material/stepper";
 import {MatCheckboxModule} from "@angular/material/checkbox";
+import { RegistrarReservaDialogComponent } from './paginas/bedel/registrar-reserva-dialog/registrar-reserva-dialog.component';
+import {MatExpansionModule} from "@angular/material/expansion";
+import {MatTreeModule} from "@angular/material/tree";
 
 
 @NgModule({
@@ -55,7 +58,8 @@ import {MatCheckboxModule} from "@angular/material/checkbox";
     ListadoReservasCursoComponent,
     AlertComponent,
     ReplaceLineBreaksPipe,
-    LoginComponent
+    LoginComponent,
+    RegistrarReservaDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -84,6 +88,8 @@ import {MatCheckboxModule} from "@angular/material/checkbox";
     MatNativeDateModule,
     MatStepperModule,
     MatCheckboxModule,
+    MatExpansionModule,
+    MatTreeModule,
   ],
   providers: [provideNgxMask()],
   bootstrap: [AppComponent]

@@ -8,6 +8,8 @@ import {Dia} from "../../../interfaces/dias";
 import {Aula} from "../../../interfaces/aula";
 import {Docente} from "../../../interfaces/docente";
 import {MatStepper} from "@angular/material/stepper";
+import {RegistrarReservaDialogComponent} from "../registrar-reserva-dialog/registrar-reserva-dialog.component";
+import {MatDialog} from "@angular/material/dialog";
 
 @Component({
   selector: 'app-registrar-reserva-periodica',
@@ -112,6 +114,7 @@ export class RegistrarReservaPeriodicaComponent implements OnInit{
     private http: HttpClient,
     private alertService: AlertService,
     private router: Router,
+    public dialog: MatDialog
   ) {
     this.registrarReservaForm = this.formBuilder.group({
       idRegistroBedel: ['Clara'],
@@ -269,6 +272,15 @@ export class RegistrarReservaPeriodicaComponent implements OnInit{
     return result.join(', ');
   }
 
+  fechasNoDisponibles(value: any  ): void{
+
+    this.dialog.open(RegistrarReservaDialogComponent, {
+      width: '600px',
+      data: value,
+    });
+
+  }
+
   siguiente(): void{
     const temp = this.registrarReservaForm.get('diasSemanaHorasDuracion')?.value;
     const tempCantAlumnos = this.registrarReservaForm.get('cantAlumnos')?.value;
@@ -281,9 +293,6 @@ export class RegistrarReservaPeriodicaComponent implements OnInit{
 
     this.registrarReservaForm.get('diasSemanaHorasDuracion')?.patchValue(newArr);
 
-    //this.registrarReservaForm.removeControl('docente');
-    //this.registrarReservaForm.removeControl('catedra');
-
     this.http.post<any>('http://localhost:8080/api/reservasPeriodicas/disponibilidad', this.registrarReservaForm.value).subscribe({
         next: (data)=> {
           if(data.diasDisponibles.length !== 0 && data.diasConSolapamiento.length === 0){
@@ -291,8 +300,11 @@ export class RegistrarReservaPeriodicaComponent implements OnInit{
             this.stepper.next();
 
           }else{
-            //todo cartel que devuelva errores
-            console.log('CARTEL DE ERROR PARA FECHAS NO DISPONIBLESSSSS');
+            if(data.diasDisponibles.length === 0 && data.diasConSolapamiento.length === 0){
+              this.alertService.ok('Sin disponibilidad','No hay aulas disponibles para los datos ingresados.');
+            }else{
+              this.fechasNoDisponibles(data);
+            }
           }
         },
         error: (value) => {
