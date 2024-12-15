@@ -12,28 +12,24 @@
 
               <mat-form-field appearance="outline">
                 <mat-label>Periodo</mat-label>
-                <mat-select formControlName="periodo">
+                <mat-select formControlName="tipoPeriodo">
                   <div *ngFor="let periodo of periodos">
                     <mat-option [value]="periodo.id">{{periodo.name}}</mat-option>
                   </div>
                 </mat-select>
 
-                <button *ngIf="registrarReservaForm.get('periodo')?.value !== null" mat-icon-button matSuffix
-                        (click)="registrarReservaForm.get('periodo')?.reset(); $event.stopPropagation()">
-                  <mat-icon>close</mat-icon>
-                </button>
               </mat-form-field>
 
               <mat-form-field appearance="outline">
                 <mat-label>Nombre Catedra/Seminario/Curso</mat-label>
-                <mat-select formControlName="nombreCatedra">
+                <mat-select formControlName="catedra">
                   <div *ngFor="let catedra of nombreCatedras">
-                    <mat-option [value]="catedra.id">{{catedra.name}}</mat-option>
+                    <mat-option [value]="catedra">{{catedra.name}}</mat-option>
                   </div>
                 </mat-select>
 
-                <button *ngIf="registrarReservaForm.get('nombreCatedra')?.value !== null" mat-icon-button matSuffix
-                        (click)="registrarReservaForm.get('nombreCatedra')?.reset(); $event.stopPropagation()">
+                <button *ngIf="registrarReservaForm.get('catedra')?.value !== null" mat-icon-button matSuffix
+                        (click)="registrarReservaForm.get('catedra')?.reset(); $event.stopPropagation()">
                   <mat-icon>close</mat-icon>
                 </button>
               </mat-form-field>
@@ -54,26 +50,26 @@
 
               <mat-form-field appearance="outline">
                 <mat-label>Cantidad de alumnos</mat-label>
-                <input matInput formControlName="cantidadAlumnos" mask="0*">
+                <input matInput formControlName="cantAlumnos" mask="0*">
               </mat-form-field>
 
               <mat-form-field appearance="outline">
                 <mat-label>Nombre del docente</mat-label>
-                <mat-select formControlName="nombreDocente">
-                  <div *ngFor="let docente of nombreDocentes">
-                    <mat-option [value]="docente.id">{{docente.name}}</mat-option>
+                <mat-select formControlName="docente">
+                  <div *ngFor="let docente of docentes">
+                    <mat-option [value]="docente">{{docente.apellido | uppercase}}, {{docente.nombre}}</mat-option>
                   </div>
                 </mat-select>
 
-                <button *ngIf="registrarReservaForm.get('nombreDocente')?.value !== null" mat-icon-button matSuffix
-                        (click)="registrarReservaForm.get('nombreDocente')?.reset(); $event.stopPropagation()">
+                <button *ngIf="registrarReservaForm.get('docente')?.value !== null" mat-icon-button matSuffix
+                        (click)="registrarReservaForm.get('docente')?.reset(); $event.stopPropagation()">
                   <mat-icon>close</mat-icon>
                 </button>
               </mat-form-field>
 
               <mat-form-field appearance="outline">
                 <mat-label>Correo electronico</mat-label>
-                <input matInput formControlName="correoElectronico">
+                <input matInput formControlName="correoDocente">
               </mat-form-field>
 
             </div>
@@ -101,7 +97,7 @@
                   <mat-label>Hora de inicio</mat-label>
                   <mat-select formControlName="horaInicioFechaAReservar">
                     <div *ngFor="let hora of horas">
-                      <mat-option [value]="hora.id">
+                      <mat-option [value]="hora.name">
                         {{hora.name}}
                       </mat-option>
                     </div>
@@ -130,12 +126,12 @@
 
               <mat-list class="lista-fechas">
                 <div mat-subheader>Fechas reservadas:</div>
-                <mat-list-item class="list-item" *ngFor="let fecha of registrarReservaForm.get('fechasReservadas')?.value">
+                <mat-list-item class="list-item" *ngFor="let fecha of registrarReservaForm.get('diasReservadosDTO')?.value">
                   <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
 
                     <div style="flex-grow: 1;">
-                      <div matListItemTitle>{{fecha.fecha | date: 'dd/MM/yyyy'}}</div>
-                      <div matListItemLine style="line-height: 30px;">Hora: {{fecha.hora.name}}, Duracion: {{fecha.duracion.name}} Mins.</div>
+                      <div matListItemTitle>{{fecha.fechaReserva | date: 'dd/MM/yyyy'}}</div>
+                      <div matListItemLine style="line-height: 30px;">Hora: {{fecha.horaInicio}}, Duracion: {{fecha.duracion}} Mins.</div>
                       <mat-divider></mat-divider>
                     </div>
 
@@ -147,8 +143,6 @@
                 </mat-list-item>
               </mat-list>
 
-             <!-- {{registrarReservaForm.value | json}}-->
-
             </div>
           </div>
 
@@ -156,7 +150,9 @@
             <button mat-button mat-raised-button matStepperPrevious (click)="close()">Cancelar</button>
 
             <div>
-              <button mat-button mat-raised-button matStepperNext color="primary" (click)="siguiente()" >Siguiente</button> <!--[disabled]="registrarReservaForm.invalid || !todosValidos"-->
+              <button mat-button mat-raised-button color="primary"
+                      [disabled]="registrarReservaForm.invalid"
+                      (click)="siguiente()" >Siguiente</button>
             </div>
           </div>
 
@@ -167,13 +163,16 @@
           <ng-template matStepLabel>Aula:</ng-template>
 
           <div class="grid-container">
-            <!--<div class="primera-mitad grid-item">
+            <div class="primera-mitad grid-item border-list">
 
               <div mat-subheader>Fechas disponibles:</div>
 
               <mat-selection-list [multiple]="false" style="max-height: 440px; overflow-y: auto;" formControlName="fechaSeleccionada">
-                <mat-list-option *ngFor="let fecha of fechasDisponibles" [value]="fecha.fecha" [color]="'primary'">
-                  <div matListItemTitle>{{fecha.fecha}}</div> <span *ngIf="fecha.aulaSeleccionada">- {{fecha.aulaSeleccionada}}</span>
+                <mat-list-option *ngFor="let fecha of fechasDisponibles" [value]="fecha" [color]="'primary'">
+                  <div matListItemTitle>
+                    {{fecha.diaReservado.fechaReserva | date: 'dd/MM/yyyy'}} - {{fecha.diaReservado.horaInicio.substring(0,5)}}
+                    <span *ngIf="fecha.diaReservado.idAula"> <mat-icon class="green-check">check_small</mat-icon> </span>
+                  </div>
                   <mat-icon matListItemIcon>calendar_month</mat-icon>
                 </mat-list-option>
               </mat-selection-list>
@@ -182,25 +181,27 @@
 
             <mat-divider [vertical]="true"></mat-divider>
 
-            <div class="segunda-mitad-periodica grid-item">
+            <div class="segunda-mitad-periodica grid-item border-list">
 
               <ng-container *ngIf="fechaSeleccionada">
 
-                <div mat-subheader>Seleccionar aula para el {{fechaSeleccionada}}:</div>
+                <div mat-subheader>Aulas disponibles para el
+                  {{fechaSeleccionada.diaReservado.fechaReserva | date: 'dd/MM/yyyy'}} - {{fechaSeleccionada.diaReservado.horaInicio.substring(0,5)}}:
+                </div>
 
                 <mat-selection-list [multiple]="false" formControlName="aulaSeleccionada">
-                  <mat-list-option class="aula-seleccionada" *ngFor="let aula of opcionesAulas" [value]="aula.nombre" [color]="'primary'">
+                  <mat-list-option class="aula-seleccionada" *ngFor="let aula of opcionesAulas" [value]="aula.numero" [color]="'primary'">
                     <span matListItemTitle>{{aula.nombre}}</span>
-                    <span matListItemLine>Ubicacion: {{aula.ubicacion}}</span>
-                    <span matListItemLine>Capacidad: {{aula.capacidad}}</span>
-                    <span matListItemLine>Caracteristicas: {{aula.caracteristicas}}</span>
+                    <span matListItemLine>Ubicacion: Piso {{aula.piso}}.</span>
+                    <span matListItemLine>Capacidad: {{aula.capacidad}} Personas.</span>
+                    <span matListItemLine>Caracteristicas: {{listaCaracteristicas(aula)}}.</span>
                     <br>
                   </mat-list-option>
                 </mat-selection-list>
 
               </ng-container>
 
-            </div>-->
+            </div>
           </div>
 
           <br>
@@ -210,8 +211,8 @@
             <button mat-button mat-raised-button (click)="close()">Cancelar</button>
 
             <div>
-              <button mat-button mat-raised-button matStepperPrevious>Atras</button>
-              <button mat-button mat-raised-button matStepperNext color="primary" (click)="submit()" [disabled]="registrarAulasForm.invalid">Registrar</button>
+              <button mat-button mat-raised-button matStepperPrevious (click)="retrocederStep()">Atras</button>
+              <button mat-button mat-raised-button matStepperNext color="primary" (click)="submit()" [disabled]="!disableRegistrar">Registrar</button>
             </div>
           </div>
         </form>

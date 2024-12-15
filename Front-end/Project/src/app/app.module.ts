@@ -83,7 +83,7 @@ import {MatCheckboxModule} from "@angular/material/checkbox";
     MatDatepickerModule,
     MatNativeDateModule,
     MatStepperModule,
-    MatCheckboxModule
+    MatCheckboxModule,
   ],
   providers: [provideNgxMask()],
   bootstrap: [AppComponent]

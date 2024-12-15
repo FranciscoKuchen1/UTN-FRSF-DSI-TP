@@ -99,6 +99,7 @@ export class RegistrarReservaPeriodicaComponent implements OnInit{
     {dia: 4, name: 'Jueves', value: false, horaInicio: null, duracion: null},
     {dia: 5, name: 'Viernes', value: false, horaInicio: null, duracion: null},
     {dia: 6, name: 'Sabado', value: false, horaInicio: null, duracion: null}];
+
   todosValidos: boolean = false;
   disableRegistrar: boolean = false;
 
@@ -280,8 +281,8 @@ export class RegistrarReservaPeriodicaComponent implements OnInit{
 
     this.registrarReservaForm.get('diasSemanaHorasDuracion')?.patchValue(newArr);
 
-    this.registrarReservaForm.removeControl('docente');
-    this.registrarReservaForm.removeControl('catedra');
+    //this.registrarReservaForm.removeControl('docente');
+    //this.registrarReservaForm.removeControl('catedra');
 
     this.http.post<any>('http://localhost:8080/api/reservasPeriodicas/disponibilidad', this.registrarReservaForm.value).subscribe({
         next: (data)=> {

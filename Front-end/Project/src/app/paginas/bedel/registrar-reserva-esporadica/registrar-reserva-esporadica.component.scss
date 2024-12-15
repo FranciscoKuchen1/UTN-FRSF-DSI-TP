@@ -69,3 +69,27 @@ mat-list.lista-fechas{
 .mat-mdc-list-item.mdc-list-item--with-three-lines .mat-mdc-list-item-unscoped-content.mdc-list-item__secondary-text{
   -webkit-box-orient: unset !important;
 }
+
+.label-dia{
+  display: block;
+  width: 65px;
+}
+
+.mat-horizontal-stepper-header-container{
+  pointer-events: none;
+  cursor: not-allowed;
+}
+
+mat-list-option.aula-seleccionada{
+  align-items: center;
+  border-bottom: 1px solid #e0e0e0;
+  padding-top: 15px;
+}
+
+.border-list{
+  border: 1px solid #e0e0e0;
+}
+
+.green-check{
+  color: green;
+}

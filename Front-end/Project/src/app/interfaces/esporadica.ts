@@ -1,7 +1,7 @@
 import {Select} from "./select";
 
 export interface Esporadica{
-  fecha: Date,
-  hora: Select,
+  fechaReserva: Date,
+  horaInicio: Select,
   duracion: Select,
 }
