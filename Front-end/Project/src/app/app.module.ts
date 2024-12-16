@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import {LOCALE_ID, NgModule} from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -41,7 +41,10 @@ import {MatCheckboxModule} from "@angular/material/checkbox";
 import { RegistrarReservaDialogComponent } from './paginas/bedel/registrar-reserva-dialog/registrar-reserva-dialog.component';
 import {MatExpansionModule} from "@angular/material/expansion";
 import {MatTreeModule} from "@angular/material/tree";
+import {registerLocaleData} from "@angular/common";
+import localeEs from '@angular/common/locales/es'
 
+registerLocaleData(localeEs, 'es');
 
 @NgModule({
   declarations: [
@@ -91,7 +94,7 @@ import {MatTreeModule} from "@angular/material/tree";
     MatExpansionModule,
     MatTreeModule,
   ],
-  providers: [provideNgxMask()],
+  providers: [provideNgxMask(),{ provide: LOCALE_ID, useValue: 'es' }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
