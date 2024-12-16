@@ -34,7 +34,7 @@
 
     <mat-card appearance="outlined" class="borderTable">
       <mat-card-content>
-        <table mat-table [dataSource]="dataSource" matSort>
+        <table mat-table [dataSource]="dataSource" matSort matSortActive="apellido" matSortDirection="asc">
 
           <ng-container matColumnDef="apellido">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Apellido</th>

@@ -10,6 +10,7 @@ import {Docente} from "../../../interfaces/docente";
 import {MatStepper} from "@angular/material/stepper";
 import {RegistrarReservaDialogComponent} from "../registrar-reserva-dialog/registrar-reserva-dialog.component";
 import {MatDialog} from "@angular/material/dialog";
+import {greaterThanZeroValidator} from "../../../validators/greaterThanZero/greaterThanZero";
 
 @Component({
   selector: 'app-registrar-reserva-periodica',
@@ -123,7 +124,7 @@ export class RegistrarReservaPeriodicaComponent implements OnInit{
       idCatedra: [null],
       nombreCatedra: [null],
       tipoAula: [null, Validators.required],
-      cantAlumnos: [null, Validators.required],
+      cantAlumnos: [null, [Validators.required, greaterThanZeroValidator()]],
       docente: [null, Validators.required],
       idDocente: [null],
       nombreDocente: [null],
@@ -306,9 +307,6 @@ export class RegistrarReservaPeriodicaComponent implements OnInit{
               this.fechasNoDisponibles(data);
             }
           }
-        },
-        error: (value) => {
-          console.log('error: ', value)
         }
       });
   }
@@ -321,9 +319,6 @@ export class RegistrarReservaPeriodicaComponent implements OnInit{
     this.http.post<any>('http://localhost:8080/api/reservasPeriodicas', this.fechasDisponibles, {headers}).subscribe({
       next: ()=> {
 
-      },
-      error: (value) => {
-        console.log('error: ', value)
       },
       complete: ()=> {
         this.alertService.snackBar('Reserva realizada con exito.');

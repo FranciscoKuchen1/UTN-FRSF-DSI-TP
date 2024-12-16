@@ -80,7 +80,7 @@
 
               <mat-form-field appearance="outline">
                 <mat-label>Fecha elegida</mat-label>
-                <input matInput [matDatepicker]="picker" placeholder="DD/MM/AAAA" formControlName="fechaAReservar" readonly>
+                <input matInput [matDatepicker]="picker" [min]="minDate" placeholder="DD/MM/AAAA" formControlName="fechaAReservar" readonly>
 
                 <button *ngIf="registrarReservaForm.get('fechaAReservar')?.value !== null" mat-icon-button matSuffix
                         (click)="registrarReservaForm.get('fechaAReservar')?.reset(); $event.stopPropagation()">

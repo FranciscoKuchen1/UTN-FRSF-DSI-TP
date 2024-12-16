@@ -11,6 +11,7 @@ import {MAT_DATE_FORMATS, MAT_DATE_LOCALE} from "@angular/material/core";
 import {MatStepper} from "@angular/material/stepper";
 import {MatDialog} from "@angular/material/dialog";
 import {RegistrarReservaDialogComponent} from "../registrar-reserva-dialog/registrar-reserva-dialog.component";
+import {greaterThanZeroValidator} from "../../../validators/greaterThanZero/greaterThanZero";
 
 export const MY_DATE_FORMATS = {
   parse: {
@@ -40,6 +41,8 @@ export class RegistrarReservaEsporadicaComponent implements OnInit{
 
   registrarReservaForm: UntypedFormGroup;
   registrarAulasForm: UntypedFormGroup;
+
+  minDate: Date = new Date();
 
   periodos: Select[] = [{id: 3, name: 'Esporadico'}];
   nombreCatedras: Select[] = [{id: 1, name: 'Análisis Numérico'}, {id: 2, name: 'Física II'}, {id: 3, name: 'Probabilidad y Estadística'}];
@@ -133,7 +136,7 @@ export class RegistrarReservaEsporadicaComponent implements OnInit{
       idCatedra: [null],
       nombreCatedra: [null],
       tipoAula: [null, Validators.required],
-      cantAlumnos: [null, Validators.required],
+      cantAlumnos: [null, [Validators.required, greaterThanZeroValidator()]],
       docente: [null, Validators.required],
       idDocente: [null],
       nombreDocente: [null],
@@ -325,9 +328,6 @@ export class RegistrarReservaEsporadicaComponent implements OnInit{
             this.fechasNoDisponibles(data);
           }
         }
-      },
-      error: (value) => {
-        console.log('error: ', value)
       }
     });
 
@@ -342,9 +342,6 @@ export class RegistrarReservaEsporadicaComponent implements OnInit{
     this.http.post<any>('http://localhost:8080/api/reservasEsporadicas', this.fechasDisponibles, {headers}).subscribe({
       next: ()=> {
 
-      },
-      error: (value) => {
-        console.log('error: ', value)
       },
       complete: ()=> {
         this.alertService.snackBar('Reserva realizada con exito.');
