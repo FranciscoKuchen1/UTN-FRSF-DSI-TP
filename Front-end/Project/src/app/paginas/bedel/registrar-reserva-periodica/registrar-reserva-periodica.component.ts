@@ -1,6 +1,6 @@
 import {Component, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
 import {FormBuilder, UntypedFormGroup, Validators} from "@angular/forms";
-import {HttpClient, HttpHeaders} from "@angular/common/http";
+import {HttpClient} from "@angular/common/http";
 import {AlertService} from "../../../services/alert/alert.service";
 import {Router} from "@angular/router";
 import {Select} from "../../../interfaces/select";
@@ -8,9 +8,11 @@ import {Dia} from "../../../interfaces/dias";
 import {Aula} from "../../../interfaces/aula";
 import {Docente} from "../../../interfaces/docente";
 import {MatStepper} from "@angular/material/stepper";
-import {RegistrarReservaDialogComponent} from "../registrar-reserva-dialog/registrar-reserva-dialog.component";
 import {MatDialog} from "@angular/material/dialog";
 import {greaterThanZeroValidator} from "../../../validators/greaterThanZero/greaterThanZero";
+import {
+  RegistrarReservaPeriodicaDialogComponent
+} from "../registrar-reserva-periodica-dialog/registrar-reserva-periodica-dialog.component";
 
 @Component({
   selector: 'app-registrar-reserva-periodica',
@@ -95,13 +97,13 @@ export class RegistrarReservaPeriodicaComponent implements OnInit{
   ];
   tiposPizarrones: Select[] = [{id: 0, name: 'Pizarron verde'}, {id: 1, name: 'Pizarron blanco'}];
   dias: Dia[] = [
-    {dia: 7, name: 'Domingo', value: false, horaInicio: null, duracion: null},
-    {dia: 1, name: 'Lunes', value: false, horaInicio: null, duracion: null},
-    {dia: 2, name: 'Martes', value: false, horaInicio: null, duracion: null},
-    {dia: 3, name: 'Miercoles', value: false, horaInicio: null, duracion: null},
-    {dia: 4, name: 'Jueves', value: false, horaInicio: null, duracion: null},
-    {dia: 5, name: 'Viernes', value: false, horaInicio: null, duracion: null},
-    {dia: 6, name: 'Sabado', value: false, horaInicio: null, duracion: null}];
+    {dia: 0, name: 'Domingo', value: false, horaInicio: null, duracion: null, idAula: 0},
+    {dia: 1, name: 'Lunes', value: false, horaInicio: null, duracion: null, idAula: 0},
+    {dia: 2, name: 'Martes', value: false, horaInicio: null, duracion: null, idAula: 0},
+    {dia: 3, name: 'Miercoles', value: false, horaInicio: null, duracion: null, idAula: 0},
+    {dia: 4, name: 'Jueves', value: false, horaInicio: null, duracion: null, idAula: 0},
+    {dia: 5, name: 'Viernes', value: false, horaInicio: null, duracion: null, idAula: 0},
+    {dia: 6, name: 'Sabado', value: false, horaInicio: null, duracion: null, idAula: 0}];
 
   todosValidos: boolean = false;
   disableRegistrar: boolean = false;
@@ -130,7 +132,7 @@ export class RegistrarReservaPeriodicaComponent implements OnInit{
       nombreDocente: [null],
       apellidoDocente: [null],
       correoDocente: [null, [Validators.required, Validators.email]],
-      diasSemanaHorasDuracion: [null, Validators.required],
+      diasSemanaDTO: [null, Validators.required],
     })
 
     this.registrarAulasForm = this.formBuilder.group({
@@ -173,8 +175,8 @@ export class RegistrarReservaPeriodicaComponent implements OnInit{
         if(value){
           this.fechaSeleccionada = value[0];
 
-          if(this.fechaSeleccionada.diaReservado.idAula){
-            this.registrarAulasForm.get('aulaSeleccionada')?.patchValue([this.fechaSeleccionada.diaReservado.idAula]);
+          if(this.fechaSeleccionada.diaSemana.idAula){
+            this.registrarAulasForm.get('aulaSeleccionada')?.patchValue([this.fechaSeleccionada.diaSemana.idAula]);
           }else{
             this.registrarAulasForm.get('aulaSeleccionada')?.reset();
           }
@@ -187,7 +189,7 @@ export class RegistrarReservaPeriodicaComponent implements OnInit{
     this.registrarAulasForm.get('aulaSeleccionada')?.valueChanges.subscribe({
       next: (value)=> {
         if(value){
-          this.fechaSeleccionada.diaReservado.idAula = value[0];
+          this.fechaSeleccionada.diaSemana.idAula = value[0];
           this.verificarDisabled();
         }
       }
@@ -195,7 +197,7 @@ export class RegistrarReservaPeriodicaComponent implements OnInit{
   }
 
   verificarDisabled(): void{
-    this.disableRegistrar = this.fechasDisponibles.every(data=> {return data.diaReservado.idAula});
+    this.disableRegistrar = this.fechasDisponibles.every(data=> {return data.diaSemana.idAula});
   }
 
   diasCompletos(): boolean{
@@ -216,7 +218,7 @@ export class RegistrarReservaPeriodicaComponent implements OnInit{
       }
     });
 
-    this.registrarReservaForm.get('diasSemanaHorasDuracion')?.patchValue(this.dias.filter(data=> data.value));
+    this.registrarReservaForm.get('diasSemanaDTO')?.patchValue(this.dias.filter(data=> data.value));
     this.todosValidos = this.diasCompletos();
   }
 
@@ -225,7 +227,7 @@ export class RegistrarReservaPeriodicaComponent implements OnInit{
       dia.horaInicio = hora.name;
 
       const dias = this.dias.filter(value => value.value && value.duracion)
-      this.registrarReservaForm.get('diasSemanaHorasDuracion')?.patchValue(dias);
+      this.registrarReservaForm.get('diasSemanaDTO')?.patchValue(dias);
       this.todosValidos = this.diasCompletos();
 
     }
@@ -236,7 +238,7 @@ export class RegistrarReservaPeriodicaComponent implements OnInit{
       dia.duracion = duracion.name;
 
       const dias = this.dias.filter(value => value.value && value.horaInicio)
-      this.registrarReservaForm.get('diasSemanaHorasDuracion')?.patchValue(dias);
+      this.registrarReservaForm.get('diasSemanaDTO')?.patchValue(dias);
       this.todosValidos = this.diasCompletos();
     }
   }
@@ -258,6 +260,13 @@ export class RegistrarReservaPeriodicaComponent implements OnInit{
     this.disableRegistrar = false;
   }
 
+  buscarDiaId(idDia: number): any{
+
+    const diaSemana = this.dias.find(value => value.dia === idDia);
+
+    return diaSemana?.name;
+  }
+
   listaCaracteristicas(aula: Aula): string{
 
     const tipoAula = this.tipoAulas[aula.tipoAula].name ?? null;
@@ -275,7 +284,7 @@ export class RegistrarReservaPeriodicaComponent implements OnInit{
 
   fechasNoDisponibles(value: any  ): void{
 
-    this.dialog.open(RegistrarReservaDialogComponent, {
+    this.dialog.open(RegistrarReservaPeriodicaDialogComponent, {
       width: '600px',
       data: value,
     });
@@ -283,7 +292,7 @@ export class RegistrarReservaPeriodicaComponent implements OnInit{
   }
 
   siguiente(): void{
-    const temp = this.registrarReservaForm.get('diasSemanaHorasDuracion')?.value;
+    const temp = this.registrarReservaForm.get('diasSemanaDTO')?.value;
     const tempCantAlumnos = this.registrarReservaForm.get('cantAlumnos')?.value;
     this.registrarReservaForm.get('cantAlumnos')?.patchValue(parseInt(tempCantAlumnos));
 
@@ -292,16 +301,16 @@ export class RegistrarReservaPeriodicaComponent implements OnInit{
       return rest;
     });
 
-    this.registrarReservaForm.get('diasSemanaHorasDuracion')?.patchValue(newArr);
+    this.registrarReservaForm.get('diasSemanaDTO')?.patchValue(newArr);
 
-    this.http.post<any>('http://localhost:8080/api/reservasPeriodicas/disponibilidad', this.registrarReservaForm.value).subscribe({
+    this.http.post<any>('http://localhost:8080/api/reservas/disponibilidad/0', this.registrarReservaForm.value).subscribe({
         next: (data)=> {
-          if(data.diasDisponibles.length !== 0 && data.diasConSolapamiento.length === 0){
-            this.fechasDisponibles = data.diasDisponibles;
+          if(data.diasSemanaDisponibles.length !== 0 && data.diasSemanaConSolapamiento.length === 0){
+            this.fechasDisponibles = data.diasSemanaDisponibles;
             this.stepper.next();
 
           }else{
-            if(data.diasDisponibles.length === 0 && data.diasConSolapamiento.length === 0){
+            if(data.diasSemanaDisponibles.length === 0 && data.diasSemanaConSolapamiento.length === 0){
               this.alertService.ok('Sin disponibilidad','No hay aulas disponibles para los datos ingresados.');
             }else{
               this.fechasNoDisponibles(data);
@@ -312,11 +321,10 @@ export class RegistrarReservaPeriodicaComponent implements OnInit{
   }
 
   submit(): void{
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json'
-    });
 
-    this.http.post<any>('http://localhost:8080/api/reservasPeriodicas', this.fechasDisponibles, {headers}).subscribe({
+    const queryForm = {... this.registrarReservaForm.value, ...this.fechasDisponibles}
+
+    this.http.post<any>('http://localhost:8080/api/reservas/0',queryForm).subscribe({
       next: ()=> {
 
       },

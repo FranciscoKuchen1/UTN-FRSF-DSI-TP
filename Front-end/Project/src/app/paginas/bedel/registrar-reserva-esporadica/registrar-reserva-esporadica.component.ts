@@ -2,7 +2,7 @@ import {Component, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
 import {FormBuilder, UntypedFormGroup, Validators} from "@angular/forms";
 import {Select} from "../../../interfaces/select";
 import {Aula} from "../../../interfaces/aula";
-import {HttpClient, HttpHeaders} from "@angular/common/http";
+import {HttpClient} from "@angular/common/http";
 import {AlertService} from "../../../services/alert/alert.service";
 import {Router} from "@angular/router";
 import {Esporadica} from "../../../interfaces/esporadica";
@@ -10,7 +10,7 @@ import {Docente} from "../../../interfaces/docente";
 import {MAT_DATE_FORMATS, MAT_DATE_LOCALE} from "@angular/material/core";
 import {MatStepper} from "@angular/material/stepper";
 import {MatDialog} from "@angular/material/dialog";
-import {RegistrarReservaDialogComponent} from "../registrar-reserva-dialog/registrar-reserva-dialog.component";
+import {RegistrarReservaEsporadicaDialogComponent} from "../registrar-reserva-esporadica-dialog/registrar-reserva-esporadica-dialog.component";
 import {greaterThanZeroValidator} from "../../../validators/greaterThanZero/greaterThanZero";
 
 export const MY_DATE_FORMATS = {
@@ -275,7 +275,7 @@ export class RegistrarReservaEsporadicaComponent implements OnInit{
 
   fechasNoDisponibles(value: any  ): void{
 
-    this.dialog.open(RegistrarReservaDialogComponent, {
+    this.dialog.open(RegistrarReservaEsporadicaDialogComponent, {
       width: '600px',
       data: value,
     });
@@ -315,14 +315,14 @@ export class RegistrarReservaEsporadicaComponent implements OnInit{
     const tempCantAlumnos = this.registrarReservaForm.get('cantAlumnos')?.value;
     this.registrarReservaForm.get('cantAlumnos')?.patchValue(parseInt(tempCantAlumnos));
 
-    this.http.post<any>('http://localhost:8080/api/reservasEsporadicas/disponibilidad', this.registrarReservaForm.getRawValue()).subscribe({
+    this.http.post<any>('http://localhost:8080/api/reservas/disponibilidad/1', this.registrarReservaForm.getRawValue()).subscribe({
       next: (data)=> {
-        if(data.diasDisponibles.length !== 0 && data.diasConSolapamiento.length === 0){
-          this.fechasDisponibles = data.diasDisponibles;
+        if(data.diasReservadosDisponibles.length !== 0 && data.diasReservadosConSolapamiento.length === 0){
+          this.fechasDisponibles = data.diasReservadosDisponibles;
           this.stepper.next();
 
         }else{
-          if(data.diasDisponibles.length === 0 && data.diasConSolapamiento.length === 0){
+          if(data.diasReservadosDisponibles.length === 0 && data.diasReservadosConSolapamiento.length === 0){
             this.alertService.ok('Sin disponibilidad','No hay aulas disponibles para los datos ingresados.');
           }else{
             this.fechasNoDisponibles(data);
@@ -335,11 +335,9 @@ export class RegistrarReservaEsporadicaComponent implements OnInit{
 
   submit(): void{
 
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json'
-    });
+    const queryForm = {... this.registrarReservaForm.getRawValue(), ...this.fechasDisponibles}
 
-    this.http.post<any>('http://localhost:8080/api/reservasEsporadicas', this.fechasDisponibles, {headers}).subscribe({
+    this.http.post<any>('http://localhost:8080/api/reservas/1', queryForm).subscribe({
       next: ()=> {
 
       },

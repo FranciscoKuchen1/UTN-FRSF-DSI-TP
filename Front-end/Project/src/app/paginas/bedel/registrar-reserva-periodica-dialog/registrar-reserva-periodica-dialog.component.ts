@@ -22,7 +22,7 @@ interface AulaConSolapamiento {
   reservaSolapada: ReservaSolapada;
 }
 
-interface DiaConSolapamiento {
+interface DiasSemanaConSolapamiento {
   diaReservado: {
     fechaReserva: string;
     horaInicio: string;
@@ -44,11 +44,12 @@ interface TreeNode {
 }
 
 @Component({
-  selector: 'app-registrar-reserva-dialog',
-  templateUrl: './registrar-reserva-dialog.component.html',
-  styleUrls: ['./registrar-reserva-dialog.component.scss']
+  selector: 'app-registrar-reserva-periodica-dialog',
+  templateUrl: './registrar-reserva-periodica-dialog.component.html',
+  styleUrls: ['./registrar-reserva-periodica-dialog.component.scss']
 })
-export class RegistrarReservaDialogComponent{
+export class RegistrarReservaPeriodicaDialogComponent {
+
   treeControl = new NestedTreeControl<TreeNode>(node => node.children);
   dataSource = new MatTreeNestedDataSource<TreeNode>();
 
@@ -57,8 +58,8 @@ export class RegistrarReservaDialogComponent{
   }
 
   private initializeTreeData(): void {
-    if (this.data && this.data.diasConSolapamiento) {
-      const treeData: TreeNode[] = this.data.diasConSolapamiento.map((dia: DiaConSolapamiento) => ({
+    if (this.data && this.data.diasSemanaConSolapamiento) {
+      const treeData: TreeNode[] = this.data.diasSemanaConSolapamiento.map((dia: DiasSemanaConSolapamiento) => ({
         name: dia.diaReservado.fechaReserva,
         children: dia.aulasConSolapamiento.map((aula: AulaConSolapamiento) => ({
           name: `${aula.aula.nombre} (${aula.aula.numero})`,

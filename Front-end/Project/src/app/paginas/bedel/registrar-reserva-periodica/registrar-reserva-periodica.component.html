@@ -150,8 +150,8 @@
                 <mat-selection-list [multiple]="false" style="max-height: 440px; overflow-y: auto;" formControlName="fechaSeleccionada">
                   <mat-list-option *ngFor="let fecha of fechasDisponibles" [value]="fecha" [color]="'primary'">
                     <div matListItemTitle>
-                      {{fecha.diaReservado.fechaReserva | date: 'dd/MM/yyyy'}} - {{fecha.diaReservado.horaInicio.substring(0,5)}}
-                      <span *ngIf="fecha.diaReservado.idAula"> <mat-icon class="green-check">check_small</mat-icon> </span>
+                      {{buscarDiaId(fecha.diaSemana.dia)}} - {{fecha.diaSemana.horaInicio.substring(0,5)}}
+                      <span *ngIf="fecha.diaSemana.idAula"> <mat-icon class="green-check">check_small</mat-icon> </span>
                     </div>
                     <mat-icon matListItemIcon>calendar_month</mat-icon>
                   </mat-list-option>
@@ -166,7 +166,7 @@
                 <ng-container *ngIf="fechaSeleccionada">
 
                   <div mat-subheader>Aulas disponibles para el
-                    {{fechaSeleccionada.diaReservado.fechaReserva | date: 'dd/MM/yyyy'}} - {{fechaSeleccionada.diaReservado.horaInicio.substring(0,5)}}:
+                    {{buscarDiaId(fechaSeleccionada.diaSemana.dia)}} - {{fechaSeleccionada.diaSemana.horaInicio.substring(0,5)}}:
                   </div>
 
                   <mat-selection-list [multiple]="false" formControlName="aulaSeleccionada">
