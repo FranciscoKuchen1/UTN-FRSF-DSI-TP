@@ -9,8 +9,6 @@ import dsitp.backend.project.mapper.DiaReservadoMapper;
 import dsitp.backend.project.mapper.ReservaEsporadicaMapper;
 import dsitp.backend.project.model.AulaDTO;
 import dsitp.backend.project.model.AulaSolapadaDTO;
-import dsitp.backend.project.model.DiaDisponibilidadDTO;
-import dsitp.backend.project.model.DiaSolapamientoDTO;
 import dsitp.backend.project.model.ReservaEsporadicaDTO;
 import dsitp.backend.project.model.ReservaRetornoDTO;
 import dsitp.backend.project.repos.AulaRepository;
@@ -68,122 +66,135 @@ public class ReservaEsporadicaService {
                 .orElseThrow(NotFoundException::new);
     }
 
-    public ReservaRetornoDTO getDisponibilidadAulaReservaEsporadica(final ReservaEsporadicaDTO reservaEsporadicaDTO) {
-        final ReservaEsporadica reservaEsporadica = reservaEsporadicaMapper
-                .toReservaEsporadicaEntity(reservaEsporadicaDTO);
-        ReservaRetornoDTO reservaRetornoDTO = new ReservaRetornoDTO();
-        reservaRetornoDTO.setDiasDisponibles(new ArrayList<>());
-        reservaRetornoDTO.setDiasConSolapamiento(new ArrayList<>());
-        List<Aula> aulas = aulaRepository.findByTipoAulaAndCapacidad(reservaEsporadica.getTipoAula().toInteger(), reservaEsporadica.getCantAlumnos());
-        if (!aulas.isEmpty()) {
-            for (DiaReservado diaReservado : reservaEsporadica.getDiasReservados()) {
-                List<AulaDTO> aulasDisponibles = obtenerDisponibilidad(aulas, diaReservado);
-                if (!aulasDisponibles.isEmpty()) {
-                    DiaDisponibilidadDTO diaDisponibilidadDTO = new DiaDisponibilidadDTO();
-                    diaDisponibilidadDTO.setDiaReservado(diaReservadoMapper.toDiaReservadoDTO(diaReservado));
-                    diaDisponibilidadDTO.setAulasDisponibles(aulasDisponibles);
-                    reservaRetornoDTO.getDiasDisponibles().add(diaDisponibilidadDTO);
-                } else {
-                    DiaSolapamientoDTO diaSolapamientoDTO = new DiaSolapamientoDTO();
-                    diaSolapamientoDTO.setDiaReservado(diaReservadoMapper.toDiaReservadoDTO(diaReservado));
-                    diaSolapamientoDTO.setAulasConSolapamiento(obtenerAulasConMenorSuperposicion(aulas, diaReservado));
-                    reservaRetornoDTO.getDiasConSolapamiento().add(diaSolapamientoDTO);
-                }
-            }
-        }
+    // public ReservaRetornoDTO getDisponibilidadAulaReservaEsporadica(final
+    // ReservaEsporadicaDTO reservaEsporadicaDTO) {
+    // final ReservaEsporadica reservaEsporadica = reservaEsporadicaMapper
+    // .toReservaEsporadicaEntity(reservaEsporadicaDTO);
+    // ReservaRetornoDTO reservaRetornoDTO = new ReservaRetornoDTO();
+    // reservaRetornoDTO.setDiasDisponibles(new ArrayList<>());
+    // reservaRetornoDTO.setDiasConSolapamiento(new ArrayList<>());
+    // List<Aula> aulas =
+    // aulaRepository.findByTipoAulaAndCapacidad(reservaEsporadica.getTipoAula().toInteger(),
+    // reservaEsporadica.getCantAlumnos());
+    // if (!aulas.isEmpty()) {
+    // for (DiaReservado diaReservado : reservaEsporadica.getDiasReservados()) {
+    // List<AulaDTO> aulasDisponibles = obtenerDisponibilidad(aulas, diaReservado);
+    // if (!aulasDisponibles.isEmpty()) {
+    // DiaDisponibilidadDTO diaDisponibilidadDTO = new DiaDisponibilidadDTO();
+    // diaDisponibilidadDTO.setDiaReservado(diaReservadoMapper.toDiaReservadoDTO(diaReservado));
+    // diaDisponibilidadDTO.setAulasDisponibles(aulasDisponibles);
+    // reservaRetornoDTO.getDiasDisponibles().add(diaDisponibilidadDTO);
+    // } else {
+    // DiaSolapamientoDTO diaSolapamientoDTO = new DiaSolapamientoDTO();
+    // diaSolapamientoDTO.setDiaReservado(diaReservadoMapper.toDiaReservadoDTO(diaReservado));
+    // diaSolapamientoDTO.setAulasConSolapamiento(obtenerAulasConMenorSuperposicion(aulas,
+    // diaReservado));
+    // reservaRetornoDTO.getDiasConSolapamiento().add(diaSolapamientoDTO);
+    // }
+    // }
+    // }
 
-        return reservaRetornoDTO;
-    }
+    // return reservaRetornoDTO;
+    // }
 
-    public List<AulaDTO> obtenerDisponibilidad(List<Aula> aulas, DiaReservado diaReservado) {
-        List<AulaDTO> aulasDisponibles = new ArrayList<>();
+    // public List<AulaDTO> obtenerDisponibilidad(List<Aula> aulas, DiaReservado
+    // diaReservado) {
+    // List<AulaDTO> aulasDisponibles = new ArrayList<>();
 
-        for (Aula aula : aulas) {
-            Boolean disponible = verificarDisponibilidad(aula, diaReservado);
-            if (disponible) {
-                aulasDisponibles.add(aulaMapper.toAulaDTO(aula));
-            }
-        }
+    // for (Aula aula : aulas) {
+    // Boolean disponible = verificarDisponibilidad(aula, diaReservado);
+    // if (disponible) {
+    // aulasDisponibles.add(aulaMapper.toAulaDTO(aula));
+    // }
+    // }
 
-        aulasDisponibles.sort(Comparator.comparing(AulaDTO::getCapacidad).reversed());
+    // aulasDisponibles.sort(Comparator.comparing(AulaDTO::getCapacidad).reversed());
 
-        return aulasDisponibles;
-    }
+    // return aulasDisponibles;
+    // }
 
-    private Boolean verificarDisponibilidad(Aula aula, DiaReservado diaReservado) {
+    // private Boolean verificarDisponibilidad(Aula aula, DiaReservado diaReservado)
+    // {
 
-        List<DiaReservado> diasReservados = diaReservadoRepository.findOverlappingDays(aula.getNumero(),
-                diaReservado.getFechaReserva(), diaReservado.getHoraInicio(),
-                diaReservado.getHoraInicio().plusMinutes(diaReservado.getDuracion()));
+    // List<DiaReservado> diasReservados =
+    // diaReservadoRepository.findOverlappingDays(aula.getNumero(),
+    // diaReservado.getFechaReserva(), diaReservado.getHoraInicio(),
+    // diaReservado.getHoraInicio().plusMinutes(diaReservado.getDuracion()));
 
-        return diasReservados.isEmpty();
-    }
+    // return diasReservados.isEmpty();
+    // }
 
-    public List<AulaSolapadaDTO> obtenerAulasConMenorSuperposicion(List<Aula> aulas, DiaReservado diaReservado) {
+    // public List<AulaSolapadaDTO> obtenerAulasConMenorSuperposicion(List<Aula>
+    // aulas, DiaReservado diaReservado) {
 
-        List<AulaSolapadaDTO> aulasSolapadasDTO = new ArrayList<>();
+    // List<AulaSolapadaDTO> aulasSolapadasDTO = new ArrayList<>();
 
-        Map<Aula, Long> aulaCantidadHorasSuper = new HashMap<>();
+    // Map<Aula, Long> aulaCantidadHorasSuper = new HashMap<>();
 
-        Map<Aula, Reserva> aulaReservaSolapada = new HashMap<>();
+    // Map<Aula, Reserva> aulaReservaSolapada = new HashMap<>();
 
-        for (Aula aula : aulas) {
-            List<DiaReservado> diasReservados = diaReservadoRepository.findPartiallyOverlappingDays(
-                    aula.getNumero(),
-                    diaReservado.getFechaReserva(),
-                    diaReservado.getHoraInicio(),
-                    diaReservado.getHoraInicio().plusMinutes(diaReservado.getDuracion()));
+    // for (Aula aula : aulas) {
+    // List<DiaReservado> diasReservados =
+    // diaReservadoRepository.findPartiallyOverlappingDays(
+    // aula.getNumero(),
+    // diaReservado.getFechaReserva(),
+    // diaReservado.getHoraInicio(),
+    // diaReservado.getHoraInicio().plusMinutes(diaReservado.getDuracion()));
 
-            Optional<DiaReservado> diaConMayorSuperposicionOptional = Optional.empty();
+    // Optional<DiaReservado> diaConMayorSuperposicionOptional = Optional.empty();
 
-            Long maxHorasSuperpuestas = 0L;
+    // Long maxHorasSuperpuestas = 0L;
 
-            for (DiaReservado dr : diasReservados) {
+    // for (DiaReservado dr : diasReservados) {
 
-                Long horasSuperpuestas = calcularHorasSuperpuestas(diaReservado, dr);
+    // Long horasSuperpuestas = calcularHorasSuperpuestas(diaReservado, dr);
 
-                if (horasSuperpuestas > maxHorasSuperpuestas) {
-                    maxHorasSuperpuestas = horasSuperpuestas;
-                    diaConMayorSuperposicionOptional = Optional.of(dr);
-                }
-            }
-            diaConMayorSuperposicionOptional.ifPresent(dia -> aulaReservaSolapada.put(aula, dia.getReserva()));
-            aulaCantidadHorasSuper.put(aula, maxHorasSuperpuestas);
-        }
+    // if (horasSuperpuestas > maxHorasSuperpuestas) {
+    // maxHorasSuperpuestas = horasSuperpuestas;
+    // diaConMayorSuperposicionOptional = Optional.of(dr);
+    // }
+    // }
+    // diaConMayorSuperposicionOptional.ifPresent(dia ->
+    // aulaReservaSolapada.put(aula, dia.getReserva()));
+    // aulaCantidadHorasSuper.put(aula, maxHorasSuperpuestas);
+    // }
 
-        Long superposicionMinima = aulaCantidadHorasSuper.values()
-                .stream()
-                .min(Long::compare)
-                .orElse(0L);
+    // Long superposicionMinima = aulaCantidadHorasSuper.values()
+    // .stream()
+    // .min(Long::compare)
+    // .orElse(0L);
 
-        List<Aula> aulasConMenorSuperposicion = aulaCantidadHorasSuper.entrySet()
-                .stream()
-                .filter(entry -> Objects.equals(entry.getValue(), superposicionMinima))
-                .map(Map.Entry::getKey)
-                .toList();
+    // List<Aula> aulasConMenorSuperposicion = aulaCantidadHorasSuper.entrySet()
+    // .stream()
+    // .filter(entry -> Objects.equals(entry.getValue(), superposicionMinima))
+    // .map(Map.Entry::getKey)
+    // .toList();
 
-        for (Aula aula : aulasConMenorSuperposicion) {
-            aulasSolapadasDTO.add(aulaMapper.toAulaSolapadaDTO(aula, aulaReservaSolapada.get(aula)));
-        }
+    // for (Aula aula : aulasConMenorSuperposicion) {
+    // aulasSolapadasDTO.add(aulaMapper.toAulaSolapadaDTO(aula,
+    // aulaReservaSolapada.get(aula)));
+    // }
 
-        return aulasSolapadasDTO;
-    }
+    // return aulasSolapadasDTO;
+    // }
 
-    private Long calcularHorasSuperpuestas(DiaReservado dia1, DiaReservado dia2) {
-        LocalTime inicio1 = dia1.getHoraInicio();
-        LocalTime fin1 = dia1.getHoraInicio().plusMinutes(dia1.getDuracion());
-        LocalTime inicio2 = dia2.getHoraInicio();
-        LocalTime fin2 = dia2.getHoraInicio().plusMinutes(dia2.getDuracion());
+    // private Long calcularHorasSuperpuestas(DiaReservado dia1, DiaReservado dia2)
+    // {
+    // LocalTime inicio1 = dia1.getHoraInicio();
+    // LocalTime fin1 = dia1.getHoraInicio().plusMinutes(dia1.getDuracion());
+    // LocalTime inicio2 = dia2.getHoraInicio();
+    // LocalTime fin2 = dia2.getHoraInicio().plusMinutes(dia2.getDuracion());
 
-        LocalTime inicioSuperposicion = inicio1.isAfter(inicio2) ? inicio1 : inicio2;
-        LocalTime finSuperposicion = fin1.isBefore(fin2) ? fin1 : fin2;
+    // LocalTime inicioSuperposicion = inicio1.isAfter(inicio2) ? inicio1 : inicio2;
+    // LocalTime finSuperposicion = fin1.isBefore(fin2) ? fin1 : fin2;
 
-        if (inicioSuperposicion.isBefore(finSuperposicion)) {
-            return Duration.between(inicioSuperposicion, finSuperposicion).toMinutes() / 60;
-        } else {
-            return 0L;
-        }
-    }
+    // if (inicioSuperposicion.isBefore(finSuperposicion)) {
+    // return Duration.between(inicioSuperposicion, finSuperposicion).toMinutes() /
+    // 60;
+    // } else {
+    // return 0L;
+    // }
+    // }
 
     public Integer create(final ReservaEsporadicaDTO reservaEsporadicaDTO) {
         final ReservaEsporadica reservaEsporadica = reservaEsporadicaMapper

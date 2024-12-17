@@ -25,7 +25,8 @@ public class ReservaEsporadicaMapper {
     private final Validator reservaEsporadicaValidator;
 
     @Autowired
-    public ReservaEsporadicaMapper(BedelRepository bedelRepository, DiaReservadoMapper diaReservadoMapper, Validator reservaEsporadicaValidator) {
+    public ReservaEsporadicaMapper(BedelRepository bedelRepository, DiaReservadoMapper diaReservadoMapper,
+            Validator reservaEsporadicaValidator) {
         this.bedelRepository = bedelRepository;
         this.diaReservadoMapper = diaReservadoMapper;
         this.reservaEsporadicaValidator = reservaEsporadicaValidator;

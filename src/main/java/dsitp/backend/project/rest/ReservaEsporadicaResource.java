@@ -53,30 +53,34 @@ public class ReservaEsporadicaResource {
         return ResponseEntity.ok(reservaEsporadicaService.get(id));
     }
 
-    @PostMapping("/disponibilidad")
-    @ApiResponse(responseCode = "200")
-    public ResponseEntity<ReservaRetornoDTO> getDisponibilidadAulaReservaEsporadica(
-            @RequestBody @Valid final ReservaEsporadicaDTO reservaEsporadicaDTO) {
-        ReservaRetornoDTO reservaRetornoDTO = reservaEsporadicaService
-                .getDisponibilidadAulaReservaEsporadica(reservaEsporadicaDTO);
-        return ResponseEntity.ok(reservaRetornoDTO);
-    }
+    // @PostMapping("/disponibilidad")
+    // @ApiResponse(responseCode = "200")
+    // public ResponseEntity<ReservaRetornoDTO>
+    // getDisponibilidadAulaReservaEsporadica(
+    // @RequestBody @Valid final ReservaEsporadicaDTO reservaEsporadicaDTO) {
+    // ReservaRetornoDTO reservaRetornoDTO = reservaEsporadicaService
+    // .getDisponibilidadAulaReservaEsporadica(reservaEsporadicaDTO);
+    // return ResponseEntity.ok(reservaRetornoDTO);
+    // }
 
     @PostMapping
     @ApiResponse(responseCode = "201")
     public ResponseEntity<Integer> createReservaEsporadica(
             @RequestBody @Valid final ReservaEsporadicaDTO reservaEsporadicaDTO) {
+
         final Integer createdId = reservaEsporadicaService.create(reservaEsporadicaDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdId);
+
     }
 
     @PutMapping("/{id}")
     @ApiResponse(responseCode = "200")
-    public ResponseEntity<Integer> updateReservaEsporadica(
-            @PathVariable(name = "id") final Integer id,
+    public ResponseEntity<Integer> updateReservaEsporadica(@PathVariable(name = "id") final Integer id,
             @RequestBody @Valid final ReservaEsporadicaDTO reservaEsporadicaDTO) {
+
         reservaEsporadicaService.update(id, reservaEsporadicaDTO);
         return ResponseEntity.ok(id);
+
     }
 
     @DeleteMapping("/{id}")

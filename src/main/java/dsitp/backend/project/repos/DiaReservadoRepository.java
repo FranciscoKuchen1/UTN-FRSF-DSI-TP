@@ -12,28 +12,24 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface DiaReservadoRepository extends JpaRepository<DiaReservado, Integer> {
 
-    @Query(value = "SELECT * FROM dia_reservado dr "
-            + "WHERE dr.id_aula = :idAula "
-            + "AND dr.fecha_reserva = :fechaReserva "
-            + "AND (:horaInicio < dr.hora_inicio + make_interval(secs => dr.duracion * 60) OR dr.hora_inicio < :horaFin)",
-            nativeQuery = true)
-    List<DiaReservado> findOverlappingDays(
-            @Param("idAula") Integer idAula,
-            @Param("fechaReserva") LocalDate fechaReserva,
-            @Param("horaInicio") LocalTime horaInicio,
-            @Param("horaFin") LocalTime horaFin
-    );
+        @Query(value = "SELECT * FROM dia_reservado dr "
+                        + "WHERE dr.id_aula = :idAula "
+                        + "AND dr.fecha_reserva = :fechaReserva "
+                        + "AND (:horaInicio < dr.hora_inicio + make_interval(secs => dr.duracion * 60) OR dr.hora_inicio < :horaFin)", nativeQuery = true)
+        List<DiaReservado> findOverlappingDays(
+                        @Param("idAula") Integer idAula,
+                        @Param("fechaReserva") LocalDate fechaReserva,
+                        @Param("horaInicio") LocalTime horaInicio,
+                        @Param("horaFin") LocalTime horaFin);
 
-    @Query(value = "SELECT * FROM dia_reservado dr "
-            + "WHERE dr.id_aula = :idAula "
-            + "AND dr.fecha_reserva = :fechaReserva "
-            + "AND (:horaInicio < dr.hora_inicio + make_interval(secs => dr.duracion * 60) OR dr.hora_inicio < :horaFin) "
-            + "AND NOT (dr.hora_inicio <= :horaInicio AND :horaFin <= dr.hora_inicio + make_interval(secs => dr.duracion * 60))",
-            nativeQuery = true)
-    List<DiaReservado> findPartiallyOverlappingDays(
-            @Param("idAula") Integer idAula,
-            @Param("fechaReserva") LocalDate fechaReserva,
-            @Param("horaInicio") LocalTime horaInicio,
-            @Param("horaFin") LocalTime horaFin
-    );
+        @Query(value = "SELECT * FROM dia_reservado dr "
+                        + "WHERE dr.id_aula = :idAula "
+                        + "AND dr.fecha_reserva = :fechaReserva "
+                        + "AND (:horaInicio < dr.hora_inicio + make_interval(secs => dr.duracion * 60) OR dr.hora_inicio < :horaFin) "
+                        + "AND NOT (dr.hora_inicio <= :horaInicio AND :horaFin <= dr.hora_inicio + make_interval(secs => dr.duracion * 60))", nativeQuery = true)
+        List<DiaReservado> findPartiallyOverlappingDays(
+                        @Param("idAula") Integer idAula,
+                        @Param("fechaReserva") LocalDate fechaReserva,
+                        @Param("horaInicio") LocalTime horaInicio,
+                        @Param("horaFin") LocalTime horaFin);
 }

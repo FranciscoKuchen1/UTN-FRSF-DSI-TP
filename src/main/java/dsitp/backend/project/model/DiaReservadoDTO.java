@@ -14,8 +14,8 @@ import lombok.Setter;
 @Setter
 public class DiaReservadoDTO {
 
-//    @NotNull(message = "El id del dia reservado es obligatorio.")
-//    private Integer id;
+    // @NotNull(message = "El id del dia reservado es obligatorio.")
+    // private Integer id;
     @Future(message = "La fecha debe ser en el futuro.")
     @NotNull(message = "La fecha de reserva es obligatoria.")
     private LocalDate fechaReserva;
@@ -31,7 +31,7 @@ public class DiaReservadoDTO {
     // TODO: JSON front ver tipo de dato, si cambiar en JSON front?
     private Integer duracion;
 
-//    @NotNull(message = "El id del aula es obligatorio.")
+    // @NotNull(message = "El id del aula es obligatorio.")
     // TODO: JSON front ver de donde obtener
     private Integer idAula;
 

@@ -9,4 +9,5 @@ public class AulaSolapadaDTO {
 
     private AulaDTO aula;
     private ReservaSolapadaDTO reservaSolapada;
+
 }

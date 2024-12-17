@@ -23,6 +23,18 @@
             "request": "launch",
             "mainClass": "",
             "vmArgs": "-javaagent:${userHome}/.appmap/lib/java/appmap.jar"
+        },
+        {
+            "name": "Debug Spring Boot",
+            "type": "java",
+            "request": "launch",
+            "mainClass": "dsitp.backend.project.ProjectApplication",
+            "projectName": "project",
+            "env": {
+                "SPRING_PROFILES_ACTIVE": "dev"
+            },
+            "cwd": "${workspaceFolder}",
+            "console": "integratedTerminal"
         }
     ]
 }

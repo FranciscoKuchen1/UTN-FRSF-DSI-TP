@@ -22,6 +22,7 @@ spring:
         id:
           new_generator_mappings: true
         format_sql: true
+        show-sql: true
         use_sql_comments: true
     defer-datasource-initialization: true
     

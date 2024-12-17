@@ -9,8 +9,6 @@ import dsitp.backend.project.mapper.DiaReservadoMapper;
 import dsitp.backend.project.mapper.ReservaPeriodicaMapper;
 import dsitp.backend.project.model.AulaDTO;
 import dsitp.backend.project.model.AulaSolapadaDTO;
-import dsitp.backend.project.model.DiaDisponibilidadDTO;
-import dsitp.backend.project.model.DiaSolapamientoDTO;
 import dsitp.backend.project.model.ReservaPeriodicaDTO;
 import dsitp.backend.project.model.ReservaPeriodicaSinDiasDTO;
 import dsitp.backend.project.model.ReservaRetornoDTO;
@@ -70,34 +68,36 @@ public class ReservaPeriodicaService {
                 .orElseThrow(NotFoundException::new);
     }
 
-    public ReservaRetornoDTO getDisponibilidadAulaReservaPeriodica(
-            final ReservaPeriodicaSinDiasDTO reservaPeriodicaSinDiasDTO) {
-        final ReservaPeriodica reservaPeriodica = reservaPeriodicaMapper
-                .toReservaPeriodicaEntityDisponibilidad(reservaPeriodicaSinDiasDTO);
-        ReservaRetornoDTO reservaRetornoDTO = new ReservaRetornoDTO();
-        reservaRetornoDTO.setDiasDisponibles(new ArrayList<>());
-        reservaRetornoDTO.setDiasConSolapamiento(new ArrayList<>());
-        List<Aula> aulas = aulaRepository.findByTipoAulaAndCapacidad(reservaPeriodica.getCantAlumnos(),
-                reservaPeriodica.getTipoAula().toInteger());
-        if (!aulas.isEmpty()) {
-            for (DiaReservado diaReservado : reservaPeriodica.getDiasReservados()) {
-                List<AulaDTO> aulasDisponibles = obtenerDisponibilidad(aulas, diaReservado);
-                if (!aulasDisponibles.isEmpty()) {
-                    DiaDisponibilidadDTO diaDisponibilidadDTO = new DiaDisponibilidadDTO();
-                    diaDisponibilidadDTO.setDiaReservado(diaReservadoMapper.toDiaReservadoDTO(diaReservado));
-                    diaDisponibilidadDTO.setAulasDisponibles(aulasDisponibles);
-                    reservaRetornoDTO.getDiasDisponibles().add(diaDisponibilidadDTO);
-                } else {
-                    DiaSolapamientoDTO diaSolapamientoDTO = new DiaSolapamientoDTO();
-                    diaSolapamientoDTO.setDiaReservado(diaReservadoMapper.toDiaReservadoDTO(diaReservado));
-                    diaSolapamientoDTO.setAulasConSolapamiento(obtenerAulasConMenorSuperposicion(aulas, diaReservado));
-                    reservaRetornoDTO.getDiasConSolapamiento().add(diaSolapamientoDTO);
-                }
-            }
-        }
+    // public ReservaRetornoDTO getDisponibilidadAulaReservaPeriodica(
+    // final ReservaPeriodicaSinDiasDTO reservaPeriodicaSinDiasDTO) {
+    // final ReservaPeriodica reservaPeriodica = reservaPeriodicaMapper
+    // .toReservaPeriodicaEntityDisponibilidad(reservaPeriodicaSinDiasDTO);
+    // ReservaRetornoDTO reservaRetornoDTO = new ReservaRetornoDTO();
+    // reservaRetornoDTO.setDiasDisponibles(new ArrayList<>());
+    // reservaRetornoDTO.setDiasConSolapamiento(new ArrayList<>());
+    // List<Aula> aulas =
+    // aulaRepository.findByTipoAulaAndCapacidad(reservaPeriodica.getTipoAula().toInteger(),
+    // reservaPeriodica.getCantAlumnos());
+    // if (!aulas.isEmpty()) {
+    // for (DiaReservado diaReservado : reservaPeriodica.getDiasReservados()) {
+    // List<AulaDTO> aulasDisponibles = obtenerDisponibilidad(aulas, diaReservado);
+    // if (!aulasDisponibles.isEmpty()) {
+    // DiaDisponibilidadDTO diaDisponibilidadDTO = new DiaDisponibilidadDTO();
+    // diaDisponibilidadDTO.setDiaReservado(diaReservadoMapper.toDiaReservadoDTO(diaReservado));
+    // diaDisponibilidadDTO.setAulasDisponibles(aulasDisponibles);
+    // reservaRetornoDTO.getDiasDisponibles().add(diaDisponibilidadDTO);
+    // } else {
+    // DiaSolapamientoDTO diaSolapamientoDTO = new DiaSolapamientoDTO();
+    // diaSolapamientoDTO.setDiaReservado(diaReservadoMapper.toDiaReservadoDTO(diaReservado));
+    // diaSolapamientoDTO.setAulasConSolapamiento(obtenerAulasConMenorSuperposicion(aulas,
+    // diaReservado));
+    // reservaRetornoDTO.getDiasConSolapamiento().add(diaSolapamientoDTO);
+    // }
+    // }
+    // }
 
-        return reservaRetornoDTO;
-    }
+    // return reservaRetornoDTO;
+    // }
 
     public List<AulaDTO> obtenerDisponibilidad(List<Aula> aulas, DiaReservado diaReservado) {
         List<AulaDTO> aulasDisponibles = new ArrayList<>();

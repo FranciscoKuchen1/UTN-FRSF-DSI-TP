@@ -54,14 +54,16 @@ public class ReservaPeriodicaResource {
         return ResponseEntity.ok(reservaPeriodicaService.get(id));
     }
 
-    @PostMapping("/disponibilidad")
-    @ApiResponse(responseCode = "200")
-    public ResponseEntity<ReservaRetornoDTO> getDisponibilidadAulaReservaPeriodica(
-            @RequestBody @Valid final ReservaPeriodicaSinDiasDTO reservaPeriodicaSinDiasDTO) {
-        ReservaRetornoDTO reservaRetornoDTO = reservaPeriodicaService
-                .getDisponibilidadAulaReservaPeriodica(reservaPeriodicaSinDiasDTO);
-        return ResponseEntity.ok(reservaRetornoDTO);
-    }
+    // @PostMapping("/disponibilidad")
+    // @ApiResponse(responseCode = "200")
+    // public ResponseEntity<ReservaRetornoDTO>
+    // getDisponibilidadAulaReservaPeriodica(
+    // @RequestBody @Valid final ReservaPeriodicaSinDiasDTO
+    // reservaPeriodicaSinDiasDTO) {
+    // ReservaRetornoDTO reservaRetornoDTO = reservaPeriodicaService
+    // .getDisponibilidadAulaReservaPeriodica(reservaPeriodicaSinDiasDTO);
+    // return ResponseEntity.ok(reservaRetornoDTO);
+    // }
 
     @PostMapping
     @ApiResponse(responseCode = "201")

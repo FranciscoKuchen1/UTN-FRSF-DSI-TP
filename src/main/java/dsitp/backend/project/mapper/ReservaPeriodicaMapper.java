@@ -36,7 +36,9 @@ public class ReservaPeriodicaMapper {
     private final Validator diaReservadoValidator;
 
     @Autowired
-    public ReservaPeriodicaMapper(final PeriodoRepository periodoRepository, final BedelRepository bedelRepository, final DiaReservadoMapper diaReservadoMapper, final Validator reservaPeriodicaValidator, final Validator diaReservadoValidator) {
+    public ReservaPeriodicaMapper(final PeriodoRepository periodoRepository, final BedelRepository bedelRepository,
+            final DiaReservadoMapper diaReservadoMapper, final Validator reservaPeriodicaValidator,
+            final Validator diaReservadoValidator) {
         this.periodoRepository = periodoRepository;
         this.bedelRepository = bedelRepository;
         this.diaReservadoMapper = diaReservadoMapper;
@@ -44,51 +46,56 @@ public class ReservaPeriodicaMapper {
         this.diaReservadoValidator = diaReservadoValidator;
     }
 
-    public ReservaPeriodica toReservaPeriodicaEntityDisponibilidad(ReservaPeriodicaSinDiasDTO reservaPeriodicaSinDiasDTO) {
+    // public ReservaPeriodica
+    // toReservaPeriodicaEntityDisponibilidad(ReservaPeriodicaSinDiasDTO
+    // reservaPeriodicaSinDiasDTO) {
 
-        ReservaPeriodica reservaPeriodica = new ReservaPeriodica();
-        reservaPeriodica.setIdCatedra(reservaPeriodicaSinDiasDTO.getIdCatedra());
-        reservaPeriodica.setNombreCatedra(reservaPeriodicaSinDiasDTO.getNombreCatedra());
-        reservaPeriodica.setIdDocente(reservaPeriodicaSinDiasDTO.getIdDocente());
-        reservaPeriodica.setNombreDocente(reservaPeriodicaSinDiasDTO.getNombreDocente());
-        reservaPeriodica.setApellidoDocente(reservaPeriodicaSinDiasDTO.getApellidoDocente());
-        reservaPeriodica.setCorreoDocente(reservaPeriodicaSinDiasDTO.getCorreoDocente());
-        reservaPeriodica.setCantAlumnos(reservaPeriodicaSinDiasDTO.getCantAlumnos());
-        reservaPeriodica.setTipoAula(TipoAula.fromInteger(reservaPeriodicaSinDiasDTO.getTipoAula()));
+    // ReservaPeriodica reservaPeriodica = new ReservaPeriodica();
+    // reservaPeriodica.setIdCatedra(reservaPeriodicaSinDiasDTO.getIdCatedra());
+    // reservaPeriodica.setNombreCatedra(reservaPeriodicaSinDiasDTO.getNombreCatedra());
+    // reservaPeriodica.setIdDocente(reservaPeriodicaSinDiasDTO.getIdDocente());
+    // reservaPeriodica.setNombreDocente(reservaPeriodicaSinDiasDTO.getNombreDocente());
+    // reservaPeriodica.setApellidoDocente(reservaPeriodicaSinDiasDTO.getApellidoDocente());
+    // reservaPeriodica.setCorreoDocente(reservaPeriodicaSinDiasDTO.getCorreoDocente());
+    // reservaPeriodica.setCantAlumnos(reservaPeriodicaSinDiasDTO.getCantAlumnos());
+    // reservaPeriodica.setTipoAula(TipoAula.fromInteger(reservaPeriodicaSinDiasDTO.getTipoAula()));
 
-        Periodo periodo = periodoRepository.findActivePeriodosByTipo(TipoPeriodo.fromInteger(reservaPeriodicaSinDiasDTO.getTipoPeriodo())).getFirst();
-        reservaPeriodica.setPeriodo(periodo);
+    // Periodo periodo =
+    // periodoRepository.findActivePeriodosByTipo(TipoPeriodo.fromInteger(reservaPeriodicaSinDiasDTO.getTipoPeriodo())).getFirst();
+    // reservaPeriodica.setPeriodo(periodo);
 
-        List<DiaReservado> diasReservados = toDiasReservados(
-                // TODO: ver si podemos hacer que el tipoPeriodo Anual se divida en 2?
-                periodo,
-                reservaPeriodicaSinDiasDTO.getDiasSemanaHorasDuracion(),
-                reservaPeriodica
-        );
-        reservaPeriodica.setDiasReservados(diasReservados);
+    // List<DiaReservado> diasReservados = toDiasReservados(
+    // // TODO: ver si podemos hacer que el tipoPeriodo Anual se divida en 2?
+    // periodo,
+    // reservaPeriodicaSinDiasDTO.getDiasSemanaHorasDuracion(),
+    // reservaPeriodica
+    // );
+    // reservaPeriodica.setDiasReservados(diasReservados);
 
-        Bedel bedel = bedelRepository.findByIdRegistroAndEliminadoFalse(reservaPeriodicaSinDiasDTO.getIdRegistroBedel())
-                .orElseThrow(() -> new NotFoundException("Bedel no encontrado"));
-        reservaPeriodica.setBedel(bedel);
+    // Bedel bedel =
+    // bedelRepository.findByIdRegistroAndEliminadoFalse(reservaPeriodicaSinDiasDTO.getIdRegistroBedel())
+    // .orElseThrow(() -> new NotFoundException("Bedel no encontrado"));
+    // reservaPeriodica.setBedel(bedel);
 
-        BindingResult bindingResult = new BeanPropertyBindingResult(reservaPeriodica, "reservaPeriodica");
-        reservaPeriodicaValidator.validate(reservaPeriodica, bindingResult);
+    // BindingResult bindingResult = new BeanPropertyBindingResult(reservaPeriodica,
+    // "reservaPeriodica");
+    // reservaPeriodicaValidator.validate(reservaPeriodica, bindingResult);
 
-        if (bindingResult.hasErrors()) {
+    // if (bindingResult.hasErrors()) {
 
-            StringBuilder errorMessages = new StringBuilder();
-            bindingResult.getAllErrors().forEach(error -> {
-                String errorMessage = error.getDefaultMessage();
-                if (errorMessage != null) {
-                    errorMessages.append(errorMessage).append("\n");
-                }
-            });
+    // StringBuilder errorMessages = new StringBuilder();
+    // bindingResult.getAllErrors().forEach(error -> {
+    // String errorMessage = error.getDefaultMessage();
+    // if (errorMessage != null) {
+    // errorMessages.append(errorMessage).append("\n");
+    // }
+    // });
 
-            throw new IllegalArgumentException(errorMessages.toString());
-        }
+    // throw new IllegalArgumentException(errorMessages.toString());
+    // }
 
-        return reservaPeriodica;
-    }
+    // return reservaPeriodica;
+    // }
 
     public ReservaPeriodica toReservaPeriodicaEntity(ReservaPeriodicaDTO reservaPeriodicaDTO) {
 
@@ -102,7 +109,8 @@ public class ReservaPeriodicaMapper {
         reservaPeriodica.setCantAlumnos(reservaPeriodicaDTO.getCantAlumnos());
         reservaPeriodica.setTipoAula(TipoAula.fromInteger(reservaPeriodicaDTO.getTipoAula()));
 
-        Periodo periodo = periodoRepository.findActivePeriodosByTipo(TipoPeriodo.fromInteger(reservaPeriodicaDTO.getTipoPeriodo())).getFirst();
+        Periodo periodo = periodoRepository
+                .findActivePeriodosByTipo(TipoPeriodo.fromInteger(reservaPeriodicaDTO.getTipoPeriodo())).getFirst();
         reservaPeriodica.setPeriodo(periodo);
 
         List<DiaReservado> diasReservados = new ArrayList<>();
@@ -167,7 +175,8 @@ public class ReservaPeriodicaMapper {
         return reservaPeriodicaDTO;
     }
 
-    public List<DiaReservado> toDiasReservados(Periodo periodo, List<Trio<Integer, String, String>> diasSemanaHorasDuracion, ReservaPeriodica reservaPeriodica) {
+    public List<DiaReservado> toDiasReservados(Periodo periodo,
+            List<Trio<Integer, String, String>> diasSemanaHorasDuracion, ReservaPeriodica reservaPeriodica) {
 
         LocalDate fechaInicio = periodo.getFechaInicio();
         LocalDate fechaFin = periodo.getFechaFin();

@@ -8,7 +8,9 @@ import lombok.Setter;
 @Setter
 public class ReservaRetornoDTO {
 
-    private List<DiaDisponibilidadDTO> diasDisponibles;
-    private List<DiaSolapamientoDTO> diasConSolapamiento;
+    private List<DiaReservadoDisponibilidadDTO> diasReservadosDisponibles;
+    private List<DiaReservadoConSolapamientoDTO> diasReservadosConSolapamiento;
+    private List<DiaSemanaDisponibilidadDTO> diasSemanaDisponibles;
+    private List<DiaSemanaConSolapamientoDTO> diasSemanaConSolapamiento;
 
 }

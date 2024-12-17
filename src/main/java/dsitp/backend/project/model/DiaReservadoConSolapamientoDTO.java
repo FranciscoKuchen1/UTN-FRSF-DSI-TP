@@ -6,7 +6,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class DiaSolapamientoDTO {
+public class DiaReservadoConSolapamientoDTO {
 
     private DiaReservadoDTO diaReservado;
     private List<AulaSolapadaDTO> aulasConSolapamiento;
