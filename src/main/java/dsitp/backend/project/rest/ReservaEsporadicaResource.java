@@ -53,16 +53,6 @@ public class ReservaEsporadicaResource {
         return ResponseEntity.ok(reservaEsporadicaService.get(id));
     }
 
-    // @PostMapping("/disponibilidad")
-    // @ApiResponse(responseCode = "200")
-    // public ResponseEntity<ReservaRetornoDTO>
-    // getDisponibilidadAulaReservaEsporadica(
-    // @RequestBody @Valid final ReservaEsporadicaDTO reservaEsporadicaDTO) {
-    // ReservaRetornoDTO reservaRetornoDTO = reservaEsporadicaService
-    // .getDisponibilidadAulaReservaEsporadica(reservaEsporadicaDTO);
-    // return ResponseEntity.ok(reservaRetornoDTO);
-    // }
-
     @PostMapping
     @ApiResponse(responseCode = "201")
     public ResponseEntity<Integer> createReservaEsporadica(

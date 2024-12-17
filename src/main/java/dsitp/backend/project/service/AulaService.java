@@ -13,6 +13,18 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+//Imports de los MAPPERS
+import dsitp.backend.project.domain.AulaInformatica;
+import dsitp.backend.project.domain.AulaMultimedio;
+import dsitp.backend.project.domain.AulaSinRecursosAdic;
+import dsitp.backend.project.domain.Reserva;
+import dsitp.backend.project.domain.ReservaEsporadica;
+import dsitp.backend.project.domain.ReservaPeriodica;
+import dsitp.backend.project.model.AulaSolapadaDTO;
+import dsitp.backend.project.model.ReservaSolapadaDTO;
+import java.util.HashMap;
+import dsitp.backend.project.model.TipoPizarron;
+
 @Service
 @Transactional
 public class AulaService {
@@ -23,7 +35,9 @@ public class AulaService {
     private final AulaMapper aulaMapper;
 
     @Autowired
-    public AulaService(final AulaRepository aulaRepository, final AulaMapper aulaMapper, ReservaEsporadicaRepository reservaEsporadicaRepository, ReservaPeriodicaRepository reservaPeriodicaRepository) {
+    public AulaService(final AulaRepository aulaRepository, final AulaMapper aulaMapper,
+            ReservaEsporadicaRepository reservaEsporadicaRepository,
+            ReservaPeriodicaRepository reservaPeriodicaRepository) {
         this.aulaRepository = aulaRepository;
         this.aulaMapper = aulaMapper;
         this.reservaEsporadicaRepository = reservaEsporadicaRepository;

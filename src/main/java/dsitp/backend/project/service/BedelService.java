@@ -31,7 +31,10 @@ public class BedelService {
     private final Validator validator;
 
     @Autowired
-    public BedelService(final BedelRepository bedelRepository, final ReservaEsporadicaRepository reservaEsporadicaRepository, final ReservaPeriodicaRepository reservaPeriodicaRepository, final BedelMapper bedelMapper, final Validator validator) {
+    public BedelService(final BedelRepository bedelRepository,
+            final ReservaEsporadicaRepository reservaEsporadicaRepository,
+            final ReservaPeriodicaRepository reservaPeriodicaRepository, final BedelMapper bedelMapper,
+            final Validator validator) {
         this.bedelRepository = bedelRepository;
         this.reservaEsporadicaRepository = reservaEsporadicaRepository;
         this.reservaPeriodicaRepository = reservaPeriodicaRepository;
@@ -80,7 +83,8 @@ public class BedelService {
 
     public List<BedelDTO> findBedeles(Integer tipoTurno, String apellido) {
         if (tipoTurno != null && apellido != null) {
-            return bedelRepository.findByTipoTurnoAndApellidoAndEliminadoFalse(TipoTurno.fromInteger(tipoTurno), apellido).stream()
+            return bedelRepository
+                    .findByTipoTurnoAndApellidoAndEliminadoFalse(TipoTurno.fromInteger(tipoTurno), apellido).stream()
                     .map(bedel -> bedelMapper.toBedelDTO(bedel))
                     .toList();
         } else if (tipoTurno != null) {
@@ -164,6 +168,38 @@ public class BedelService {
             return referencedWarning;
         }
         return null;
+    }
+
+    public BedelDTO toBedelDTO(Bedel bedel) {
+        if (bedel == null) {
+            return null;
+        }
+
+        BedelDTO bedelDTO = new BedelDTO();
+        bedelDTO.setIdRegistro(bedel.getIdRegistro());
+        bedelDTO.setNombre(bedel.getNombre());
+        bedelDTO.setApellido(bedel.getApellido());
+        bedelDTO.setContrasena(bedel.getContrasena());
+        bedelDTO.setConfirmacionContrasena(bedel.getContrasena()); // Suponiendo que es la misma
+        bedelDTO.setTipoTurno(bedel.getTipoTurno() != null ? bedel.getTipoTurno().ordinal() : null);
+
+        return bedelDTO;
+    }
+
+    public Bedel toBedelEntity(BedelDTO bedelDTO) {
+        if (bedelDTO == null) {
+            return null;
+        }
+
+        Bedel bedel = new Bedel();
+        bedel.setIdRegistro(bedelDTO.getIdRegistro());
+        bedel.setNombre(bedelDTO.getNombre());
+        bedel.setApellido(bedelDTO.getApellido());
+        bedel.setContrasena(bedelDTO.getContrasena());
+        bedel.setEliminado(false);
+        bedel.setTipoTurno(bedelDTO.getTipoTurno() != null ? TipoTurno.values()[bedelDTO.getTipoTurno()] : null);
+
+        return bedel;
     }
 
 }

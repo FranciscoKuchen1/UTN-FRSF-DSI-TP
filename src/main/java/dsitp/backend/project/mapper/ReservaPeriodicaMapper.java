@@ -228,15 +228,4 @@ public class ReservaPeriodicaMapper {
         return diasReservados;
     }
 
-    public ReservaSolapadaDTO toReservaSolapadaDTO(ReservaPeriodica reservaPeriodica) {
-        ReservaSolapadaDTO reservaSolapadaDTO = new ReservaSolapadaDTO();
-        reservaSolapadaDTO.setNombreCatedra(reservaPeriodica.getNombreCatedra());
-        reservaSolapadaDTO.setNombreDocente(reservaPeriodica.getNombreDocente());
-        reservaSolapadaDTO.setApellidoDocente(reservaPeriodica.getApellidoDocente());
-        reservaSolapadaDTO.setCorreoDocente(reservaPeriodica.getCorreoDocente());
-        reservaSolapadaDTO.setInicioReserva(reservaPeriodica.getPeriodo().getFechaInicio());
-        reservaSolapadaDTO.setFinReserva(reservaPeriodica.getPeriodo().getFechaFin());
-
-        return reservaSolapadaDTO;
-    }
 }

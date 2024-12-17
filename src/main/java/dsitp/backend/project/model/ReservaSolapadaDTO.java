@@ -1,6 +1,8 @@
 package dsitp.backend.project.model;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -12,7 +14,7 @@ public class ReservaSolapadaDTO {
     private String nombreDocente;
     private String apellidoDocente;
     private String correoDocente;
-    private LocalDate inicioReserva;
-    private LocalDate finReserva;
+    private LocalTime inicioReserva;
+    private LocalTime finReserva;
 
 }

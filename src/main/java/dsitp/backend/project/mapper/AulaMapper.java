@@ -76,21 +76,28 @@ public class AulaMapper {
         switch (aulaDTO.getTipoAula()) {
             case 0 -> {
                 AulaSinRecursosAdic aulaSinRecursos = new AulaSinRecursosAdic();
-                aulaSinRecursos.setTieneVentiladores((Boolean) aulaDTO.getAtributosEspecificos().getOrDefault("tieneVentiladores", false));
+                aulaSinRecursos.setTieneVentiladores(
+                        (Boolean) aulaDTO.getAtributosEspecificos().getOrDefault("tieneVentiladores", false));
                 aula = aulaSinRecursos;
             }
             case 1 -> {
                 AulaInformatica aulaInformatica = new AulaInformatica();
-                aulaInformatica.setCantidadPCs((Integer) aulaDTO.getAtributosEspecificos().getOrDefault("cantidadPCs", 0));
-                aulaInformatica.setTieneCanon((Boolean) aulaDTO.getAtributosEspecificos().getOrDefault("tieneCanon", false));
+                aulaInformatica
+                        .setCantidadPCs((Integer) aulaDTO.getAtributosEspecificos().getOrDefault("cantidadPCs", 0));
+                aulaInformatica
+                        .setTieneCanon((Boolean) aulaDTO.getAtributosEspecificos().getOrDefault("tieneCanon", false));
                 aula = aulaInformatica;
             }
             case 2 -> {
                 AulaMultimedio aulaMultimedio = new AulaMultimedio();
-                aulaMultimedio.setTieneTelevisor((Boolean) aulaDTO.getAtributosEspecificos().getOrDefault("tieneTelevisor", false));
-                aulaMultimedio.setTieneCanon((Boolean) aulaDTO.getAtributosEspecificos().getOrDefault("tieneCanon", false));
-                aulaMultimedio.setTieneComputadora((Boolean) aulaDTO.getAtributosEspecificos().getOrDefault("tieneComputadora", false));
-                aulaMultimedio.setTieneVentiladores((Boolean) aulaDTO.getAtributosEspecificos().getOrDefault("tieneVentiladores", false));
+                aulaMultimedio.setTieneTelevisor(
+                        (Boolean) aulaDTO.getAtributosEspecificos().getOrDefault("tieneTelevisor", false));
+                aulaMultimedio
+                        .setTieneCanon((Boolean) aulaDTO.getAtributosEspecificos().getOrDefault("tieneCanon", false));
+                aulaMultimedio.setTieneComputadora(
+                        (Boolean) aulaDTO.getAtributosEspecificos().getOrDefault("tieneComputadora", false));
+                aulaMultimedio.setTieneVentiladores(
+                        (Boolean) aulaDTO.getAtributosEspecificos().getOrDefault("tieneVentiladores", false));
                 aula = aulaMultimedio;
             }
             default ->
@@ -107,23 +114,4 @@ public class AulaMapper {
         return aula;
     }
 
-    public AulaSolapadaDTO toAulaSolapadaDTO(Aula aula, Reserva reserva) {
-        AulaSolapadaDTO aulaSolapadaDTO = new AulaSolapadaDTO();
-        aulaSolapadaDTO.setAula(toAulaDTO(aula));
-
-        ReservaSolapadaDTO reservaSolapadaDTO;
-        switch (reserva) {
-            case ReservaPeriodica reservaPeriodica ->
-                reservaSolapadaDTO = reservaPeriodicaMapper.toReservaSolapadaDTO(reservaPeriodica);
-            case ReservaEsporadica reservaEsporadica ->
-                reservaSolapadaDTO = reservaEsporadicaMapper.toReservaSolapadaDTO(reservaEsporadica);
-            default ->
-                throw new IllegalArgumentException("Tipo de reserva desconocido");
-        }
-
-        aulaSolapadaDTO.setReservaSolapada(reservaSolapadaDTO);
-
-        return aulaSolapadaDTO;
-
-    }
 }

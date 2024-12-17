@@ -105,19 +105,6 @@ public class ReservaService {
         this.diaReservadoValidator = diaReservadoValidator;
     }
 
-    // public List<ReservaDTO> findAll() {
-    // final List<Reserva> reservas = reservaRepository.findAll(Sort.by("id"));
-    // return reservas.stream()
-    // .map(reservaMapper::toReservaDTO)
-    // .toList();
-    // }
-
-    // public ReservaDTO get(final Integer id) {
-    // return reservaRepository.findById(id)
-    // .map(reservaMapper::toReservaDTO)
-    // .orElseThrow(NotFoundException::new);
-    // }
-
     public ReservaRetornoDTO getDisponibilidadAulaReserva(final ReservaDTO reservaDTO, final Integer tipoReserva) {
 
         ReservaRetornoDTO reservaRetornoDTO = new ReservaRetornoDTO();
@@ -159,12 +146,7 @@ public class ReservaService {
                         diaSemanaDisponibilidadDTO.setAulasDisponibles(aulasDisponiblesDTO);
                         reservaRetornoDTO.getDiasSemanaDisponibles().add(diaSemanaDisponibilidadDTO);
                     } else {
-                        // DiaSolapamientoDTO diaSolapamientoDTO = new DiaSolapamientoDTO();
-                        // diaSolapamientoDTO.setDiaReservado(diaReservadoMapper.toDiaReservadoDTO(diaReservado));
-                        // diaSolapamientoDTO
-                        // .setAulasConSolapamiento(obtenerAulasConMenorSuperposicion(aulas,
-                        // diaReservado));
-                        // reservaRetornoDTO.getDiasConSolapamiento().add(diaSolapamientoDTO);
+
                         List<AulaSolapadaDTO> aulasSolapadasDTO = obtenerDisponibilidadSuperposicionReservaPeriodica(
                                 reservaPeriodica,
                                 diaSemanaDTO, aulasObtenidas);
@@ -244,6 +226,7 @@ public class ReservaService {
 
         if (periodo.getFechaInicio().isBefore(LocalDate.now())) {
             fechaIterador = LocalDate.now();
+            fechaIterador = fechaIterador.plusDays(1);
         } else {
             fechaIterador = periodo.getFechaInicio();
         }
@@ -317,9 +300,13 @@ public class ReservaService {
                     if (reservaObtenida.isPresent()) {
                         Reserva reserva = reservaObtenida.get();
                         AulaSolapadaDTO aulaSolapadaDTO = new AulaSolapadaDTO();
+                        DiaReservado diaReservadoObtenido = reservaRepository.obtenerDiaReservado(
+                                aulaMenosSolap.getKey().getNumero(), reserva.getId(), fechaIterador,
+                                diaReservado.getHoraInicio(),
+                                diaReservado.getHoraInicio().plusMinutes(diaReservado.getDuracion()));
                         aulaSolapadaDTO.setAula(toAulaDTO(aulaMenosSolap.getKey()));
                         aulaSolapadaDTO
-                                .setReservaSolapada(toReservaSolapadaDTO(reserva));
+                                .setReservaSolapada(toReservaSolapadaDTO(reserva, diaReservadoObtenido));
 
                         aulasSolapadasDTO.add(aulaSolapadaDTO);
 
@@ -328,26 +315,6 @@ public class ReservaService {
                     }
 
                 }
-
-                // BindingResult bindingResult = new BeanPropertyBindingResult(diaReservado,
-                // "diaReservado");
-                // diaReservadoValidator.validate(diaReservado, bindingResult);
-
-                // if (bindingResult.hasErrors()) {
-
-                // StringBuilder errorMessages = new StringBuilder();
-                // bindingResult.getAllErrors().forEach(error -> {
-                // String errorMessage = error.getDefaultMessage();
-                // if (errorMessage != null) {
-                // errorMessages.append(errorMessage);
-                // }
-                // });
-
-                // throw new IllegalArgumentException(errorMessages.toString());
-                // }
-
-                // diaReservado.setReserva(reservaPeriodica);
-                // diasReservados.add(diaReservado);
 
             }
             fechaIterador = fechaIterador.plusDays(1);
@@ -363,6 +330,7 @@ public class ReservaService {
 
         if (periodo.getFechaInicio().isBefore(LocalDate.now())) {
             fechaIterador = LocalDate.now();
+            fechaIterador = fechaIterador.plusDays(1);
         } else {
             fechaIterador = periodo.getFechaInicio();
         }
@@ -486,9 +454,14 @@ public class ReservaService {
             if (reservaObtenida.isPresent()) {
                 Reserva reserva = reservaObtenida.get();
                 AulaSolapadaDTO aulaSolapadaDTO = new AulaSolapadaDTO();
+
+                DiaReservado diaReservadoObtenido = reservaRepository.obtenerDiaReservado(
+                        aulaMenosSolap.getKey().getNumero(), reserva.getId(), diaReservadoDTO.getFechaReserva(),
+                        diaReservadoDTO.getHoraInicio(),
+                        diaReservadoDTO.getHoraInicio().plusMinutes(diaReservadoDTO.getDuracion()));
                 aulaSolapadaDTO.setAula(toAulaDTO(aulaMenosSolap.getKey()));
                 aulaSolapadaDTO
-                        .setReservaSolapada(toReservaSolapadaDTO(reserva));
+                        .setReservaSolapada(toReservaSolapadaDTO(reserva, diaReservadoObtenido));
 
                 aulasSolapadasDTO.add(aulaSolapadaDTO);
 
@@ -588,6 +561,7 @@ public class ReservaService {
 
             if (periodo.getFechaInicio().isBefore(LocalDate.now())) {
                 fechaIterador = LocalDate.now();
+                fechaIterador = fechaIterador.plusDays(1);
             } else {
                 fechaIterador = periodo.getFechaInicio();
             }
@@ -604,6 +578,11 @@ public class ReservaService {
                     diaReservado.setFechaReserva(fechaIterador);
                     diaReservado.setHoraInicio(horaInicio);
                     diaReservado.setDuracion(duracion);
+
+                    Optional<Aula> aula = aulaRepository.findById(diaSemanaDTO.getIdAula());
+                    if (aula.isPresent()) {
+                        diaReservado.setAula(aula.get());
+                    }
 
                     diaReservado.setReserva(reservaPeriodica);
                     diasReservados.add(diaReservado);
@@ -751,82 +730,16 @@ public class ReservaService {
         return reservaEsporadica;
     }
 
-    public List<DiaReservado> toDiasReservados(Periodo periodo,
-            List<Trio<Integer, String, String>> diasSemanaHorasDuracion, ReservaPeriodica reservaPeriodica) {
-
-        LocalDate fechaInicio = periodo.getFechaInicio();
-        LocalDate fechaFin = periodo.getFechaFin();
-
-        List<DiaReservado> diasReservados = new ArrayList<>();
-
-        LocalDate fechaActual = fechaInicio;
-        if (fechaInicio.isBefore(LocalDate.now())) {
-            fechaActual = LocalDate.now();
-        }
-        // TODO: cambiar a como está en el diagrama
-        while (!fechaActual.isAfter(fechaFin)) {
-            DayOfWeek diaSemana = fechaActual.getDayOfWeek();
-            Integer idDiaSemana = diaSemana.getValue() % 7;
-            // NOTE: si hay 2 lunes, se toma el primero, por ejemplo
-            if (Trio.containsFirst(diasSemanaHorasDuracion, idDiaSemana)) {
-                Trio<Integer, String, String> trio = Trio.findByFirst(diasSemanaHorasDuracion, idDiaSemana);
-                LocalTime horaInicio = LocalTime.parse(trio.getHoraInicio(), DateTimeFormatter.ofPattern("HH:mm"));
-                Integer duracion = Integer.valueOf(trio.getDuracion());
-
-                DiaReservado diaReservado = new DiaReservado();
-                diaReservado.setFechaReserva(fechaActual);
-                diaReservado.setHoraInicio(horaInicio);
-                diaReservado.setDuracion(duracion);
-
-                BindingResult bindingResult = new BeanPropertyBindingResult(diaReservado, "diaReservado");
-                diaReservadoValidator.validate(diaReservado, bindingResult);
-
-                if (bindingResult.hasErrors()) {
-
-                    StringBuilder errorMessages = new StringBuilder();
-                    bindingResult.getAllErrors().forEach(error -> {
-                        String errorMessage = error.getDefaultMessage();
-                        if (errorMessage != null) {
-                            errorMessages.append(errorMessage);
-                        }
-                    });
-
-                    throw new IllegalArgumentException(errorMessages.toString());
-                }
-
-                diaReservado.setReserva(reservaPeriodica);
-                diasReservados.add(diaReservado);
-            }
-
-            fechaActual = fechaActual.plusDays(1);
-        }
-
-        return diasReservados;
-    }
-
-    // public ReservaSolapadaDTO toReservaSolapadaDTO(ReservaPeriodica
-    // reservaPeriodica) {
-    // ReservaSolapadaDTO reservaSolapadaDTO = new ReservaSolapadaDTO();
-    // reservaSolapadaDTO.setNombreCatedra(reservaPeriodica.getNombreCatedra());
-    // reservaSolapadaDTO.setNombreDocente(reservaPeriodica.getNombreDocente());
-    // reservaSolapadaDTO.setApellidoDocente(reservaPeriodica.getApellidoDocente());
-    // reservaSolapadaDTO.setCorreoDocente(reservaPeriodica.getCorreoDocente());
-    // reservaSolapadaDTO.setInicioReserva(reservaPeriodica.getPeriodo().getFechaInicio());
-    // reservaSolapadaDTO.setFinReserva(reservaPeriodica.getPeriodo().getFechaFin());
-
-    // return reservaSolapadaDTO;
-    // }
-
-    public ReservaSolapadaDTO toReservaSolapadaDTO(Reserva reserva) {
+    public ReservaSolapadaDTO toReservaSolapadaDTO(Reserva reserva, DiaReservado diaReservadoObtenido) {
 
         ReservaSolapadaDTO reservaSolapadaDTO = new ReservaSolapadaDTO();
         reservaSolapadaDTO.setNombreCatedra(reserva.getNombreCatedra());
         reservaSolapadaDTO.setNombreDocente(reserva.getNombreDocente());
         reservaSolapadaDTO.setApellidoDocente(reserva.getApellidoDocente());
         reservaSolapadaDTO.setCorreoDocente(reserva.getCorreoDocente());
-        // TODO: terminar
-        // reservaSolapadaDTO.setInicioReserva(reserva);
-        // reservaSolapadaDTO.setFinReserva(reserva);
+        reservaSolapadaDTO.setInicioReserva(diaReservadoObtenido.getHoraInicio());
+        reservaSolapadaDTO
+                .setFinReserva(diaReservadoObtenido.getHoraInicio().plusMinutes(diaReservadoObtenido.getDuracion()));
 
         return reservaSolapadaDTO;
     }
@@ -869,19 +782,6 @@ public class ReservaService {
         return aulaDTO;
     }
 
-    // public DiaSemanaDTO toDiaSemanaDTO(DiaSemana diaSemana) {
-    // if (diaSemana == null) {
-    // return null;
-    // }
-
-    // DiaSemanaDTO diaSemanaDTO = new DiaSemanaDTO();
-    // diaSemanaDTO.setFechaReserva(diaSemana.getFechaReserva());
-    // diaSemanaDTO.setDuracion(diaSemana.getDuracion());
-    // diaSemanaDTO.setHoraInicio(diaSemana.getHoraInicio());
-
-    // return diaReservadoDTO;
-    // }
-
     public Integer create(final ReservaDTO reservaDTO, final Integer tipoReserva) {
 
         if (tipoReserva == 0) {
@@ -895,27 +795,5 @@ public class ReservaService {
         // TODO: ver mejorar
         return null;
     }
-
-    // public void update(final Integer id, final ReservaDTO reservaDTO) {
-    // final Reserva existingReserva = reservaRepository.findById(id)
-    // .orElseThrow(NotFoundException::new);
-
-    // Reserva updatedReserva = reservaMapper.toReservaEntity(reservaDTO);
-
-    // updatedReserva.setId(existingReserva.getId());
-    // reservaRepository.save(updatedReserva);
-    // }
-
-    // public void delete(final Integer id) {
-    // final Reserva existingReserva = reservaRepository.findById(id)
-    // .orElseThrow(NotFoundException::new);
-
-    // existingReserva.setBedel(null);
-    // existingReserva.setDiasReservados(null);
-    // existingReserva.setPeriodo(null);
-    // reservaRepository.save(existingReserva);
-
-    // reservaRepository.deleteById(id);
-    // }
 
 }

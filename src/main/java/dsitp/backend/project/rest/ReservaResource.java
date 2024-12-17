@@ -40,19 +40,6 @@ public class ReservaResource {
         this.bedelRepository = bedelRepository;
     }
 
-    // @GetMapping
-    // @ApiResponse(responseCode = "200")
-    // public ResponseEntity<List<ReservaDTO>> getAllReservas() {
-    // return ResponseEntity.ok(reservaService.findAll());
-    // }
-
-    // @GetMapping("/{id}")
-    // @ApiResponse(responseCode = "200")
-    // public ResponseEntity<ReservaDTO> getReserva(
-    // @PathVariable(name = "id") final Integer id) {
-    // return ResponseEntity.ok(reservaService.get(id));
-    // }
-
     @PostMapping("/disponibilidad/{tipoReserva}")
     @ApiResponse(responseCode = "200")
     public ResponseEntity<ReservaRetornoDTO> getDisponibilidadAulaReserva(
@@ -71,38 +58,5 @@ public class ReservaResource {
         final Integer createdId = reservaService.create(reservaDTO, tipoReserva);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdId);
     }
-
-    // @PutMapping("/{id}")
-    // @ApiResponse(responseCode = "200")
-    // public ResponseEntity<Integer> updateReserva(
-    // @PathVariable(name = "id") final Integer id,
-    // @RequestBody @Valid final ReservaDTO reservaPeriodicaDTO) {
-    // reservaService.update(id, reservaPeriodicaDTO);
-    // return ResponseEntity.ok(id);
-    // }
-
-    // @DeleteMapping("/{id}")
-    // @ApiResponse(responseCode = "204")
-    // public ResponseEntity<Void> deleteReserva(
-    // @PathVariable(name = "id") final Integer id) {
-    // reservaService.delete(id);
-    // return ResponseEntity.noContent().build();
-    // }
-
-    // @GetMapping("/periodoValues")
-    // @ApiResponse(responseCode = "200")
-    // public ResponseEntity<Map<Integer, Integer>> getPeriodoValues() {
-    // return ResponseEntity.ok(periodoRepository.findAll(Sort.by("id"))
-    // .stream()
-    // .collect(CustomCollectors.toSortedMap(Periodo::getId, Periodo::getId)));
-    // }
-
-    // @GetMapping("/bedelValues")
-    // @ApiResponse(responseCode = "200")
-    // public ResponseEntity<Map<Integer, Integer>> getBedelValues() {
-    // return ResponseEntity.ok(bedelRepository.findByEliminadoFalse(Sort.by("id"))
-    // .stream()
-    // .collect(CustomCollectors.toSortedMap(Bedel::getId, Bedel::getId)));
-    // }
 
 }
