@@ -290,13 +290,52 @@ export class RegistrarReservaEsporadicaComponent implements OnInit{
 
   listaCaracteristicas(aula: Aula): string{
 
-    const tipoAula = this.tipoAulas[aula.tipoAula].name ?? null;
+    /*const tipoAula = this.tipoAulas[aula.tipoAula].name ?? null;
     const aireAcondicionado = aula.tieneAireAcondicionado ? 'Aire acondicionado' : null;
     const tipoPizarron = this.tiposPizarrones[aula.tipoPizarron]?.name ?? null;
 
     let result = [];
 
     if (tipoAula) result.push(tipoAula);
+    if (aireAcondicionado) result.push(aireAcondicionado);
+    if (tipoPizarron) result.push(tipoPizarron);
+
+    return result.join(', ');*/
+
+    const tipoAula = this.tipoAulas[aula.tipoAula].name ?? null;
+    const aireAcondicionado = aula.tieneAireAcondicionado ? 'Aire acondicionado' : null;
+    const tipoPizarron = this.tiposPizarrones[aula.tipoPizarron]?.name ?? null;
+
+    let result = [];
+
+    if(this.tipoAulas[aula.tipoAula].id === 0){
+
+      const tieneVentiladores = aula.atributosEspecificos.tieneVentiladores;
+      if(tieneVentiladores) result.push('Ventiladores');
+
+    }else if(this.tipoAulas[aula.tipoAula].id === 1){
+
+      const cantidadPCs = aula.atributosEspecificos.cantidadPCs;
+      const tieneCanon = aula.atributosEspecificos.tieneCanon;
+
+      if(cantidadPCs) result.push(`${cantidadPCs > 0 ? cantidadPCs : 'sin'} computadoras`);
+      if(tieneCanon) result.push('Cañon');
+
+    }else if(this.tipoAulas[aula.tipoAula].id === 2){
+
+      const tieneCanon = aula.atributosEspecificos.tieneCanon;
+      const tieneComputadora = aula.atributosEspecificos.tieneComputadora;
+      const tieneTelevisor = aula.atributosEspecificos.tieneTelevisor;
+      const tieneVentiladores = aula.atributosEspecificos.tieneVentiladores;
+
+      if(tieneCanon) result.push('Cañon');
+      if(tieneComputadora) result.push('Computadora');
+      if(tieneTelevisor) result.push('Televisor');
+      if(tieneVentiladores) result.push('Ventiladores');
+
+    }
+
+    //if (tipoAula) result.push(tipoAula);
     if (aireAcondicionado) result.push(aireAcondicionado);
     if (tipoPizarron) result.push(tipoPizarron);
 
