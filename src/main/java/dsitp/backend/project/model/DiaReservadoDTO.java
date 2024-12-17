@@ -28,11 +28,8 @@ public class DiaReservadoDTO {
     @ValidDuration
     @Positive
     @NotNull(message = "La duración es obligatoria.")
-    // TODO: JSON front ver tipo de dato, si cambiar en JSON front?
     private Integer duracion;
 
-    // @NotNull(message = "El id del aula es obligatorio.")
-    // TODO: JSON front ver de donde obtener
     private Integer idAula;
 
 }

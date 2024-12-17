@@ -300,13 +300,9 @@ public class ReservaService {
                     if (reservaObtenida.isPresent()) {
                         Reserva reserva = reservaObtenida.get();
                         AulaSolapadaDTO aulaSolapadaDTO = new AulaSolapadaDTO();
-                        DiaReservado diaReservadoObtenido = reservaRepository.obtenerDiaReservado(
-                                aulaMenosSolap.getKey().getNumero(), reserva.getId(), fechaIterador,
-                                diaReservado.getHoraInicio(),
-                                diaReservado.getHoraInicio().plusMinutes(diaReservado.getDuracion()));
                         aulaSolapadaDTO.setAula(toAulaDTO(aulaMenosSolap.getKey()));
                         aulaSolapadaDTO
-                                .setReservaSolapada(toReservaSolapadaDTO(reserva, diaReservadoObtenido));
+                                .setReservaSolapada(toReservaSolapadaDTO(reserva));
 
                         aulasSolapadasDTO.add(aulaSolapadaDTO);
 
@@ -380,7 +376,6 @@ public class ReservaService {
             Boolean aulaDisponible = true;
             Integer i = 0;
             while (i < diasReservados.size() && aulaDisponible) {
-                // TODO: ver que ande obtenerDisponibilidadAula
                 aulaDisponible = (reservaRepository.obtenerDisponibilidadAulaPeriodica(aula.getNumero(),
                         diasReservados.get(i).getFechaReserva(), diasReservados.get(i).getHoraInicio(),
                         diasReservados.get(i).getHoraInicio().plusMinutes(diasReservados.get(i).getDuracion()))
@@ -406,7 +401,6 @@ public class ReservaService {
         Map<Aula, Tuple> aulasMenosSolap = new HashMap<>();
 
         for (Aula aula : aulasObtenidas) {
-            // TODO: ver que ande obtenerDisponibilidadAula
 
             Tuple reservaEsporadicaSolapadaConTiempoSolap = reservaRepository.obtenerReservaEsporadicaQueSuperpone(
                     aula.getNumero(),
@@ -455,13 +449,9 @@ public class ReservaService {
                 Reserva reserva = reservaObtenida.get();
                 AulaSolapadaDTO aulaSolapadaDTO = new AulaSolapadaDTO();
 
-                DiaReservado diaReservadoObtenido = reservaRepository.obtenerDiaReservado(
-                        aulaMenosSolap.getKey().getNumero(), reserva.getId(), diaReservadoDTO.getFechaReserva(),
-                        diaReservadoDTO.getHoraInicio(),
-                        diaReservadoDTO.getHoraInicio().plusMinutes(diaReservadoDTO.getDuracion()));
                 aulaSolapadaDTO.setAula(toAulaDTO(aulaMenosSolap.getKey()));
                 aulaSolapadaDTO
-                        .setReservaSolapada(toReservaSolapadaDTO(reserva, diaReservadoObtenido));
+                        .setReservaSolapada(toReservaSolapadaDTO(reserva));
 
                 aulasSolapadasDTO.add(aulaSolapadaDTO);
 
@@ -480,7 +470,6 @@ public class ReservaService {
         List<AulaDTO> aulasDisponiblesDTO = new ArrayList<>();
         for (Aula aula : aulasObtenidas) {
 
-            // TODO: ver que ande obtenerDisponibilidadAula
             Boolean aulaDisponible = (reservaRepository.obtenerDisponibilidadAulaPeriodica(aula.getNumero(),
                     diaReservadoDTO.getFechaReserva(), diaReservadoDTO.getHoraInicio(),
                     diaReservadoDTO.getHoraInicio().plusMinutes(diaReservadoDTO.getDuracion()))
@@ -508,8 +497,6 @@ public class ReservaService {
         reservaPeriodica.setCantAlumnos(reservaDTO.getCantAlumnos());
         reservaPeriodica.setTipoAula(TipoAula.fromInteger(reservaDTO.getTipoAula()));
 
-        // TODO: ver mejorar periodos
-        // TODO: ver si podemos hacer que el tipoPeriodo Anual se divida en 2?
         Periodo periodo = periodoRepository
                 .findActivePeriodosByTipo(TipoPeriodo.fromInteger(reservaDTO.getTipoPeriodo()))
                 .getFirst();
@@ -730,16 +717,13 @@ public class ReservaService {
         return reservaEsporadica;
     }
 
-    public ReservaSolapadaDTO toReservaSolapadaDTO(Reserva reserva, DiaReservado diaReservadoObtenido) {
+    public ReservaSolapadaDTO toReservaSolapadaDTO(Reserva reserva) {
 
         ReservaSolapadaDTO reservaSolapadaDTO = new ReservaSolapadaDTO();
         reservaSolapadaDTO.setNombreCatedra(reserva.getNombreCatedra());
         reservaSolapadaDTO.setNombreDocente(reserva.getNombreDocente());
         reservaSolapadaDTO.setApellidoDocente(reserva.getApellidoDocente());
         reservaSolapadaDTO.setCorreoDocente(reserva.getCorreoDocente());
-        reservaSolapadaDTO.setInicioReserva(diaReservadoObtenido.getHoraInicio());
-        reservaSolapadaDTO
-                .setFinReserva(diaReservadoObtenido.getHoraInicio().plusMinutes(diaReservadoObtenido.getDuracion()));
 
         return reservaSolapadaDTO;
     }
@@ -792,7 +776,6 @@ public class ReservaService {
             return reservaEsporadicaRepository.save(reservaEsporadica).getId();
         }
 
-        // TODO: ver mejorar
         return null;
     }
 

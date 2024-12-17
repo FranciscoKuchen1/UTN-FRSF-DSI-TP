@@ -107,23 +107,4 @@ public interface ReservaRepository extends JpaRepository<Reserva, Integer> {
                         @Param("horaInicio") LocalTime horaInicio,
                         @Param("horaFin") LocalTime horaFin);
 
-        @Query(value = "SELECT dr " +
-                        "FROM reserva_periodica r " +
-                        "JOIN dia_reservado dr ON dr.id_reserva = r.id " +
-                        "WHERE r.id = :idReserva " +
-                        "AND dr.id_aula = :idAula " +
-                        "AND dr.fecha_reserva = :fecha " +
-                        "AND ((:horaInicio < dr.hora_inicio + make_interval(secs => dr.duracion * 60)) " +
-                        "AND (:horaFin > dr.hora_inicio)) " +
-                        "ORDER BY LEAST(EXTRACT(EPOCH FROM (:horaFin - dr.hora_inicio)), " +
-                        "EXTRACT(EPOCH FROM (dr.hora_inicio + make_interval(secs => dr.duracion * 60) - :horaInicio))) DESC "
-                        +
-                        "LIMIT 1", nativeQuery = true)
-        DiaReservado obtenerDiaReservado(
-                        @Param("idAula") Integer idAula,
-                        @Param("idReserva") Integer idReserva,
-                        @Param("fecha") LocalDate fecha,
-                        @Param("horaInicio") LocalTime horaInicio,
-                        @Param("horaFin") LocalTime horaFin);
-
 }

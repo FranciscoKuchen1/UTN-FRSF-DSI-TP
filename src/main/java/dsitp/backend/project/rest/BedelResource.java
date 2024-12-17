@@ -40,7 +40,8 @@ public class BedelResource {
 
     @GetMapping
     @ApiResponse(responseCode = "200")
-    public ResponseEntity<?> getBedeles(@Min(0) @Max(2) @RequestParam(required = false) final Integer tipoTurno, @Size(max = 30) @RequestParam(required = false) final String apellido) {
+    public ResponseEntity<?> getBedeles(@Min(0) @Max(2) @RequestParam(required = false) final Integer tipoTurno,
+            @Size(max = 30) @RequestParam(required = false) final String apellido) {
         logger.info("Se buscan los bedeles por criterios");
         List<BedelDTO> bedelesDTO = bedelService.findBedeles(tipoTurno, apellido);
         if (bedelesDTO.isEmpty()) {
@@ -53,7 +54,6 @@ public class BedelResource {
     @GetMapping("/{idRegistro}")
     @ApiResponse(responseCode = "200")
     public ResponseEntity<BedelDTO> getBedel(@PathVariable(name = "idRegistro") final String idRegistro) {
-        // TODO: solucionar problema http status 500
         return ResponseEntity.ok(bedelService.getBedelByIdRegistro(idRegistro));
     }
 
@@ -65,7 +65,8 @@ public class BedelResource {
 
     @GetMapping("/tipo-turno/{tipoTurno}")
     @ApiResponse(responseCode = "200")
-    public ResponseEntity<List<BedelDTO>> getBedelesByTipoTurno(@PathVariable(name = "tipoTurno") final Integer tipoTurno) {
+    public ResponseEntity<List<BedelDTO>> getBedelesByTipoTurno(
+            @PathVariable(name = "tipoTurno") final Integer tipoTurno) {
         return ResponseEntity.ok(bedelService.getBedelesByTipoTurno(tipoTurno));
     }
 
@@ -79,7 +80,8 @@ public class BedelResource {
 
     @PutMapping("/{idRegistro}")
     @ApiResponse(responseCode = "200")
-    public ResponseEntity<Map<String, String>> updateBedel(@PathVariable(name = "idRegistro") final String idRegistro, @RequestBody final BedelDTO bedelDTO) {
+    public ResponseEntity<Map<String, String>> updateBedel(@PathVariable(name = "idRegistro") final String idRegistro,
+            @RequestBody final BedelDTO bedelDTO) {
         bedelService.update(idRegistro, bedelDTO);
         Map<String, String> response = Map.of("idRegistro", idRegistro);
         return ResponseEntity.ok(response);
@@ -89,10 +91,11 @@ public class BedelResource {
     @ApiResponse(responseCode = "204")
     public ResponseEntity<Void> deleteBedelLogica(@PathVariable(name = "idRegistro") final String idRegistro) {
         logger.info("Bedel es eliminado");
-//        final ReferencedWarning referencedWarning = bedelService.getReferencedWarning(idRegistro);
-//        if (referencedWarning != null) {
-//            throw new ReferencedException(referencedWarning);
-//        }
+        // final ReferencedWarning referencedWarning =
+        // bedelService.getReferencedWarning(idRegistro);
+        // if (referencedWarning != null) {
+        // throw new ReferencedException(referencedWarning);
+        // }
 
         bedelService.deleteLogico(idRegistro);
         return ResponseEntity.noContent().build();

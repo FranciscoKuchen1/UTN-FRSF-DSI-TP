@@ -51,7 +51,6 @@ public class ReservaPeriodicaSinDiasDTO {
     @NotBlank(message = "El idRegistro del bedel es obligatorio.")
     private String idRegistroBedel;
 
-    // TODO: ver de cambiar Duracion de String a Integer
     @NotEmpty(message = "Debe seleccionar al menos un día a reservar.")
     private List<DiaSemanaDTO> diasSemanaDTO;
 

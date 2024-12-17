@@ -65,7 +65,7 @@ public class ReservaPeriodicaMapper {
     // reservaPeriodica.setPeriodo(periodo);
 
     // List<DiaReservado> diasReservados = toDiasReservados(
-    // // TODO: ver si podemos hacer que el tipoPeriodo Anual se divida en 2?
+    //
     // periodo,
     // reservaPeriodicaSinDiasDTO.getDiasSemanaHorasDuracion(),
     // reservaPeriodica
@@ -187,7 +187,6 @@ public class ReservaPeriodicaMapper {
         if (fechaInicio.isBefore(LocalDate.now())) {
             fechaActual = LocalDate.now();
         }
-        // TODO: cambiar a como está en el diagrama
         while (!fechaActual.isAfter(fechaFin)) {
             DayOfWeek diaSemana = fechaActual.getDayOfWeek();
             Integer idDiaSemana = diaSemana.getValue() % 7;
