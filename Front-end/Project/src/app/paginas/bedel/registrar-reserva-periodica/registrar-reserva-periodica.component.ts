@@ -182,8 +182,6 @@ export class RegistrarReservaPeriodicaComponent implements OnInit{
           }
 
           this.opcionesAulas = this.fechaSeleccionada.aulasDisponibles;
-
-          console.log('valores',this.opcionesAulas);
         }
       }
     });
@@ -271,7 +269,6 @@ export class RegistrarReservaPeriodicaComponent implements OnInit{
 
   listaCaracteristicas(aula: Aula): string{
 
-    const tipoAula = this.tipoAulas[aula.tipoAula].name ?? null;
     const aireAcondicionado = aula.tieneAireAcondicionado ? 'Aire acondicionado' : null;
     const tipoPizarron = this.tiposPizarrones[aula.tipoPizarron]?.name ?? null;
 
@@ -304,7 +301,6 @@ export class RegistrarReservaPeriodicaComponent implements OnInit{
 
     }
 
-    //if (tipoAula) result.push(tipoAula);
     if (aireAcondicionado) result.push(aireAcondicionado);
     if (tipoPizarron) result.push(tipoPizarron);
 
@@ -351,7 +347,13 @@ export class RegistrarReservaPeriodicaComponent implements OnInit{
 
   submit(): void{
 
-    const queryForm = {... this.registrarReservaForm.value, ...this.fechasDisponibles}
+    const formData = this.registrarReservaForm.getRawValue();
+    delete this.fechasDisponibles[0].aulasDisponibles;
+    formData.diasSemanaDTO = [];
+
+    this.fechasDisponibles.forEach(value => formData.diasSemanaDTO.push(value.diaSemana));
+
+    const queryForm = {...formData}
 
     this.http.post<any>('http://localhost:8080/api/reservas/0',queryForm).subscribe({
       next: ()=> {

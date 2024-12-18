@@ -23,8 +23,8 @@ interface AulaConSolapamiento {
 }
 
 interface DiasSemanaConSolapamiento {
-  diaReservado: {
-    fechaReserva: string;
+  diaSemana: {
+    dia: number;
     horaInicio: string;
     duracion: number;
   };
@@ -53,14 +53,25 @@ export class RegistrarReservaPeriodicaDialogComponent {
   treeControl = new NestedTreeControl<TreeNode>(node => node.children);
   dataSource = new MatTreeNestedDataSource<TreeNode>();
 
+  dias: any[] = [
+    {dia: 0, name: 'Domingo'},
+    {dia: 1, name: 'Lunes'},
+    {dia: 2, name: 'Martes'},
+    {dia: 3, name: 'Miercole'},
+    {dia: 4, name: 'Jueves'},
+    {dia: 5, name: 'Viernes'},
+    {dia: 6, name: 'Sabado'},
+  ]
+
   constructor(@Inject(MAT_DIALOG_DATA) public data: any) {
     this.initializeTreeData();
+    console.log('dia elegido: ',this.dias[2].name);
   }
 
   private initializeTreeData(): void {
     if (this.data && this.data.diasSemanaConSolapamiento) {
       const treeData: TreeNode[] = this.data.diasSemanaConSolapamiento.map((dia: DiasSemanaConSolapamiento) => ({
-        name: dia.diaReservado.fechaReserva,
+        name: this.dias[dia.diaSemana.dia].name,
         children: dia.aulasConSolapamiento.map((aula: AulaConSolapamiento) => ({
           name: `${aula.aula.nombre} (${aula.aula.numero})`,
           reservaSolapada: aula.reservaSolapada,

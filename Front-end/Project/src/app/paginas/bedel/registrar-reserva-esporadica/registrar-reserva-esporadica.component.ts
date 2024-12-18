@@ -290,19 +290,6 @@ export class RegistrarReservaEsporadicaComponent implements OnInit{
 
   listaCaracteristicas(aula: Aula): string{
 
-    /*const tipoAula = this.tipoAulas[aula.tipoAula].name ?? null;
-    const aireAcondicionado = aula.tieneAireAcondicionado ? 'Aire acondicionado' : null;
-    const tipoPizarron = this.tiposPizarrones[aula.tipoPizarron]?.name ?? null;
-
-    let result = [];
-
-    if (tipoAula) result.push(tipoAula);
-    if (aireAcondicionado) result.push(aireAcondicionado);
-    if (tipoPizarron) result.push(tipoPizarron);
-
-    return result.join(', ');*/
-
-    const tipoAula = this.tipoAulas[aula.tipoAula].name ?? null;
     const aireAcondicionado = aula.tieneAireAcondicionado ? 'Aire acondicionado' : null;
     const tipoPizarron = this.tiposPizarrones[aula.tipoPizarron]?.name ?? null;
 
@@ -351,6 +338,8 @@ export class RegistrarReservaEsporadicaComponent implements OnInit{
 
   siguiente(): void{
 
+    console.log('valores form: ',this.registrarReservaForm.value);
+
     const tempCantAlumnos = this.registrarReservaForm.get('cantAlumnos')?.value;
     this.registrarReservaForm.get('cantAlumnos')?.patchValue(parseInt(tempCantAlumnos));
 
@@ -374,7 +363,13 @@ export class RegistrarReservaEsporadicaComponent implements OnInit{
 
   submit(): void{
 
-    const queryForm = {... this.registrarReservaForm.getRawValue(), ...this.fechasDisponibles}
+    const formData = this.registrarReservaForm.getRawValue();
+    delete this.fechasDisponibles[0].aulasDisponibles;
+    formData.diasReservadosDTO = [];
+
+    this.fechasDisponibles.forEach(value => formData.diasReservadosDTO.push(value.diaReservado));
+
+    const queryForm = {...formData}
 
     this.http.post<any>('http://localhost:8080/api/reservas/1', queryForm).subscribe({
       next: ()=> {
