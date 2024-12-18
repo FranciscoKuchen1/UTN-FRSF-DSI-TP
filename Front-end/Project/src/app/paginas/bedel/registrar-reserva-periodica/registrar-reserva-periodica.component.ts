@@ -328,7 +328,12 @@ export class RegistrarReservaPeriodicaComponent implements OnInit{
 
     this.registrarReservaForm.get('diasSemanaDTO')?.patchValue(newArr);
 
-    this.http.post<any>('http://localhost:8080/api/reservas/disponibilidad/0', this.registrarReservaForm.value).subscribe({
+    const formData = this.registrarReservaForm.getRawValue();
+    delete formData.catedra;
+    delete formData.docente;
+    const queryForm = {...formData}
+
+    this.http.post<any>('http://localhost:8080/api/reservas/disponibilidad/0', queryForm).subscribe({
         next: (data)=> {
           if(data.diasSemanaDisponibles.length !== 0 && data.diasSemanaConSolapamiento.length === 0){
             this.fechasDisponibles = data.diasSemanaDisponibles;
@@ -352,6 +357,9 @@ export class RegistrarReservaPeriodicaComponent implements OnInit{
     formData.diasSemanaDTO = [];
 
     this.fechasDisponibles.forEach(value => formData.diasSemanaDTO.push(value.diaSemana));
+
+    delete formData.catedra;
+    delete formData.docente;
 
     const queryForm = {...formData}
 

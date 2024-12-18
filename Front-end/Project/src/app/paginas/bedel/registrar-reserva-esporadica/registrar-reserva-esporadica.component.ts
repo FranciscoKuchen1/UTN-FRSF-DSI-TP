@@ -12,6 +12,7 @@ import {MatStepper} from "@angular/material/stepper";
 import {MatDialog} from "@angular/material/dialog";
 import {RegistrarReservaEsporadicaDialogComponent} from "../registrar-reserva-esporadica-dialog/registrar-reserva-esporadica-dialog.component";
 import {greaterThanZeroValidator} from "../../../validators/greaterThanZero/greaterThanZero";
+import {MatDatepicker} from "@angular/material/datepicker";
 
 export const MY_DATE_FORMATS = {
   parse: {
@@ -38,6 +39,7 @@ export const MY_DATE_FORMATS = {
 export class RegistrarReservaEsporadicaComponent implements OnInit{
 
   @ViewChild(MatStepper) stepper: MatStepper;
+  @ViewChild(MatDatepicker) datepicker: MatDatepicker<Date>;
 
   registrarReservaForm: UntypedFormGroup;
   registrarAulasForm: UntypedFormGroup;
@@ -232,6 +234,10 @@ export class RegistrarReservaEsporadicaComponent implements OnInit{
     });
   }
 
+  openDatepicker(): void{
+    this.datepicker.open();
+  }
+
   verificarDisabled(): void{
     this.disableRegistrar = this.fechasDisponibles.every(data=> {return data.diaReservado.idAula});
   }
@@ -341,7 +347,16 @@ export class RegistrarReservaEsporadicaComponent implements OnInit{
     const tempCantAlumnos = this.registrarReservaForm.get('cantAlumnos')?.value;
     this.registrarReservaForm.get('cantAlumnos')?.patchValue(parseInt(tempCantAlumnos));
 
-    this.http.post<any>('http://localhost:8080/api/reservas/disponibilidad/1', this.registrarReservaForm.getRawValue()).subscribe({
+    const formData = this.registrarReservaForm.getRawValue();
+    delete formData.catedra;
+    delete formData.docente;
+    delete formData.fechaAReservar;
+    delete formData.horaInicioFechaAReservar;
+    delete formData.duracionFechaAReservar;
+    const queryForm = {...formData}
+
+
+    this.http.post<any>('http://localhost:8080/api/reservas/disponibilidad/1', queryForm).subscribe({
       next: (data)=> {
         if(data.diasReservadosDisponibles.length !== 0 && data.diasReservadosConSolapamiento.length === 0){
           this.fechasDisponibles = data.diasReservadosDisponibles;
@@ -365,6 +380,12 @@ export class RegistrarReservaEsporadicaComponent implements OnInit{
     formData.diasReservadosDTO = [];
 
     this.fechasDisponibles.forEach(value => formData.diasReservadosDTO.push(value.diaReservado));
+
+    delete formData.catedra;
+    delete formData.docente;
+    delete formData.fechaAReservar;
+    delete formData.horaInicioFechaAReservar;
+    delete formData.duracionFechaAReservar;
 
     const queryForm = {...formData}
 
