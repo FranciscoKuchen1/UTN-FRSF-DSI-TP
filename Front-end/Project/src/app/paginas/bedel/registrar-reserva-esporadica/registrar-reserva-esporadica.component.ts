@@ -253,7 +253,7 @@ export class RegistrarReservaEsporadicaComponent implements OnInit{
 
     const fechasGuardadas = this.registrarReservaForm.get('diasReservadosDTO')?.value;
 
-    fechasGuardadas.push({fechaReserva: this.formatDateToISO(fecha), horaInicio: hora, duracion: parseInt(duracion)});
+    fechasGuardadas.push({fechaReserva: this.formatDateToISO(fecha), horaInicio: hora, duracion: parseInt(duracion), idAula: 0});
 
     this.registrarReservaForm.get('diasReservadosDTO')?.patchValue(fechasGuardadas);
 
