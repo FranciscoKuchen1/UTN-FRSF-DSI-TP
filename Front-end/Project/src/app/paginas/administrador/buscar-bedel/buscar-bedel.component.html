@@ -68,7 +68,7 @@
                   <mat-icon>edit</mat-icon>
                   <span>Editar</span>
                 </button>
-                <button mat-menu-item (click)="eliminarBedel(row)">
+                <button mat-menu-item (click)="eliminarBedel(row)" [disabled]="row.idRegistro === 'Clara'">
                   <mat-icon>delete</mat-icon>
                   <span>Eliminar</span>
                 </button>
