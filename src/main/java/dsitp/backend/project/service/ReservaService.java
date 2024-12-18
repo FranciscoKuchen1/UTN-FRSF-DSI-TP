@@ -11,8 +11,6 @@ import dsitp.backend.project.domain.Reserva;
 import dsitp.backend.project.domain.ReservaEsporadica;
 import dsitp.backend.project.domain.ReservaPeriodica;
 import dsitp.backend.project.domain.Reserva;
-import dsitp.backend.project.mapper.AulaMapper;
-import dsitp.backend.project.mapper.DiaReservadoMapper;
 import dsitp.backend.project.model.AulaDTO;
 import dsitp.backend.project.model.AulaSolapadaDTO;
 import dsitp.backend.project.model.DiaReservadoConSolapamientoDTO;
@@ -70,8 +68,6 @@ public class ReservaService {
     private final ReservaEsporadicaRepository reservaEsporadicaRepository;
     private final DiaReservadoRepository diaReservadoRepository;
     private final AulaRepository aulaRepository;
-    private final DiaReservadoMapper diaReservadoMapper;
-    private final AulaMapper aulaMapper;
     private final PeriodoRepository periodoRepository;
     private final BedelRepository bedelRepository;
     private final Validator reservaPeriodicaValidator;
@@ -84,8 +80,6 @@ public class ReservaService {
             final ReservaEsporadicaRepository reservaEsporadicaRepository,
             final DiaReservadoRepository diaReservadoRepository,
             final AulaRepository aulaRepository,
-            final DiaReservadoMapper diaReservadoMapper,
-            final AulaMapper aulaMapper,
             final PeriodoRepository periodoRepository,
             final BedelRepository bedelRepository,
             final Validator reservaPeriodicaValidator,
@@ -96,8 +90,6 @@ public class ReservaService {
         this.reservaEsporadicaRepository = reservaEsporadicaRepository;
         this.diaReservadoRepository = diaReservadoRepository;
         this.aulaRepository = aulaRepository;
-        this.diaReservadoMapper = diaReservadoMapper;
-        this.aulaMapper = aulaMapper;
         this.periodoRepository = periodoRepository;
         this.bedelRepository = bedelRepository;
         this.reservaPeriodicaValidator = reservaPeriodicaValidator;
@@ -626,7 +618,13 @@ public class ReservaService {
 
         List<DiaReservadoDTO> diasReservadosDTO = new ArrayList<>();
         for (DiaReservado diaReservado : reservaPeriodica.getDiasReservados()) {
-            diasReservadosDTO.add(diaReservadoMapper.toDiaReservadoDTO(diaReservado));
+            DiaReservadoDTO diaReservadoDTO = new DiaReservadoDTO();
+            diaReservadoDTO.setFechaReserva(diaReservado.getFechaReserva());
+            diaReservadoDTO.setHoraInicio(diaReservado.getHoraInicio());
+            diaReservadoDTO.setDuracion(diaReservado.getDuracion());
+            diaReservadoDTO.setIdAula(diaReservado.getAula().getNumero());
+
+            diasReservadosDTO.add(diaReservadoDTO);
         }
         reservaPeriodicaDTO.setDiasReservadosDTO(diasReservadosDTO);
 
@@ -645,18 +643,27 @@ public class ReservaService {
         reservaEsporadica.setCantAlumnos(reservaDTO.getCantAlumnos());
         reservaEsporadica.setTipoAula(TipoAula.fromInteger(reservaDTO.getTipoAula()));
 
-        Bedel bedel = bedelRepository.findByIdRegistroAndEliminadoFalse(reservaDTO.getIdRegistroBedel())
-                .orElseThrow(() -> new NotFoundException("Bedel no encontrado"));
-        reservaEsporadica.setBedel(bedel);
-
         List<DiaReservado> diasReservados = new ArrayList<>();
         for (DiaReservadoDTO diaReservadoDTO : reservaDTO.getDiasReservadosDTO()) {
-            DiaReservado diaReservado = diaReservadoMapper.toDiaReservadoEntity(diaReservadoDTO);
+            DiaReservado diaReservado = new DiaReservado();
+            diaReservado.setFechaReserva(diaReservadoDTO.getFechaReserva());
+            diaReservado.setHoraInicio(diaReservadoDTO.getHoraInicio());
+            diaReservado.setDuracion(diaReservadoDTO.getDuracion());
+
+            Optional<Aula> aula = aulaRepository.findById(diaReservadoDTO.getIdAula());
+            if (aula.isPresent()) {
+                diaReservado.setAula(aula.get());
+            }
+
             diaReservado.setReserva(reservaEsporadica);
             diasReservados.add(diaReservado);
         }
 
         reservaEsporadica.setDiasReservados(diasReservados);
+
+        Bedel bedel = bedelRepository.findByIdRegistroAndEliminadoFalse(reservaDTO.getIdRegistroBedel())
+                .orElseThrow(() -> new NotFoundException("Bedel no encontrado"));
+        reservaEsporadica.setBedel(bedel);
 
         BindingResult bindingResult = new BeanPropertyBindingResult(reservaEsporadica, "reservaEsporadica");
         reservaEsporadicaValidator.validate(reservaEsporadica, bindingResult);
@@ -693,7 +700,16 @@ public class ReservaService {
 
         List<DiaReservado> diasReservados = new ArrayList<>();
         for (DiaReservadoDTO diaReservadoDTO : reservaDTO.getDiasReservadosDTO()) {
-            DiaReservado diaReservado = diaReservadoMapper.toDiaReservadoEntity(diaReservadoDTO);
+            DiaReservado diaReservado = new DiaReservado();
+            diaReservado.setFechaReserva(diaReservadoDTO.getFechaReserva());
+            diaReservado.setHoraInicio(diaReservadoDTO.getHoraInicio());
+            diaReservado.setDuracion(diaReservadoDTO.getDuracion());
+
+            Optional<Aula> aula = aulaRepository.findById(diaReservadoDTO.getIdAula());
+            if (aula.isPresent()) {
+                diaReservado.setAula(aula.get());
+            }
+
             diaReservado.setReserva(reservaEsporadica);
             diasReservados.add(diaReservado);
         }

@@ -30,6 +30,7 @@ public class DiaReservadoDTO {
     @NotNull(message = "La duración es obligatoria.")
     private Integer duracion;
 
+    // TODO: ver @NotNull
     private Integer idAula;
 
 }
