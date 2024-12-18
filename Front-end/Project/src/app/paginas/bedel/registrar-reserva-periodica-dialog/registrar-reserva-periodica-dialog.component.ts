@@ -65,7 +65,6 @@ export class RegistrarReservaPeriodicaDialogComponent {
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: any) {
     this.initializeTreeData();
-    console.log('dia elegido: ',this.dias[2].name);
   }
 
   private initializeTreeData(): void {

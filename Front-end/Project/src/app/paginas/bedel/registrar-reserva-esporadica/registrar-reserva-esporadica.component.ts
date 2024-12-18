@@ -338,8 +338,6 @@ export class RegistrarReservaEsporadicaComponent implements OnInit{
 
   siguiente(): void{
 
-    console.log('valores form: ',this.registrarReservaForm.value);
-
     const tempCantAlumnos = this.registrarReservaForm.get('cantAlumnos')?.value;
     this.registrarReservaForm.get('cantAlumnos')?.patchValue(parseInt(tempCantAlumnos));
 
