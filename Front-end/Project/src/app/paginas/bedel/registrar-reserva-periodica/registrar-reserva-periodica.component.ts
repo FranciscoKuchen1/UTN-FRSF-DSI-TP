@@ -253,6 +253,19 @@ export class RegistrarReservaPeriodicaComponent implements OnInit{
     });
   }
 
+  transformarHoraInicioFin(horaInicio: string, duracionMinutos: number): string{
+
+    const [horas, minutos] = horaInicio.split(':').map(Number);
+    const totalMinutos = horas * 60 + minutos;
+    const nuevaHoraEnMinutos = totalMinutos + parseInt(duracionMinutos.toString());
+    const nuevaHora = Math.floor(nuevaHoraEnMinutos / 60) % 24;
+    const nuevosMinutos = nuevaHoraEnMinutos % 60;
+    const nuevaHoraFormateada = `${String(nuevaHora).padStart(2, '0')}:${String(nuevosMinutos).padStart(2, '0')}`;
+
+    return ` de ${horaInicio.substring(0,5)} a ${nuevaHoraFormateada}` ?? '';
+
+  }
+
   retrocederStep(): void{
     this.registrarAulasForm.get('fechaSeleccionada')?.reset()
     this.registrarAulasForm.get('aulaSeleccionada')?.reset()

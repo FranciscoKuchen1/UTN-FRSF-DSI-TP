@@ -170,7 +170,8 @@
               <mat-selection-list [multiple]="false" style="max-height: 440px; overflow-y: auto;" formControlName="fechaSeleccionada">
                 <mat-list-option *ngFor="let fecha of fechasDisponibles" [value]="fecha" [color]="'primary'">
                   <div matListItemTitle>
-                    {{fecha.diaReservado.fechaReserva | date: 'dd/MM/yyyy'}} - {{fecha.diaReservado.horaInicio.substring(0,5)}}
+                    <!--{{fecha.diaReservado.fechaReserva | date: 'dd/MM/yyyy'}} - {{fecha.diaReservado.horaInicio.substring(0,5)}}-->
+                    {{fecha.diaReservado.fechaReserva | date: 'dd/MM/yyyy'}} {{transformarHoraInicioFin(fecha.diaReservado.horaInicio, fecha.diaReservado.duracion)}}
                     <span *ngIf="fecha.diaReservado.idAula"> <mat-icon class="green-check">check_small</mat-icon> </span>
                   </div>
                   <mat-icon matListItemIcon>calendar_month</mat-icon>
@@ -186,7 +187,8 @@
               <ng-container *ngIf="fechaSeleccionada">
 
                 <div mat-subheader>Aulas disponibles para el
-                  {{fechaSeleccionada.diaReservado.fechaReserva | date: 'dd/MM/yyyy'}} - {{fechaSeleccionada.diaReservado.horaInicio.substring(0,5)}}:
+                  <!--{{fechaSeleccionada.diaReservado.fechaReserva | date: 'dd/MM/yyyy'}} - {{fechaSeleccionada.diaReservado.horaInicio.substring(0,5)}}:-->
+                  {{fechaSeleccionada.diaReservado.fechaReserva | date: 'dd/MM/yyyy'}} {{transformarHoraInicioFin(fechaSeleccionada.diaReservado.horaInicio, fechaSeleccionada.diaReservado.duracion)}}:
                 </div>
 
                 <mat-selection-list [multiple]="false" formControlName="aulaSeleccionada">

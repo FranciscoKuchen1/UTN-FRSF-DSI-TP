@@ -6,7 +6,7 @@
     <!-- Nodo de fecha -->
     <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding>
       <button mat-icon-button disabled></button>
-      {{node.name | date: 'dd/MM/yyyy'}}
+      {{node.name[0] | date: 'dd/MM/yyyy'}} {{node.name[1]}}
     </mat-tree-node>
 
     <!-- Nodo de fecha expandible -->
@@ -17,7 +17,7 @@
             {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
           </mat-icon>
         </button>
-        {{node.name | date: 'dd/MM/yyyy'}}
+        {{node.name[0] | date: 'dd/MM/yyyy'}} {{node.name[1]}}
       </div>
       <div [class.example-tree-invisible]="!treeControl.isExpanded(node)"
            role="group">

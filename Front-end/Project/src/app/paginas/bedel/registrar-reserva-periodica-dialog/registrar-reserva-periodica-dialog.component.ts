@@ -32,7 +32,7 @@ interface DiasSemanaConSolapamiento {
 }
 
 interface TreeNode {
-  name: string;
+  name: string[];
   children?: TreeNode[];
   reservaSolapada?: ReservaSolapada;
   aula?: {
@@ -70,7 +70,7 @@ export class RegistrarReservaPeriodicaDialogComponent {
   private initializeTreeData(): void {
     if (this.data && this.data.diasSemanaConSolapamiento) {
       const treeData: TreeNode[] = this.data.diasSemanaConSolapamiento.map((dia: DiasSemanaConSolapamiento) => ({
-        name: this.dias[dia.diaSemana.dia].name,
+        name: [this.dias[dia.diaSemana.dia].name, this.transformarHoraInicioFin(dia.diaSemana.horaInicio, dia.diaSemana.duracion)],
         children: dia.aulasConSolapamiento.map((aula: AulaConSolapamiento) => ({
           name: `${aula.aula.nombre} (${aula.aula.numero})`,
           reservaSolapada: aula.reservaSolapada,
@@ -87,4 +87,17 @@ export class RegistrarReservaPeriodicaDialogComponent {
   hasChild = (_: number, node: TreeNode) => !!node.children && node.children.length > 0;
 
   isReservaSolapada = (_: number, node: TreeNode) => !!node.reservaSolapada;
+
+  transformarHoraInicioFin(horaInicio: string, duracionMinutos: number): string{
+
+    const [horas, minutos] = horaInicio.split(':').map(Number);
+    const totalMinutos = horas * 60 + minutos;
+    const nuevaHoraEnMinutos = totalMinutos + parseInt(duracionMinutos.toString());
+    const nuevaHora = Math.floor(nuevaHoraEnMinutos / 60) % 24;
+    const nuevosMinutos = nuevaHoraEnMinutos % 60;
+    const nuevaHoraFormateada = `${String(nuevaHora).padStart(2, '0')}:${String(nuevosMinutos).padStart(2, '0')}`;
+
+    return ` de ${horaInicio.substring(0,5)} a ${nuevaHoraFormateada}` ?? '';
+
+  }
 }
