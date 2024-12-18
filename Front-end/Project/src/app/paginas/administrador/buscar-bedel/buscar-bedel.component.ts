@@ -6,7 +6,7 @@ import {FormBuilder, UntypedFormGroup} from "@angular/forms";
 import {HttpClient, HttpParams} from "@angular/common/http";
 import {AlertService} from "../../../services/alert/alert.service";
 import {Select} from "../../../interfaces/select";
-import {Router} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 
 @Component({
   selector: 'app-buscar-bedel',
@@ -20,6 +20,8 @@ export class BuscarBedelComponent implements OnInit{
   dataSource = new MatTableDataSource();
   buscarBedelForm: UntypedFormGroup;
 
+  extraData: any;
+
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
@@ -28,6 +30,7 @@ export class BuscarBedelComponent implements OnInit{
     private http: HttpClient,
     private alertService: AlertService,
     private router: Router,
+    private route: ActivatedRoute,
   ) {
     this.buscarBedelForm = this.formBuilder.group({
       apellido: [null],
@@ -36,11 +39,20 @@ export class BuscarBedelComponent implements OnInit{
   }
 
   ngOnInit() {
+    this.route.paramMap.subscribe(() => {
+      if(history.state.extraData){
+        this.buscarBedelForm.get('apellido')?.patchValue(history.state.extraData.apellido);
+        this.buscarBedelForm.get('tipoTurno')?.patchValue(history.state.extraData.tipoTurno);
+      }
+    });
+
     this.submit();
   }
 
   editarBedel(row: any): void{
-    this.router.navigate([`editar-bedel`, row.idRegistro]);
+    this.router.navigate([`editar-bedel`, row.idRegistro], {
+      state: { extraData: this.buscarBedelForm.value }
+    });
   }
 
   eliminarBedel(row: any): void{

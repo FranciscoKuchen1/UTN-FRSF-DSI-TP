@@ -33,6 +33,8 @@ export class RegistrarEditarBedelComponent implements OnInit, CanComponentDeacti
   hasNumber = false;
   hasSpecialCharacter = false;
 
+  extraData: any;
+
   constructor(
     private formbuilder: FormBuilder,
     private router: Router,
@@ -53,6 +55,7 @@ export class RegistrarEditarBedelComponent implements OnInit, CanComponentDeacti
   ngOnInit() {
     this.route.paramMap.subscribe(params => {
       this.id = params.get('id');
+      this.extraData = history.state.extraData;
     });
 
     if (this.id) {
@@ -94,15 +97,17 @@ export class RegistrarEditarBedelComponent implements OnInit, CanComponentDeacti
     }
   }
 
-  redirect(url: string) {
-    this.router.navigate([url]);
+  redirect(url: string, extraData?: any) {
+    this.router.navigate([url], {
+      state: { extraData: extraData }
+    });
   }
 
   close(): void {
     this.formChanged = false;
     if(this.id){
       this.alertService.confirm('Cancelar', 'Desea cancelar la edición del bedel?').subscribe(() => {
-        this.redirect('buscar-bedel');
+        this.redirect('buscar-bedel', this.extraData);
       });
     }else{
       this.alertService.confirm('Cancelar', 'Desea cancelar el registro de bedel?').subscribe(() => {
@@ -172,10 +177,10 @@ export class RegistrarEditarBedelComponent implements OnInit, CanComponentDeacti
   }
 
   clear(): void {
-      this.bedelForm.reset();
-      this.bedelForm.clearValidators();
-      this.bedelForm.updateValueAndValidity();
-      this.bedelForm.setErrors(null);
+    this.bedelForm.setErrors(null);
+    this.bedelForm.clearValidators();
+    this.bedelForm.updateValueAndValidity();
+    this.bedelForm.reset();
   }
 
   submit(): void {
@@ -209,7 +214,7 @@ export class RegistrarEditarBedelComponent implements OnInit, CanComponentDeacti
               this.alertService.snackBar('Bedel editado correctamente.');
               this.formChanged = false;
               this.clear();
-              this.redirect('buscar-bedel');
+              this.redirect('buscar-bedel', this.extraData);
             }
           }
         )
