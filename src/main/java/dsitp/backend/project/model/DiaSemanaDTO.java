@@ -2,8 +2,11 @@ package dsitp.backend.project.model;
 
 import java.util.List;
 
+import dsitp.backend.project.validation.ValidDurationDTO;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Positive;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -13,13 +16,21 @@ import lombok.Setter;
 @AllArgsConstructor
 public class DiaSemanaDTO {
 
-    @NotNull
+    @NotNull(message = "El dia de la semana es obligatorio.")
     private Integer dia;
-    @NotBlank
+
+    @NotBlank(message = "La hora de inicio es obligatoria.")
+    @Pattern(regexp = "^[0-9]{2}:[0-9]{2}$", message = "El formato de la hora debe ser HH:mm, usando solo dígitos")
     private String horaInicio;
-    @NotBlank
+
+    @ValidDurationDTO
+    @Positive
+    @NotBlank(message = "La duración es obligatoria.")
+    @Pattern(regexp = "^[0-9]+$", message = "La duración debe contener solo dígitos")
     private String duracion;
 
+    // TODO: ver
+    // @NotNull(message = "La duración es obligatoria.")
     private Integer idAula;
 
     public static Boolean containsFirst(List<DiaSemanaDTO> diasSemanaDTO, Integer target) {

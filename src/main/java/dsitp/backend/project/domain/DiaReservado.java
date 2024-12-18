@@ -1,5 +1,7 @@
 package dsitp.backend.project.domain;
 
+import dsitp.backend.project.validation.FutureMoment;
+import dsitp.backend.project.validation.RegistrarGroup;
 import dsitp.backend.project.validation.ValidDuration;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.Column;
@@ -32,6 +34,7 @@ import org.springframework.stereotype.Component;
 @Getter
 @Setter
 @Component
+@FutureMoment(message = "El momento debe ser futuro.")
 public class DiaReservado {
 
     @Id
@@ -41,7 +44,6 @@ public class DiaReservado {
     private Integer id;
 
     @Column
-    @Future(message = "La fecha debe ser en el futuro.")
     @NotNull(message = "La fecha de reserva es obligatoria.")
     private LocalDate fechaReserva;
 
@@ -59,10 +61,14 @@ public class DiaReservado {
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_aula")
+    // TODO: ver
+    // @NotNull(message = "El aula es obligatoria.", groups = RegistrarGroup.class)
     private Aula aula;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_reserva")
+    // TODO: ver
+    @NotNull(message = "La reserva es obligatoria.")
     private Reserva reserva;
 
     @CreatedDate

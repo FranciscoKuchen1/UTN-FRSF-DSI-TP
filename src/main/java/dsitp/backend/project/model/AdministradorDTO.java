@@ -14,7 +14,7 @@ public class AdministradorDTO {
 
     @Size(max = 20)
     @NotBlank(message = "El idRegistro es obligatorio.")
-    @UsuarioIdRegistroUnique(groups = {CreateGroup.class})
+    @UsuarioIdRegistroUnique(groups = { CreateGroup.class })
     private String idRegistro;
 
     @Size(max = 100)
@@ -22,6 +22,7 @@ public class AdministradorDTO {
     private String nombre;
 
     @Size(max = 100)
+    // TODO: ver si poner el 40?
     @NotBlank(message = "El apellido es obligatorio.")
     private String apellido;
 

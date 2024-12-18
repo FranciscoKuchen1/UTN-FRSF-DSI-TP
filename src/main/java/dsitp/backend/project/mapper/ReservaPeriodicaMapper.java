@@ -110,7 +110,8 @@ public class ReservaPeriodicaMapper {
         reservaPeriodica.setTipoAula(TipoAula.fromInteger(reservaPeriodicaDTO.getTipoAula()));
 
         Periodo periodo = periodoRepository
-                .findActivePeriodosByTipo(TipoPeriodo.fromInteger(reservaPeriodicaDTO.getTipoPeriodo())).getFirst();
+                .findActivePeriodosByTipoAndYear(TipoPeriodo.fromInteger(reservaPeriodicaDTO.getTipoPeriodo()))
+                .getFirst();
         reservaPeriodica.setPeriodo(periodo);
 
         List<DiaReservado> diasReservados = new ArrayList<>();

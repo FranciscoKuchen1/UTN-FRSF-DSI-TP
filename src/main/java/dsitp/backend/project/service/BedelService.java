@@ -3,7 +3,6 @@ package dsitp.backend.project.service;
 import dsitp.backend.project.domain.Bedel;
 import dsitp.backend.project.domain.ReservaEsporadica;
 import dsitp.backend.project.domain.ReservaPeriodica;
-import dsitp.backend.project.mapper.BedelMapper;
 import dsitp.backend.project.model.BedelDTO;
 import dsitp.backend.project.model.TipoTurno;
 import dsitp.backend.project.repos.BedelRepository;
@@ -27,57 +26,55 @@ public class BedelService {
     private final BedelRepository bedelRepository;
     private final ReservaEsporadicaRepository reservaEsporadicaRepository;
     private final ReservaPeriodicaRepository reservaPeriodicaRepository;
-    private final BedelMapper bedelMapper;
     private final Validator validator;
 
     @Autowired
     public BedelService(final BedelRepository bedelRepository,
             final ReservaEsporadicaRepository reservaEsporadicaRepository,
-            final ReservaPeriodicaRepository reservaPeriodicaRepository, final BedelMapper bedelMapper,
+            final ReservaPeriodicaRepository reservaPeriodicaRepository,
             final Validator validator) {
         this.bedelRepository = bedelRepository;
         this.reservaEsporadicaRepository = reservaEsporadicaRepository;
         this.reservaPeriodicaRepository = reservaPeriodicaRepository;
-        this.bedelMapper = bedelMapper;
         this.validator = validator;
     }
 
     public List<BedelDTO> findAll() {
         final List<Bedel> bedeles = bedelRepository.findByEliminadoFalse(Sort.by("id"));
         return bedeles.stream()
-                .map(bedel -> bedelMapper.toBedelDTO(bedel))
+                .map(bedel -> toBedelDTO(bedel))
                 .toList();
     }
 
     public BedelDTO get(final Integer id) {
         return bedelRepository.findById(id)
-                .map(bedel -> bedelMapper.toBedelDTO(bedel))
+                .map(bedel -> toBedelDTO(bedel))
                 .orElseThrow(NotFoundException::new);
     }
 
     public BedelDTO getByIdRegistro(final String idRegistro) {
         return bedelRepository.findByIdRegistroAndEliminadoFalse(idRegistro)
-                .map(bedel -> bedelMapper.toBedelDTO(bedel))
+                .map(bedel -> toBedelDTO(bedel))
                 .orElseThrow(NotFoundException::new);
     }
 
     public List<BedelDTO> getBedelesByApellido(final String apellido) {
         final List<Bedel> bedeles = bedelRepository.findByApellidoAndEliminadoFalse(apellido);
         return bedeles.stream()
-                .map(bedel -> bedelMapper.toBedelDTO(bedel))
+                .map(bedel -> toBedelDTO(bedel))
                 .toList();
     }
 
     public List<BedelDTO> getBedelesByTipoTurno(final Integer tipoTurno) {
         final List<Bedel> bedeles = bedelRepository.findByTipoTurnoAndEliminadoFalse(TipoTurno.fromInteger(tipoTurno));
         return bedeles.stream()
-                .map(bedel -> bedelMapper.toBedelDTO(bedel))
+                .map(bedel -> toBedelDTO(bedel))
                 .toList();
     }
 
     public BedelDTO getBedelByIdRegistro(final String idRegistro) {
         return bedelRepository.findByIdRegistroAndEliminadoFalse(idRegistro)
-                .map(bedel -> bedelMapper.toBedelDTO(bedel))
+                .map(bedel -> toBedelDTO(bedel))
                 .orElseThrow(NotFoundException::new);
     }
 
@@ -85,25 +82,25 @@ public class BedelService {
         if (tipoTurno != null && apellido != null) {
             return bedelRepository
                     .findByTipoTurnoAndApellidoAndEliminadoFalse(TipoTurno.fromInteger(tipoTurno), apellido).stream()
-                    .map(bedel -> bedelMapper.toBedelDTO(bedel))
+                    .map(bedel -> toBedelDTO(bedel))
                     .toList();
         } else if (tipoTurno != null) {
             return bedelRepository.findByTipoTurnoAndEliminadoFalse(TipoTurno.fromInteger(tipoTurno)).stream()
-                    .map(bedel -> bedelMapper.toBedelDTO(bedel))
+                    .map(bedel -> toBedelDTO(bedel))
                     .toList();
         } else if (apellido != null) {
             return bedelRepository.findByApellidoAndEliminadoFalse(apellido).stream()
-                    .map(bedel -> bedelMapper.toBedelDTO(bedel))
+                    .map(bedel -> toBedelDTO(bedel))
                     .toList();
         } else {
             return bedelRepository.findByEliminadoFalse().stream()
-                    .map(bedel -> bedelMapper.toBedelDTO(bedel))
+                    .map(bedel -> toBedelDTO(bedel))
                     .toList();
         }
     }
 
     public Integer create(final BedelDTO bedelDTO) {
-        final Bedel bedel = bedelMapper.toBedelEntity(bedelDTO);
+        final Bedel bedel = toBedelEntity(bedelDTO);
         return bedelRepository.save(bedel).getId();
     }
 

@@ -1,5 +1,7 @@
 package dsitp.backend.project.model;
 
+import dsitp.backend.project.validation.FutureMoment;
+import dsitp.backend.project.validation.FutureMomentDTO;
 import dsitp.backend.project.validation.ValidDuration;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.Future;
@@ -12,11 +14,11 @@ import lombok.Setter;
 
 @Getter
 @Setter
+@FutureMomentDTO(message = "El momento debe ser futuro.")
 public class DiaReservadoDTO {
 
     // @NotNull(message = "El id del dia reservado es obligatorio.")
     // private Integer id;
-    @Future(message = "La fecha debe ser en el futuro.")
     @NotNull(message = "La fecha de reserva es obligatoria.")
     private LocalDate fechaReserva;
 

@@ -4,7 +4,6 @@ import dsitp.backend.project.domain.Aula;
 import dsitp.backend.project.domain.DiaReservado;
 import dsitp.backend.project.domain.Reserva;
 import dsitp.backend.project.domain.ReservaEsporadica;
-import dsitp.backend.project.mapper.AulaMapper;
 import dsitp.backend.project.mapper.DiaReservadoMapper;
 import dsitp.backend.project.mapper.ReservaEsporadicaMapper;
 import dsitp.backend.project.model.AulaDTO;
@@ -37,20 +36,15 @@ public class ReservaEsporadicaService {
     private final DiaReservadoRepository diaReservadoRepository;
     private final AulaRepository aulaRepository;
     private final ReservaEsporadicaMapper reservaEsporadicaMapper;
-    private final DiaReservadoMapper diaReservadoMapper;
-    private final AulaMapper aulaMapper;
 
     @Autowired
     public ReservaEsporadicaService(final ReservaEsporadicaRepository reservaEsporadicaRepository,
             final DiaReservadoRepository diaReservadoRepository, final AulaRepository aulaRepository,
-            final ReservaEsporadicaMapper reservaEsporadicaMapper, final DiaReservadoMapper diaReservadoMapper,
-            final AulaMapper aulaMapper) {
+            final ReservaEsporadicaMapper reservaEsporadicaMapper) {
         this.reservaEsporadicaRepository = reservaEsporadicaRepository;
         this.diaReservadoRepository = diaReservadoRepository;
         this.aulaRepository = aulaRepository;
         this.reservaEsporadicaMapper = reservaEsporadicaMapper;
-        this.diaReservadoMapper = diaReservadoMapper;
-        this.aulaMapper = aulaMapper;
     }
 
     public List<ReservaEsporadicaDTO> findAll() {

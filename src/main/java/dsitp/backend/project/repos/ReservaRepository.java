@@ -89,7 +89,8 @@ public interface ReservaRepository extends JpaRepository<Reserva, Integer> {
                         @Param("horaInicio") LocalTime horaInicio,
                         @Param("horaFin") LocalTime horaFin);
 
-        @Query(value = "SELECT r.id AS id, " +
+        @Query(value = "SELECT r.id AS id_reserva, " +
+                        "dr.id AS id_dia_reservado, " +
                         "LEAST(EXTRACT(EPOCH FROM (:horaFin - dr.hora_inicio)), " +
                         "EXTRACT(EPOCH FROM (dr.hora_inicio + make_interval(secs => dr.duracion * 60) - :horaInicio)))::int AS superposicion "
                         +
@@ -106,5 +107,8 @@ public interface ReservaRepository extends JpaRepository<Reserva, Integer> {
                         @Param("fecha") LocalDate fecha,
                         @Param("horaInicio") LocalTime horaInicio,
                         @Param("horaFin") LocalTime horaFin);
+
+        @Query("SELECT dr FROM DiaReservado dr WHERE dr.id = :id")
+        Optional<DiaReservado> findDiaReservadoById(@Param("id") Integer id);
 
 }

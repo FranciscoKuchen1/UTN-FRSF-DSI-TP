@@ -25,8 +25,7 @@ public abstract class Usuario {
 
     @Id
     @Column
-    @SequenceGenerator(name = "primary_sequence", sequenceName
-            = "primary_sequence", allocationSize = 1, initialValue = 10000)
+    @SequenceGenerator(name = "primary_sequence", sequenceName = "primary_sequence", allocationSize = 1, initialValue = 10000)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "primary_sequence")
     private Integer id;
 

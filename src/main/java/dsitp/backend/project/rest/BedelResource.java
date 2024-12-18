@@ -24,6 +24,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotBlank;
 
 @RestController
 @RequestMapping(value = "/api/bedeles", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -41,7 +43,7 @@ public class BedelResource {
     @GetMapping
     @ApiResponse(responseCode = "200")
     public ResponseEntity<?> getBedeles(@Min(0) @Max(2) @RequestParam(required = false) final Integer tipoTurno,
-            @Size(max = 30) @RequestParam(required = false) final String apellido) {
+            @Size(max = 30) @RequestParam(required = false) @NotBlank(message = "Apellido es obligatorio") final String apellido) {
         logger.info("Se buscan los bedeles por criterios");
         List<BedelDTO> bedelesDTO = bedelService.findBedeles(tipoTurno, apellido);
         if (bedelesDTO.isEmpty()) {
@@ -53,13 +55,15 @@ public class BedelResource {
 
     @GetMapping("/{idRegistro}")
     @ApiResponse(responseCode = "200")
-    public ResponseEntity<BedelDTO> getBedel(@PathVariable(name = "idRegistro") final String idRegistro) {
+    public ResponseEntity<BedelDTO> getBedel(
+            @PathVariable(name = "idRegistro") @NotBlank(message = "Id de registro es obligatorio") final String idRegistro) {
         return ResponseEntity.ok(bedelService.getBedelByIdRegistro(idRegistro));
     }
 
     @GetMapping("/apellido/{apellido}")
     @ApiResponse(responseCode = "200")
-    public ResponseEntity<List<BedelDTO>> getBedelesByApellido(@PathVariable(name = "apellido") final String apellido) {
+    public ResponseEntity<List<BedelDTO>> getBedelesByApellido(
+            @PathVariable(name = "apellido") @NotBlank(message = "Apellido es obligatorio") final String apellido) {
         return ResponseEntity.ok(bedelService.getBedelesByApellido(apellido));
     }
 
@@ -80,8 +84,9 @@ public class BedelResource {
 
     @PutMapping("/{idRegistro}")
     @ApiResponse(responseCode = "200")
-    public ResponseEntity<Map<String, String>> updateBedel(@PathVariable(name = "idRegistro") final String idRegistro,
-            @RequestBody final BedelDTO bedelDTO) {
+    public ResponseEntity<Map<String, String>> updateBedel(
+            @PathVariable(name = "idRegistro") @NotBlank(message = "Id de registro es obligatorio") final String idRegistro,
+            @RequestBody @Valid final BedelDTO bedelDTO) {
         bedelService.update(idRegistro, bedelDTO);
         Map<String, String> response = Map.of("idRegistro", idRegistro);
         return ResponseEntity.ok(response);
@@ -89,7 +94,8 @@ public class BedelResource {
 
     @DeleteMapping("/{idRegistro}")
     @ApiResponse(responseCode = "204")
-    public ResponseEntity<Void> deleteBedelLogica(@PathVariable(name = "idRegistro") final String idRegistro) {
+    public ResponseEntity<Void> deleteBedelLogica(
+            @PathVariable(name = "idRegistro") @NotBlank(message = "Id de registro es obligatorio") final String idRegistro) {
         logger.info("Bedel es eliminado");
         // final ReferencedWarning referencedWarning =
         // bedelService.getReferencedWarning(idRegistro);
