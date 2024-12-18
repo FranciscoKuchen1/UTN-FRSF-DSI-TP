@@ -357,7 +357,6 @@ export class RegistrarReservaPeriodicaComponent implements OnInit{
     formData.diasSemanaDTO = [];
 
     this.fechasDisponibles.forEach(value => formData.diasSemanaDTO.push(value.diaSemana));
-
     delete formData.catedra;
     delete formData.docente;
 
