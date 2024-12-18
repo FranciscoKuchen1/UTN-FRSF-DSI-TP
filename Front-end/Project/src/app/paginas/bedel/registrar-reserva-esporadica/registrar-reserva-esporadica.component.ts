@@ -358,7 +358,6 @@ export class RegistrarReservaEsporadicaComponent implements OnInit{
         }
       }
     });
-
   }
 
   submit(): void{
@@ -380,7 +379,6 @@ export class RegistrarReservaEsporadicaComponent implements OnInit{
         this.redirect('');
       }
     });
-
   }
 
 }
