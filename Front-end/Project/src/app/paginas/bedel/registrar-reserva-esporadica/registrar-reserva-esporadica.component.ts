@@ -303,7 +303,7 @@ export class RegistrarReservaEsporadicaComponent implements OnInit{
     const nuevosMinutos = nuevaHoraEnMinutos % 60;
     const nuevaHoraFormateada = `${String(nuevaHora).padStart(2, '0')}:${String(nuevosMinutos).padStart(2, '0')}`;
 
-    return `de ${horaInicio} a ${nuevaHoraFormateada}` ?? '';
+    return `de ${horaInicio.substring(0,5)} a ${nuevaHoraFormateada}` ?? '';
   }
 
   listaCaracteristicas(aula: Aula): string{
@@ -381,9 +381,20 @@ export class RegistrarReservaEsporadicaComponent implements OnInit{
           }
         }
       },
-      error: (er)=> {
-        if(er.error.message === 'El momento debe ser futuro.'){
+      error: (value)=> {
+        /*if(value.error.message === 'El momento debe ser futuro.'){
           this.alertService.ok('ERROR', 'Una de las fechas reservadas está en el pasado.');
+        }*/
+
+        if (value.status === 400 && value.error) {
+          let errorMessages = '';
+
+          if (typeof value.error === 'object') {
+            for (const [field, message] of Object.entries(value.error)) {
+              errorMessages += `${message}\n`;
+            }
+          }
+          this.alertService.ok('ERROR', errorMessages);
         }
       }
     });
@@ -405,9 +416,18 @@ export class RegistrarReservaEsporadicaComponent implements OnInit{
     const queryForm = {...formData}
 
     this.http.post<any>('http://localhost:8080/api/reservas/1', queryForm).subscribe({
-      next: ()=> {
+      error: (value) => {
+      if (value.status === 400 && value.error) {
+        let errorMessages = '';
 
-      },
+        if (typeof value.error === 'object') {
+          for (const [field, message] of Object.entries(value.error)) {
+            errorMessages += `${message}\n`;
+          }
+        }
+        this.alertService.ok('ERROR', errorMessages);
+      }
+    },
       complete: ()=> {
         this.alertService.snackBar('Reserva realizada con exito.');
         this.redirect('');

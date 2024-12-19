@@ -347,19 +347,31 @@ export class RegistrarReservaPeriodicaComponent implements OnInit{
     const queryForm = {...formData}
 
     this.http.post<any>('http://localhost:8080/api/reservas/disponibilidad/0', queryForm).subscribe({
-        next: (data)=> {
-          if(data.diasSemanaDisponibles.length !== 0 && data.diasSemanaConSolapamiento.length === 0){
-            this.fechasDisponibles = data.diasSemanaDisponibles;
-            this.stepper.next();
+      next: (data)=> {
+        if(data.diasSemanaDisponibles.length !== 0 && data.diasSemanaConSolapamiento.length === 0){
+          this.fechasDisponibles = data.diasSemanaDisponibles;
+          this.stepper.next();
 
+        }else{
+          if(data.diasSemanaDisponibles.length === 0 && data.diasSemanaConSolapamiento.length === 0){
+            this.alertService.ok('Sin disponibilidad','No hay aulas disponibles para los datos ingresados.');
           }else{
-            if(data.diasSemanaDisponibles.length === 0 && data.diasSemanaConSolapamiento.length === 0){
-              this.alertService.ok('Sin disponibilidad','No hay aulas disponibles para los datos ingresados.');
-            }else{
-              this.fechasNoDisponibles(data);
-            }
+            this.fechasNoDisponibles(data);
           }
         }
+      },
+      error: (value) => {
+        if (value.status === 400 && value.error) {
+          let errorMessages = '';
+
+          if (typeof value.error === 'object') {
+            for (const [field, message] of Object.entries(value.error)) {
+              errorMessages += `${message}\n`;
+            }
+          }
+          this.alertService.ok('ERROR', errorMessages);
+        }
+      },
       });
   }
 
@@ -376,8 +388,17 @@ export class RegistrarReservaPeriodicaComponent implements OnInit{
     const queryForm = {...formData}
 
     this.http.post<any>('http://localhost:8080/api/reservas/0',queryForm).subscribe({
-      next: ()=> {
+      error: (value) => {
+        if (value.status === 400 && value.error) {
+          let errorMessages = '';
 
+          if (typeof value.error === 'object') {
+            for (const [field, message] of Object.entries(value.error)) {
+              errorMessages += `${message}\n`;
+            }
+          }
+          this.alertService.ok('ERROR', errorMessages);
+        }
       },
       complete: ()=> {
         this.alertService.snackBar('Reserva realizada con exito.');
