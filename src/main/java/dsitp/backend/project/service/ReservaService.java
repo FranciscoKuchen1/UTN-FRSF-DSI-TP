@@ -270,7 +270,8 @@ public class ReservaService {
                     } else if (reservaEsporadicaSolapadaConTiempoSolap != null
                             && reservaPeriodicaSolapadaConTiempoSolap != null) {
                         if (reservaEsporadicaSolapadaConTiempoSolap.get("superposicion",
-                                Integer.class) < reservaPeriodicaSolapadaConTiempoSolap.get(1, Integer.class)) {
+                                Integer.class) < reservaPeriodicaSolapadaConTiempoSolap.get("superposicion",
+                                        Integer.class)) {
                             aulasSolapadas.put(aula, reservaEsporadicaSolapadaConTiempoSolap);
                         } else {
                             aulasSolapadas.put(aula, reservaPeriodicaSolapadaConTiempoSolap);
@@ -279,8 +280,11 @@ public class ReservaService {
 
                     if (menorSolapamiento == null) {
                         aulasMenosSolap = aulasSolapadas;
+                        menorSolapamiento = aulasSolapadas.get(aula).get("superposicion", Integer.class);
                     } else if (aulasSolapadas.get(aula).get("superposicion", Integer.class) < menorSolapamiento) {
                         aulasMenosSolap = aulasSolapadas;
+                    } else if (aulasSolapadas.get(aula).get("superposicion", Integer.class).equals(menorSolapamiento)) {
+                        aulasMenosSolap.putAll(aulasSolapadas);
                     }
 
                 }
@@ -439,7 +443,7 @@ public class ReservaService {
                 aulasSolapadas.put(aula, reservaEsporadicaSolapadaConTiempoSolap);
             } else if (reservaEsporadicaSolapadaConTiempoSolap != null
                     && reservaPeriodicaSolapadaConTiempoSolap != null) {
-                if (reservaEsporadicaSolapadaConTiempoSolap.get(1,
+                if (reservaEsporadicaSolapadaConTiempoSolap.get("superposicion",
                         Integer.class) < reservaPeriodicaSolapadaConTiempoSolap.get("superposicion", Integer.class)) {
                     aulasSolapadas.put(aula, reservaEsporadicaSolapadaConTiempoSolap);
                 } else {
@@ -452,8 +456,8 @@ public class ReservaService {
                 menorSolapamiento = aulasSolapadas.get(aula).get("superposicion", Integer.class);
             } else if (aulasSolapadas.get(aula).get("superposicion", Integer.class) < menorSolapamiento) {
                 aulasMenosSolap = aulasSolapadas;
-            } else if (aulasSolapadas.get(aula).get("superposicion", Integer.class) == menorSolapamiento) {
-                aulasMenosSolap.put(aula, reservaPeriodicaSolapadaConTiempoSolap);
+            } else if (aulasSolapadas.get(aula).get("superposicion", Integer.class).equals(menorSolapamiento)) {
+                aulasMenosSolap.putAll(aulasSolapadas);
             }
 
         }
