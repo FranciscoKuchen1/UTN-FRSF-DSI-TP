@@ -8,14 +8,18 @@ import dsitp.backend.project.repos.BedelRepository;
 import dsitp.backend.project.repos.PeriodoRepository;
 import dsitp.backend.project.service.ReservaService;
 import dsitp.backend.project.util.CustomCollectors;
+import dsitp.backend.project.validation.UpdateGroup;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import jakarta.validation.Valid;
+import jakarta.validation.groups.Default;
+
 import java.util.List;
 import java.util.Map;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -54,6 +58,7 @@ public class ReservaResource {
 
     @PostMapping("/{tipoReserva}")
     @ApiResponse(responseCode = "201")
+    @Validated({ Default.class })
     public ResponseEntity<Integer> createReserva(
             @RequestBody @Valid final ReservaDTO reservaDTO,
             @PathVariable(name = "tipoReserva") final Integer tipoReserva) {

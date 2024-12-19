@@ -47,7 +47,7 @@ public class BedelResource {
     @GetMapping
     @ApiResponse(responseCode = "200")
     public ResponseEntity<?> getBedeles(@Min(0) @Max(2) @RequestParam(required = false) final Integer tipoTurno,
-            @Size(max = 30) @RequestParam(required = false) final String apellido) {
+            @Size(max = 40) @RequestParam(required = false) final String apellido) {
         logger.info("Se buscan los bedeles por criterios");
         List<BedelDTO> bedelesDTO = bedelService.findBedeles(tipoTurno, apellido);
         if (bedelesDTO.isEmpty()) {

@@ -602,6 +602,18 @@ public class ReservaService {
 
             if (periodo.getFechaInicio().isBefore(LocalDate.now())) {
                 fechaIterador = LocalDate.now();
+                DayOfWeek diaSemanaHoy = LocalDate.now().getDayOfWeek();
+                Integer diaHoy = diaSemanaHoy.getValue() % 7;
+
+                if (diaSemanaDTO.getDia() == diaHoy) {
+
+                    LocalTime horaInicioDTO = LocalTime.parse(diaSemanaDTO.getHoraInicio(),
+                            DateTimeFormatter.ofPattern("HH:mm"));
+
+                    if (LocalTime.now().isAfter(horaInicioDTO)) {
+                        fechaIterador = fechaIterador.plusDays(1);
+                    }
+                }
 
             } else {
                 fechaIterador = periodo.getFechaInicio();

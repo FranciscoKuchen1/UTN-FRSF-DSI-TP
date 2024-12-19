@@ -21,20 +21,20 @@ public class BedelDTO {
     @UsuarioIdRegistroUnique(groups = CreateGroup.class)
     private String idRegistro;
 
-    @Size(max = 100)
+    @Size(max = 25)
     @NotBlank(message = "El nombre es obligatorio.")
     private String nombre;
 
-    @Size(max = 100)
+    @Size(max = 40)
     @NotBlank(message = "El apellido es obligatorio.", groups = { CreateGroup.class, UpdateGroup.class })
     private String apellido;
 
-    @Size(max = 100)
+    @Size(max = 20)
     @ValidPassword
     @NotBlank(message = "La contrasena es obligatoria.")
     private String contrasena;
 
-    @Size(max = 100)
+    @Size(max = 20)
     @NotBlank(message = "La confirmacion de la contrasena es obligatoria.")
     private String confirmacionContrasena;
 
