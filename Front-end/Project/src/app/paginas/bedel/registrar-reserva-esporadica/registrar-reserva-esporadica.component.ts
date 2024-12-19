@@ -380,6 +380,11 @@ export class RegistrarReservaEsporadicaComponent implements OnInit{
             this.fechasNoDisponibles(data);
           }
         }
+      },
+      error: (er)=> {
+        if(er.error.message === 'El momento debe ser futuro.'){
+          this.alertService.ok('ERROR', 'Una de las fechas reservadas está en el pasado.');
+        }
       }
     });
   }
