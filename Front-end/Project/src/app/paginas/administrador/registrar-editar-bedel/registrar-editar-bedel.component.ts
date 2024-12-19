@@ -231,10 +231,13 @@ export class RegistrarEditarBedelComponent implements OnInit, CanComponentDeacti
                 if (typeof value.error === 'object') {
                   for (const [field, message] of Object.entries(value.error)) {
                     errorMessages += `${message}\n`;
+
+                    if(field === 'createBedel.bedelDTO.idRegistro'){
+                      this.bedelForm.get('idRegistro')?.reset();
+                    }
                   }
                 }
                 this.alertService.ok('ERROR', errorMessages);
-                this.bedelForm.get('idRegistro')?.reset();
               }
             },
             complete: () => {
