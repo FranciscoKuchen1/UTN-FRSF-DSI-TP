@@ -43,6 +43,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.Period;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.TemporalAdjusters;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -324,8 +325,23 @@ public class ReservaService {
         List<DiaReservado> diasReservados = new ArrayList<>();
         Periodo periodo = reservaPeriodica.getPeriodo();
 
+        int diaSemanaActual = LocalDate.now().getDayOfWeek().getValue() % 7;
+
         if (periodo.getFechaInicio().isBefore(LocalDate.now())) {
             fechaIterador = LocalDate.now();
+            DayOfWeek diaSemanaHoy = LocalDate.now().getDayOfWeek();
+            Integer diaHoy = diaSemanaHoy.getValue() % 7;
+
+            if (diaSemanaDTO.getDia() == diaHoy) {
+
+                LocalTime horaInicioDTO = LocalTime.parse(diaSemanaDTO.getHoraInicio(),
+                        DateTimeFormatter.ofPattern("HH:mm"));
+
+                if (LocalTime.now().isAfter(horaInicioDTO)) {
+                    fechaIterador = fechaIterador.plusDays(1);
+                }
+            }
+
         } else {
             fechaIterador = periodo.getFechaInicio();
         }
@@ -661,11 +677,27 @@ public class ReservaService {
         reservaEsporadica.setTipoAula(TipoAula.fromInteger(reservaDTO.getTipoAula()));
 
         List<DiaReservado> diasReservados = new ArrayList<>();
+
         for (DiaReservadoDTO diaReservadoDTO : reservaDTO.getDiasReservadosDTO()) {
             DiaReservado diaReservado = new DiaReservado();
             diaReservado.setFechaReserva(diaReservadoDTO.getFechaReserva());
             diaReservado.setHoraInicio(diaReservadoDTO.getHoraInicio());
             diaReservado.setDuracion(diaReservadoDTO.getDuracion());
+
+            if (!diasReservados.isEmpty()) {
+                for (DiaReservado diaYaReservado : diasReservados) {
+                    if (diaYaReservado.getFechaReserva() == diaReservado.getFechaReserva() &&
+                            (diaReservado.getHoraInicio().isBefore(diaYaReservado.getHoraInicio())
+                                    && diaYaReservado.getHoraInicio().isBefore(
+                                            diaReservado.getHoraInicio().plusMinutes(diaReservado.getDuracion())))
+                            ||
+                            (diaYaReservado.getHoraInicio().isBefore(diaReservado.getHoraInicio()) &&
+                                    diaReservado.getHoraInicio().isBefore(diaYaReservado.getHoraInicio()
+                                            .plusMinutes(diaYaReservado.getDuracion())))) {
+                        throw new IllegalArgumentException("Hay solapamiento en los dias ingresados.");
+                    }
+                }
+            }
 
             // TODO: NECESARIO?
             Optional<Aula> aula = aulaRepository.findById(diaReservadoDTO.getIdAula());
