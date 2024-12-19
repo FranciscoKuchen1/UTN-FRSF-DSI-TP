@@ -13,7 +13,7 @@ import {AlertService} from "../../../services/alert/alert.service";
   styleUrls: ['./listado-reservas-dia.component.scss']
 })
 export class ListadoReservasDiaComponent {
-  displayedColumns: string[] = ['docente', 'catedra', 'tipoAula', 'ocupacion','hora inicio', 'hora fin'];
+  displayedColumns: string[] = ['docente', 'catedra', 'tipoAula'/*, 'ocupacion'*/,'hora inicio', 'hora fin'];
   dataSource = new MatTableDataSource();
   listadoReservaDiaForm: UntypedFormGroup;
   tiposAula: Select[] = [{id: 0, name: 'Todas'},{id: 1, name: 'Multimedios'},{id: 2, name: 'Aula informatica'},{id: 3, name: 'Aula sin recursos adicionales'}];
@@ -23,8 +23,8 @@ export class ListadoReservasDiaComponent {
 
   constructor(
     private formBuilder: FormBuilder,
-    private http: HttpClient,
-    private alertService: AlertService,
+    //private http: HttpClient,
+    //private alertService: AlertService,
   ) {
     this.listadoReservaDiaForm = this.formBuilder.group({
       fecha: [null],
