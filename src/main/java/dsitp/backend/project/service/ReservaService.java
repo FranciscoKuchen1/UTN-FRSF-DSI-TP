@@ -53,6 +53,8 @@ import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
@@ -413,6 +415,11 @@ public class ReservaService {
         }
 
         Collections.sort(aulasDisponiblesDTO, Comparator.comparingInt(AulaDTO::getCapacidad));
+
+        aulasDisponiblesDTO = aulasDisponiblesDTO.stream()
+                .limit(3)
+                .collect(Collectors.toList());
+
     }
 
     // diag nombre
@@ -516,7 +523,9 @@ public class ReservaService {
 
         Collections.sort(aulasDisponiblesDTO, Comparator.comparingInt(AulaDTO::getCapacidad));
 
-        return aulasDisponiblesDTO;
+        return aulasDisponiblesDTO.stream()
+                .limit(3)
+                .collect(Collectors.toList());
     }
 
     public ReservaPeriodica toReservaPeriodicaEntityDisponibilidad(
