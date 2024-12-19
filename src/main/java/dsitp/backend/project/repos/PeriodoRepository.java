@@ -13,9 +13,8 @@ public interface PeriodoRepository extends JpaRepository<Periodo, Integer> {
 
     @Query("SELECT p FROM Periodo p "
             + "WHERE p.tipoPeriodo = :tipoPeriodo "
-            + "AND p.fechaFin >= CURRENT_TIMESTAMP ")
-
-    // TODO: si la fecha actual es mayor al periodo especificada
+            + "AND p.fechaFin >= CURRENT_TIMESTAMP "
+            + "ORDER BY YEAR(p.fechaFin) ASC")
     List<Periodo> findActivePeriodosByTipoAndYear(@Param("tipoPeriodo") TipoPeriodo tipoPeriodo);
 
 }
