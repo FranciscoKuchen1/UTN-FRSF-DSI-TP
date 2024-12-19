@@ -114,6 +114,7 @@ public class ReservaService {
 
         if (!aulasObtenidas.isEmpty()) {
             if (tipoReserva == 0) {
+
                 final ReservaPeriodica reservaPeriodica = toReservaPeriodicaEntityDisponibilidad(reservaDTO);
                 for (DiaSemanaDTO diaSemanaDTO : reservaDTO.getDiasSemanaDTO()) {
                     // TODO: Ver si no da problemas
@@ -354,6 +355,7 @@ public class ReservaService {
         } else {
             fechaIterador = periodo.getFechaInicio();
         }
+
         while (!fechaIterador.isAfter(periodo.getFechaFin())) {
             DayOfWeek diaSemana = fechaIterador.getDayOfWeek();
             Integer idDiaSemana = diaSemana.getValue() % 7;
