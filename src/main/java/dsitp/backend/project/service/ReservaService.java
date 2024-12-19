@@ -676,24 +676,30 @@ public class ReservaService {
         reservaEsporadica.setCantAlumnos(reservaDTO.getCantAlumnos());
         reservaEsporadica.setTipoAula(TipoAula.fromInteger(reservaDTO.getTipoAula()));
 
+        List<DiaReservadoDTO> diasReservadosDTO = reservaDTO.getDiasReservadosDTO();
+        diasReservadosDTO.sort(Comparator.comparing(DiaReservadoDTO::getHoraInicio));
+
         List<DiaReservado> diasReservados = new ArrayList<>();
 
-        for (DiaReservadoDTO diaReservadoDTO : reservaDTO.getDiasReservadosDTO()) {
+        for (DiaReservadoDTO diaReservadoDTO : diasReservadosDTO) {
             DiaReservado diaReservado = new DiaReservado();
             diaReservado.setFechaReserva(diaReservadoDTO.getFechaReserva());
             diaReservado.setHoraInicio(diaReservadoDTO.getHoraInicio());
             diaReservado.setDuracion(diaReservadoDTO.getDuracion());
 
+            // (diaYaReservado.getFechaReserva() == diaReservado.getFechaReserva() &&
+            // (diaReservado.getHoraInicio().isBefore(diaYaReservado.getHoraInicio())
+            // && diaYaReservado.getHoraInicio().isBefore(
+            // diaReservado.getHoraInicio().plusMinutes(diaReservado.getDuracion())))
+            // ||
+            // (diaYaReservado.getHoraInicio().isBefore(diaReservado.getHoraInicio()) &&
+            // diaReservado.getHoraInicio().isBefore(diaYaReservado.getHoraInicio()
+            // .plusMinutes(diaYaReservado.getDuracion()))))
+
             if (!diasReservados.isEmpty()) {
                 for (DiaReservado diaYaReservado : diasReservados) {
-                    if (diaYaReservado.getFechaReserva() == diaReservado.getFechaReserva() &&
-                            (diaReservado.getHoraInicio().isBefore(diaYaReservado.getHoraInicio())
-                                    && diaYaReservado.getHoraInicio().isBefore(
-                                            diaReservado.getHoraInicio().plusMinutes(diaReservado.getDuracion())))
-                            ||
-                            (diaYaReservado.getHoraInicio().isBefore(diaReservado.getHoraInicio()) &&
-                                    diaReservado.getHoraInicio().isBefore(diaYaReservado.getHoraInicio()
-                                            .plusMinutes(diaYaReservado.getDuracion())))) {
+                    if (diaYaReservado.getHoraInicio().plusMinutes(diaYaReservado.getDuracion())
+                            .isAfter(diaReservado.getHoraInicio())) {
                         throw new IllegalArgumentException("Hay solapamiento en los dias ingresados.");
                     }
                 }
