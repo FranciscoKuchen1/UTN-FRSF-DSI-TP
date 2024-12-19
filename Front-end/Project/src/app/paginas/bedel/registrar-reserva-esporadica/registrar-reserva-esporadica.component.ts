@@ -252,6 +252,15 @@ export class RegistrarReservaEsporadicaComponent implements OnInit{
     return date.toLocaleDateString('en-CA', options);
   }
 
+  areDatesEqual(date1: Date, date2: string): boolean {
+    const dateFromString = new Date(date2);
+    const normalizedDate1 = new Date(Date.UTC(date1.getUTCFullYear(), date1.getUTCMonth(), date1.getUTCDate()));
+    const normalizedDate2 = new Date(Date.UTC(dateFromString.getUTCFullYear(), dateFromString.getUTCMonth(), dateFromString.getUTCDate()));
+
+    return normalizedDate1.getTime() === normalizedDate2.getTime();
+  }
+
+
   agregarALista(): void{
     const fecha = this.registrarReservaForm.get('fechaAReservar')?.value;
     const hora = this.registrarReservaForm.get('horaInicioFechaAReservar')?.value;
@@ -259,7 +268,14 @@ export class RegistrarReservaEsporadicaComponent implements OnInit{
 
     const fechasGuardadas = this.registrarReservaForm.get('diasReservadosDTO')?.value;
 
-    fechasGuardadas.push({fechaReserva: this.formatDateToISO(fecha), horaInicio: hora, duracion: parseInt(duracion), idAula: 0});
+    const temp = fechasGuardadas.some((value: any) => { return this.areDatesEqual(fecha, value.fechaReserva) });
+    console.log('temp: ', temp)
+
+    if(!temp){
+      fechasGuardadas.push({fechaReserva: this.formatDateToISO(fecha), horaInicio: hora, duracion: parseInt(duracion), idAula: 0});
+    }else{
+      this.alertService.ok('ERROR', 'No puedes agregar la misma fecha dos veces.');
+    }
 
     this.registrarReservaForm.get('diasReservadosDTO')?.patchValue(fechasGuardadas);
 
