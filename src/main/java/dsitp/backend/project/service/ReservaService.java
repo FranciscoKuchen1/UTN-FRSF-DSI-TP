@@ -281,15 +281,17 @@ public class ReservaService {
                         }
                     }
 
-                    if (menorSolapamiento == null) {
-                        aulasMenosSolap = aulasSolapadas;
-                        menorSolapamiento = aulasSolapadas.get(aula).get("superposicion", Integer.class);
-                    } else if (aulasSolapadas.get(aula).get("superposicion", Integer.class) < menorSolapamiento) {
-                        aulasMenosSolap = aulasSolapadas;
-                    } else if (aulasSolapadas.get(aula).get("superposicion", Integer.class).equals(menorSolapamiento)) {
-                        aulasMenosSolap.putAll(aulasSolapadas);
+                    if (aulasSolapadas.get(aula) != null) {
+                        if (menorSolapamiento == null) {
+                            aulasMenosSolap = aulasSolapadas;
+                            menorSolapamiento = aulasSolapadas.get(aula).get("superposicion", Integer.class);
+                        } else if (aulasSolapadas.get(aula).get("superposicion", Integer.class) < menorSolapamiento) {
+                            aulasMenosSolap = aulasSolapadas;
+                        } else if (aulasSolapadas.get(aula).get("superposicion", Integer.class)
+                                .equals(menorSolapamiento)) {
+                            aulasMenosSolap.putAll(aulasSolapadas);
+                        }
                     }
-
                 }
 
             }

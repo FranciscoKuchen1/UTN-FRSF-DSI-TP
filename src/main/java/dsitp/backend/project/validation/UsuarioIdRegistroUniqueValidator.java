@@ -25,8 +25,8 @@ class UsuarioIdRegistroUniqueValidator implements ConstraintValidator<UsuarioIdR
 
     @Override
     public boolean isValid(final String value, final ConstraintValidatorContext context) {
-        if (value == null) {
-            return false;
+        if (value == null || value.trim().isEmpty()) {
+            return true;
         }
 
         if (bedelService.idRegistroExists(value) || administradorService.idRegistroExists(value)) {
