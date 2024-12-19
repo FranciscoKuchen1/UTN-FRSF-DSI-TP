@@ -41,8 +41,8 @@
           <p><strong>Cátedra:</strong> {{node.reservaSolapada.nombreCatedra}}</p>
           <p><strong>Docente:</strong> {{node.reservaSolapada.nombreDocente}} {{node.reservaSolapada.apellidoDocente}}</p>
           <p><strong>Correo:</strong> {{node.reservaSolapada.correoDocente}}</p>
-          <!--<p><strong>Inicio reserva:</strong> {{node.reservaSolapada.inicioReserva | date: 'dd/MM/yyyy'}}</p>
-          <p><strong>Fin reserva:</strong> {{node.reservaSolapada.finReserva | date: 'dd/MM/yyyy'}}</p>-->
+          <p><strong>Inicio reserva:</strong> {{node.reservaSolapada.inicioReserva.substring(0,5)}}</p>
+          <p><strong>Fin reserva:</strong> {{node.reservaSolapada.finReserva.substring(0,5)}}</p>
           <p><strong>Aula:</strong> {{node.aula.nombre}} (Número: {{node.aula.numero}}, Piso: {{node.aula.piso}}, Capacidad: {{node.aula.capacidad}})</p>
         </div>
       </div>
