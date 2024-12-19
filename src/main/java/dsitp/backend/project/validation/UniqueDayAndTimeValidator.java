@@ -29,7 +29,8 @@ public class UniqueDayAndTimeValidator implements ConstraintValidator<UniqueDayA
         Boolean isValid = diasMap.values().stream().allMatch(set -> set.size() == 1);
         if (!isValid) {
             context.disableDefaultConstraintViolation();
-            context.buildConstraintViolationWithTemplate("Existen horarios duplicados en los días reservados.")
+            context.buildConstraintViolationWithTemplate(
+                    "Existe más de una hora de inicio y duración para el mismo día.")
                     .addConstraintViolation();
         }
         return isValid;

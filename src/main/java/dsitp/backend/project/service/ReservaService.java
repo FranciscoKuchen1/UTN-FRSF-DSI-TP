@@ -208,8 +208,7 @@ public class ReservaService {
             DiaSemanaDTO diaSemanaDTO) {
         List<AulaDTO> aulasDisponiblesDTO = new ArrayList<>();
         List<DiaReservado> diasReservados = obtenerDiasReservados(reservaPeriodica, diaSemanaDTO);
-        obtenerDisponibilidadReservaPeriodica(reservaPeriodica.getCantAlumnos(), aulasObtenidas, diasReservados,
-                aulasDisponiblesDTO);
+        obtenerDisponibilidadReservaPeriodica(reservaPeriodica.getCantAlumnos(), aulasObtenidas, diasReservados);
 
         return aulasDisponiblesDTO;
     }
@@ -392,8 +391,9 @@ public class ReservaService {
     }
 
     // diag nombre
-    private void obtenerDisponibilidadReservaPeriodica(Integer cantAlumnos, List<Aula> aulasObtenidas,
-            List<DiaReservado> diasReservados, List<AulaDTO> aulasDisponiblesDTO) {
+    private List<AulaDTO> obtenerDisponibilidadReservaPeriodica(Integer cantAlumnos, List<Aula> aulasObtenidas,
+            List<DiaReservado> diasReservados) {
+        List<AulaDTO> aulasDisponiblesDTO = new ArrayList<>();
         for (Aula aula : aulasObtenidas) {
             Boolean aulaDisponible = true;
             Integer i = 0;
@@ -420,6 +420,7 @@ public class ReservaService {
                 .limit(3)
                 .collect(Collectors.toList());
 
+        return aulasDisponiblesDTO;
     }
 
     // diag nombre
@@ -711,26 +712,18 @@ public class ReservaService {
             diaReservado.setHoraInicio(diaReservadoDTO.getHoraInicio());
             diaReservado.setDuracion(diaReservadoDTO.getDuracion());
 
-            // (diaYaReservado.getFechaReserva() == diaReservado.getFechaReserva() &&
-            // (diaReservado.getHoraInicio().isBefore(diaYaReservado.getHoraInicio())
-            // && diaYaReservado.getHoraInicio().isBefore(
-            // diaReservado.getHoraInicio().plusMinutes(diaReservado.getDuracion())))
-            // ||
-            // (diaYaReservado.getHoraInicio().isBefore(diaReservado.getHoraInicio()) &&
-            // diaReservado.getHoraInicio().isBefore(diaYaReservado.getHoraInicio()
-            // .plusMinutes(diaYaReservado.getDuracion()))))
-
-            if (!diasReservados.isEmpty()) {
-                for (DiaReservado diaYaReservado : diasReservados) {
-                    if (diaYaReservado.getFechaReserva().isEqual(diaReservado.getFechaReserva())
-                            && !diaYaReservado.getHoraInicio().plusMinutes(diaYaReservado.getDuracion())
-                                    .equals(diaReservado.getHoraInicio())
-                            && diaYaReservado.getHoraInicio().plusMinutes(diaYaReservado.getDuracion())
-                                    .isAfter(diaReservado.getHoraInicio())) {
-                        throw new IllegalArgumentException("Hay solapamiento en los dias ingresados.");
-                    }
-                }
-            }
+            // if (!diasReservados.isEmpty()) {
+            // for (DiaReservado diaYaReservado : diasReservados) {
+            // if (diaYaReservado.getFechaReserva().isEqual(diaReservado.getFechaReserva())
+            // && !diaYaReservado.getHoraInicio().plusMinutes(diaYaReservado.getDuracion())
+            // .equals(diaReservado.getHoraInicio())
+            // && diaYaReservado.getHoraInicio().plusMinutes(diaYaReservado.getDuracion())
+            // .isAfter(diaReservado.getHoraInicio())) {
+            // throw new IllegalArgumentException("Hay solapamiento en los dias
+            // ingresados.");
+            // }
+            // }
+            // }
 
             // TODO: NECESARIO?
             Optional<Aula> aula = aulaRepository.findById(diaReservadoDTO.getIdAula());
