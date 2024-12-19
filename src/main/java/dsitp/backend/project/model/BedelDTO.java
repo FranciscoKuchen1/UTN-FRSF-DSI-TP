@@ -2,6 +2,7 @@ package dsitp.backend.project.model;
 
 import dsitp.backend.project.validation.CreateGroup;
 import dsitp.backend.project.validation.PasswordMatches;
+import dsitp.backend.project.validation.UpdateGroup;
 import dsitp.backend.project.validation.UsuarioIdRegistroUnique;
 import dsitp.backend.project.validation.ValidPassword;
 import jakarta.validation.constraints.NotBlank;
@@ -16,7 +17,7 @@ import lombok.Setter;
 public class BedelDTO {
 
     @Size(max = 20)
-    @NotBlank(message = "El idRegistro es obligatorio.")
+    @NotBlank(message = "El id registro es obligatorio.", groups = CreateGroup.class)
     @UsuarioIdRegistroUnique(groups = CreateGroup.class)
     private String idRegistro;
 
@@ -25,7 +26,7 @@ public class BedelDTO {
     private String nombre;
 
     @Size(max = 100)
-    @NotBlank(message = "El apellido es obligatorio.")
+    @NotBlank(message = "El apellido es obligatorio.", groups = { CreateGroup.class, UpdateGroup.class })
     private String apellido;
 
     @Size(max = 100)
@@ -37,7 +38,7 @@ public class BedelDTO {
     @NotBlank(message = "La confirmacion de la contrasena es obligatoria.")
     private String confirmacionContrasena;
 
-    @NotNull(message = "El tipoTurno es obligatorio.")
+    @NotNull(message = "El tipoTurno es obligatorio.", groups = { CreateGroup.class, UpdateGroup.class })
     private Integer tipoTurno;
 
 }

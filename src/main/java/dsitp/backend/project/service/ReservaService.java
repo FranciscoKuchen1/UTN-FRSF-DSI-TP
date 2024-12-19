@@ -429,6 +429,7 @@ public class ReservaService {
                     diaReservadoDTO.getHoraInicio(),
                     diaReservadoDTO.getHoraInicio().plusMinutes(diaReservadoDTO.getDuracion()));
 
+            // TODO: ver de asegurar
             Map<Aula, Tuple> aulasSolapadas = new HashMap<>();
 
             if (reservaEsporadicaSolapadaConTiempoSolap == null && reservaPeriodicaSolapadaConTiempoSolap != null) {
@@ -448,8 +449,11 @@ public class ReservaService {
 
             if (menorSolapamiento == null) {
                 aulasMenosSolap = aulasSolapadas;
+                menorSolapamiento = aulasSolapadas.get(aula).get("superposicion", Integer.class);
             } else if (aulasSolapadas.get(aula).get("superposicion", Integer.class) < menorSolapamiento) {
                 aulasMenosSolap = aulasSolapadas;
+            } else if (aulasSolapadas.get(aula).get("superposicion", Integer.class) == menorSolapamiento) {
+                aulasMenosSolap.put(aula, reservaPeriodicaSolapadaConTiempoSolap);
             }
 
         }
@@ -698,7 +702,7 @@ public class ReservaService {
 
             if (!diasReservados.isEmpty()) {
                 for (DiaReservado diaYaReservado : diasReservados) {
-                    if (diaYaReservado.getFechaReserva() == diaReservado.getFechaReserva()
+                    if (diaYaReservado.getFechaReserva().isEqual(diaReservado.getFechaReserva())
                             && !diaYaReservado.getHoraInicio().plusMinutes(diaYaReservado.getDuracion())
                                     .equals(diaReservado.getHoraInicio())
                             && diaYaReservado.getHoraInicio().plusMinutes(diaYaReservado.getDuracion())

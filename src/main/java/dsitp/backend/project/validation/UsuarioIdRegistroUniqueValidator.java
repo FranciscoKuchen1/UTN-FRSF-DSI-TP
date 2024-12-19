@@ -16,7 +16,8 @@ class UsuarioIdRegistroUniqueValidator implements ConstraintValidator<UsuarioIdR
     private final HttpServletRequest request;
 
     @Autowired
-    public UsuarioIdRegistroUniqueValidator(final BedelService bedelService, final AdministradorService administradorService, final HttpServletRequest request) {
+    public UsuarioIdRegistroUniqueValidator(final BedelService bedelService,
+            final AdministradorService administradorService, final HttpServletRequest request) {
         this.bedelService = bedelService;
         this.administradorService = administradorService;
         this.request = request;

@@ -3,10 +3,13 @@ package dsitp.backend.project.rest;
 import dsitp.backend.project.model.BedelDTO;
 import dsitp.backend.project.service.BedelService;
 import dsitp.backend.project.validation.CreateGroup;
+import dsitp.backend.project.validation.UpdateGroup;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.Size;
+import jakarta.validation.groups.Default;
+
 import java.util.List;
 import java.util.Map;
 import org.slf4j.Logger;
@@ -26,6 +29,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 @RestController
 @RequestMapping(value = "/api/bedeles", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -43,7 +47,7 @@ public class BedelResource {
     @GetMapping
     @ApiResponse(responseCode = "200")
     public ResponseEntity<?> getBedeles(@Min(0) @Max(2) @RequestParam(required = false) final Integer tipoTurno,
-            @Size(max = 30) @RequestParam(required = false) @NotBlank(message = "Apellido es obligatorio") final String apellido) {
+            @Size(max = 30) @RequestParam(required = false) final String apellido) {
         logger.info("Se buscan los bedeles por criterios");
         List<BedelDTO> bedelesDTO = bedelService.findBedeles(tipoTurno, apellido);
         if (bedelesDTO.isEmpty()) {
@@ -56,27 +60,28 @@ public class BedelResource {
     @GetMapping("/{idRegistro}")
     @ApiResponse(responseCode = "200")
     public ResponseEntity<BedelDTO> getBedel(
-            @PathVariable(name = "idRegistro") @NotBlank(message = "Id de registro es obligatorio") final String idRegistro) {
+            @PathVariable(name = "idRegistro") @NotBlank(message = "El id de registro es obligatorio") final String idRegistro) {
         return ResponseEntity.ok(bedelService.getBedelByIdRegistro(idRegistro));
     }
 
     @GetMapping("/apellido/{apellido}")
     @ApiResponse(responseCode = "200")
     public ResponseEntity<List<BedelDTO>> getBedelesByApellido(
-            @PathVariable(name = "apellido") @NotBlank(message = "Apellido es obligatorio") final String apellido) {
+            @PathVariable(name = "apellido") @NotBlank(message = "El apellido es obligatorio") final String apellido) {
         return ResponseEntity.ok(bedelService.getBedelesByApellido(apellido));
     }
 
     @GetMapping("/tipo-turno/{tipoTurno}")
     @ApiResponse(responseCode = "200")
     public ResponseEntity<List<BedelDTO>> getBedelesByTipoTurno(
-            @PathVariable(name = "tipoTurno") final Integer tipoTurno) {
+            @PathVariable(name = "tipoTurno") @NotNull(message = "El tipo turno es obligatorio") final Integer tipoTurno) {
         return ResponseEntity.ok(bedelService.getBedelesByTipoTurno(tipoTurno));
     }
 
     @PostMapping
     @ApiResponse(responseCode = "201")
-    public ResponseEntity<?> createBedel(@RequestBody @Validated(CreateGroup.class) final BedelDTO bedelDTO) {
+    @Validated({ CreateGroup.class, Default.class })
+    public ResponseEntity<?> createBedel(@RequestBody @Valid final BedelDTO bedelDTO) {
         logger.info("Nuevo bedel es creado");
         final Integer createdId = bedelService.create(bedelDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdId);
@@ -84,8 +89,9 @@ public class BedelResource {
 
     @PutMapping("/{idRegistro}")
     @ApiResponse(responseCode = "200")
+    @Validated({ UpdateGroup.class, Default.class })
     public ResponseEntity<Map<String, String>> updateBedel(
-            @PathVariable(name = "idRegistro") @NotBlank(message = "Id de registro es obligatorio") final String idRegistro,
+            @PathVariable(name = "idRegistro") @NotBlank(message = "El id de registro es obligatorio") final String idRegistro,
             @RequestBody @Valid final BedelDTO bedelDTO) {
         bedelService.update(idRegistro, bedelDTO);
         Map<String, String> response = Map.of("idRegistro", idRegistro);
