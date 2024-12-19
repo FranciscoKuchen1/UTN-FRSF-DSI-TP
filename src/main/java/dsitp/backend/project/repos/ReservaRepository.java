@@ -52,7 +52,7 @@ public interface ReservaRepository extends JpaRepository<Reserva, Integer> {
                         "JOIN dia_reservado dr ON dr.id_reserva = r.id " +
                         "WHERE dr.id_aula = :idAula " +
                         "AND dr.fecha_reserva = :fecha " +
-                        "AND (:horaInicio < dr.hora_inicio + make_interval(secs => dr.duracion * 60) OR dr.hora_inicio < :horaFin)", nativeQuery = true)
+                        "AND (:horaInicio <= dr.hora_inicio + make_interval(secs => dr.duracion * 60) OR dr.hora_inicio <= :horaFin)", nativeQuery = true)
         Boolean obtenerDisponibilidadAulaEsporadica(
                         @Param("idAula") Integer idAula,
                         @Param("fecha") LocalDate fecha,
@@ -64,14 +64,15 @@ public interface ReservaRepository extends JpaRepository<Reserva, Integer> {
                         "JOIN dia_reservado dr ON dr.id_reserva = r.id " +
                         "WHERE dr.id_aula = :idAula " +
                         "AND dr.fecha_reserva = :fecha " +
-                        "AND (:horaInicio < dr.hora_inicio + make_interval(secs => dr.duracion * 60) OR dr.hora_inicio < :horaFin)", nativeQuery = true)
+                        "AND (:horaInicio <= dr.hora_inicio + make_interval(secs => dr.duracion * 60) OR dr.hora_inicio <= :horaFin)", nativeQuery = true)
         Boolean obtenerDisponibilidadAulaPeriodica(
                         @Param("idAula") Integer idAula,
                         @Param("fecha") LocalDate fecha,
                         @Param("horaInicio") LocalTime horaInicio,
                         @Param("horaFin") LocalTime horaFin);
 
-        @Query(value = "SELECT r.id AS id, " +
+        @Query(value = "SELECT r.id AS id_reserva, " +
+                        "dr.id AS id_dia_reservado, " +
                         "LEAST(EXTRACT(EPOCH FROM (:horaFin - dr.hora_inicio)), " +
                         "EXTRACT(EPOCH FROM (dr.hora_inicio + make_interval(secs => dr.duracion * 60) - :horaInicio)))::int AS superposicion "
                         +

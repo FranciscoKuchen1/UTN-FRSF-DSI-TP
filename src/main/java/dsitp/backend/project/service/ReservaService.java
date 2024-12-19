@@ -326,7 +326,6 @@ public class ReservaService {
 
         if (periodo.getFechaInicio().isBefore(LocalDate.now())) {
             fechaIterador = LocalDate.now();
-            fechaIterador = fechaIterador.plusDays(1);
         } else {
             fechaIterador = periodo.getFechaInicio();
         }
@@ -558,8 +557,6 @@ public class ReservaService {
             if (periodo.getFechaInicio().isBefore(LocalDate.now())) {
                 fechaIterador = LocalDate.now();
 
-                // TODO: VER cambiar
-                fechaIterador = fechaIterador.plusDays(1);
             } else {
                 fechaIterador = periodo.getFechaInicio();
             }
