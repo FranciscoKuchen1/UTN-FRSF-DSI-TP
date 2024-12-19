@@ -47,29 +47,76 @@ public interface ReservaRepository extends JpaRepository<Reserva, Integer> {
                         @Param("fechaInicio") LocalDate fechaInicio,
                         @Param("fechaFin") LocalDate fechaFin);
 
-        @Query(value = "SELECT CASE WHEN COUNT(r) > 0 THEN FALSE ELSE TRUE END " +
+        @Query(value = "SELECT CASE WHEN COUNT(dr) > 0 THEN FALSE ELSE TRUE END " +
                         "FROM reserva_esporadica r " +
                         "JOIN dia_reservado dr ON dr.id_reserva = r.id " +
                         "WHERE dr.id_aula = :idAula " +
                         "AND dr.fecha_reserva = :fecha " +
-                        "AND (:horaInicio <= dr.hora_inicio + make_interval(secs => dr.duracion * 60) OR dr.hora_inicio <= :horaFin)", nativeQuery = true)
+                        "AND ( (" +
+                        "(dr.hora_inicio <= :horaInicio AND dr.hora_inicio + make_interval(secs => dr.duracion * 60) >= :horaFin) "
+                        +
+                        ") OR (" +
+                        "(dr.hora_inicio <= :horaInicio AND dr.hora_inicio + make_interval(secs => dr.duracion * 60) > :horaInicio) "
+                        +
+                        ") OR (" +
+                        "(dr.hora_inicio < :horaFin AND dr.hora_inicio + make_interval(secs => dr.duracion * 60) >= :horaFin) "
+                        +
+                        ") OR (" +
+                        "(dr.hora_inicio >= :horaInicio AND dr.hora_inicio + make_interval(secs => dr.duracion * 60) <= :horaFin) "
+                        +
+                        ")" +
+                        ")", nativeQuery = true)
         Boolean obtenerDisponibilidadAulaEsporadica(
                         @Param("idAula") Integer idAula,
                         @Param("fecha") LocalDate fecha,
                         @Param("horaInicio") LocalTime horaInicio,
                         @Param("horaFin") LocalTime horaFin);
 
-        @Query(value = "SELECT CASE WHEN COUNT(r) > 0 THEN FALSE ELSE TRUE END " +
+        @Query(value = "SELECT CASE WHEN COUNT(dr) > 0 THEN FALSE ELSE TRUE END " +
                         "FROM reserva_periodica r " +
                         "JOIN dia_reservado dr ON dr.id_reserva = r.id " +
                         "WHERE dr.id_aula = :idAula " +
                         "AND dr.fecha_reserva = :fecha " +
-                        "AND (:horaInicio <= dr.hora_inicio + make_interval(secs => dr.duracion * 60) OR dr.hora_inicio <= :horaFin)", nativeQuery = true)
+                        "AND ( (" +
+                        "(dr.hora_inicio <= :horaInicio AND dr.hora_inicio + make_interval(secs => dr.duracion * 60) >= :horaFin) "
+                        +
+                        ") OR (" +
+                        "(dr.hora_inicio <= :horaInicio AND dr.hora_inicio + make_interval(secs => dr.duracion * 60) > :horaInicio) "
+                        +
+                        ") OR (" +
+                        "(dr.hora_inicio < :horaFin AND dr.hora_inicio + make_interval(secs => dr.duracion * 60) >= :horaFin) "
+                        +
+                        ") OR (" +
+                        "(dr.hora_inicio >= :horaInicio AND dr.hora_inicio + make_interval(secs => dr.duracion * 60) <= :horaFin) "
+                        +
+                        ")" +
+                        ")", nativeQuery = true)
         Boolean obtenerDisponibilidadAulaPeriodica(
                         @Param("idAula") Integer idAula,
                         @Param("fecha") LocalDate fecha,
                         @Param("horaInicio") LocalTime horaInicio,
                         @Param("horaFin") LocalTime horaFin);
+
+        // @Query(value = "SELECT r.id AS id_reserva, " +
+        // "dr.id AS id_dia_reservado, " +
+        // "LEAST(EXTRACT(EPOCH FROM (:horaFin - dr.hora_inicio)), " +
+        // "EXTRACT(EPOCH FROM (dr.hora_inicio + make_interval(secs => dr.duracion * 60)
+        // - :horaInicio)))::int AS superposicion "
+        // +
+        // "FROM reserva_esporadica r " +
+        // "JOIN dia_reservado dr ON dr.id_reserva = r.id " +
+        // "WHERE dr.id_aula = :idAula " +
+        // "AND dr.fecha_reserva = :fecha " +
+        // "AND ((:horaInicio < dr.hora_inicio + make_interval(secs => dr.duracion *
+        // 60)) " +
+        // "AND (:horaFin > dr.hora_inicio)) " +
+        // "ORDER BY superposicion DESC " +
+        // "LIMIT 1", nativeQuery = true)
+        // Tuple obtenerReservaEsporadicaQueSuperpone(
+        // @Param("idAula") Integer idAula,
+        // @Param("fecha") LocalDate fecha,
+        // @Param("horaInicio") LocalTime horaInicio,
+        // @Param("horaFin") LocalTime horaFin);
 
         @Query(value = "SELECT r.id AS id_reserva, " +
                         "dr.id AS id_dia_reservado, " +
@@ -80,8 +127,20 @@ public interface ReservaRepository extends JpaRepository<Reserva, Integer> {
                         "JOIN dia_reservado dr ON dr.id_reserva = r.id " +
                         "WHERE dr.id_aula = :idAula " +
                         "AND dr.fecha_reserva = :fecha " +
-                        "AND ((:horaInicio < dr.hora_inicio + make_interval(secs => dr.duracion * 60)) " +
-                        "AND (:horaFin > dr.hora_inicio)) " +
+                        "AND ( (" +
+                        "(dr.hora_inicio <= :horaInicio AND dr.hora_inicio + make_interval(secs => dr.duracion * 60) >= :horaFin) "
+                        +
+                        ") OR (" +
+                        "(dr.hora_inicio <= :horaInicio AND dr.hora_inicio + make_interval(secs => dr.duracion * 60) > :horaInicio) "
+                        +
+                        ") OR (" +
+                        "(dr.hora_inicio < :horaFin AND dr.hora_inicio + make_interval(secs => dr.duracion * 60) >= :horaFin) "
+                        +
+                        ") OR (" +
+                        "(dr.hora_inicio >= :horaInicio AND dr.hora_inicio + make_interval(secs => dr.duracion * 60) <= :horaFin) "
+                        +
+                        ")" +
+                        ") " +
                         "ORDER BY superposicion DESC " +
                         "LIMIT 1", nativeQuery = true)
         Tuple obtenerReservaEsporadicaQueSuperpone(
@@ -99,8 +158,20 @@ public interface ReservaRepository extends JpaRepository<Reserva, Integer> {
                         "JOIN dia_reservado dr ON dr.id_reserva = r.id " +
                         "WHERE dr.id_aula = :idAula " +
                         "AND dr.fecha_reserva = :fecha " +
-                        "AND ((:horaInicio < dr.hora_inicio + make_interval(secs => dr.duracion * 60)) " +
-                        "AND (:horaFin > dr.hora_inicio)) " +
+                        "AND ( (" +
+                        "(dr.hora_inicio <= :horaInicio AND dr.hora_inicio + make_interval(secs => dr.duracion * 60) >= :horaFin) "
+                        +
+                        ") OR (" +
+                        "(dr.hora_inicio <= :horaInicio AND dr.hora_inicio + make_interval(secs => dr.duracion * 60) > :horaInicio) "
+                        +
+                        ") OR (" +
+                        "(dr.hora_inicio < :horaFin AND dr.hora_inicio + make_interval(secs => dr.duracion * 60) >= :horaFin) "
+                        +
+                        ") OR (" +
+                        "(dr.hora_inicio >= :horaInicio AND dr.hora_inicio + make_interval(secs => dr.duracion * 60) <= :horaFin) "
+                        +
+                        ")" +
+                        ") " +
                         "ORDER BY superposicion DESC " +
                         "LIMIT 1", nativeQuery = true)
         Tuple obtenerReservaPeriodicaQueSuperpone(
