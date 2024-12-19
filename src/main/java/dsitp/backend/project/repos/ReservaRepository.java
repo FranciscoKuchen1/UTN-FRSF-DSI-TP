@@ -76,8 +76,7 @@ public interface ReservaRepository extends JpaRepository<Reserva, Integer> {
          * SELECT CASE WHEN COUNT(dr) > 0 THEN FALSE ELSE TRUE END
          * FORM reserva_esporadica r
          * JOIN dia_reservado dr ON dr.id_reserva = r.id
-         * WHERE dr.id_aula = :idAula
-         * AND dr.fecha_reserva = :fecha
+         * WHERE dr.fecha_reserva
          */
 
         @Query(value = "SELECT CASE WHEN COUNT(dr) > 0 THEN FALSE ELSE TRUE END " +

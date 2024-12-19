@@ -206,9 +206,10 @@ public class ReservaService {
 
     public List<AulaDTO> obtenerAulasDisponibleEnPeriodo(ReservaPeriodica reservaPeriodica, List<Aula> aulasObtenidas,
             DiaSemanaDTO diaSemanaDTO) {
-        List<AulaDTO> aulasDisponiblesDTO = new ArrayList<>();
+
         List<DiaReservado> diasReservados = obtenerDiasReservados(reservaPeriodica, diaSemanaDTO);
-        obtenerDisponibilidadReservaPeriodica(reservaPeriodica.getCantAlumnos(), aulasObtenidas, diasReservados);
+        List<AulaDTO> aulasDisponiblesDTO = obtenerDisponibilidadReservaPeriodica(reservaPeriodica.getCantAlumnos(),
+                aulasObtenidas, diasReservados);
 
         return aulasDisponiblesDTO;
     }
