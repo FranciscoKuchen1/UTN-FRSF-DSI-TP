@@ -1,0 +1,8 @@
+[
+  "dsitp/backend/project/mapper",
+  "dsitp/backend/project/model",
+  "dsitp/backend/project/repos",
+  "dsitp/backend/project/rest",
+  "dsitp/backend/project/service",
+  "dsitp/backend/project/validation"
+]

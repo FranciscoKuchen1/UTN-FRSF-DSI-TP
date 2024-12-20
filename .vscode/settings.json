@@ -1,0 +1,14 @@
+{
+    "launch": {
+        "version": "0.2.0",
+        "configurations": [
+            {
+                "type": "java",
+                "name": "Run with AppMap",
+                "request": "launch",
+                "mainClass": "",
+                "vmArgs": "-javaagent:${userHome}/.appmap/lib/java/appmap.jar"
+            }
+        ]
+    }
+}

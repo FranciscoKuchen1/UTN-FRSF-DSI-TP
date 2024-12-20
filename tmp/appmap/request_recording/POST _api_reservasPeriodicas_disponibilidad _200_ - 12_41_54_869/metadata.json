@@ -1,0 +1,23 @@
+{
+  "name": "POST /api/reservasPeriodicas/disponibilidad (200) - 12:41:54.869",
+  "app": "DSITP-backend",
+  "language": {
+    "name": "java",
+    "version": "21.0.4+7-LTS",
+    "engine": "OpenJDK 64-Bit Server VM"
+  },
+  "client": {
+    "name": "appmap-java",
+    "url": "https://github.com/appland/appmap-java"
+  },
+  "recorder": {
+    "name": "request_recording",
+    "type": "requests"
+  },
+  "recording": {},
+  "git": {
+    "repository": "https://github.com/FranciscoKuchen1/DSITP.git",
+    "branch": "backend",
+    "commit": "c4e63811390430c7f350dae420611a9e2fbaf764"
+  }
+}

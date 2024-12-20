@@ -1,0 +1,1538 @@
+{
+  "events": [
+    {
+      "event": "call",
+      "http_server_request": {
+        "headers": {
+          "sec-fetch-mode": "cors",
+          "referer": "http://localhost:8080/swagger-ui/index.html",
+          "content-length": "368",
+          "sec-fetch-site": "same-origin",
+          "accept-language": "es-419,es;q=0.9",
+          "cookie": "pga4_session=880f6e73-025c-49be-bc99-b908241773ca!UQngEss2hfokl83nG5e2AnX3473ZdTZ9/x5C4i5T7/0=; PGADMIN_LANGUAGE=en; phpMyAdmin=9c3024a4c3b3cfb1e6f6ebaf75475633; pmaAuth-1=M98zO4dsEx%2FrfWxwyZJLcw3vICcE0GaKLf56PRHkbuQBOZ1XKFw%2Fws2qnhpNFgx1suZWq2NxrQD8vudB%2FQRuVg%3D%3D; pmaUser-1=cSKy2QQ3MRqRU5KNxeh4Ewhlm3SyT05CU8Z6oe0jSSFASb6pNs%2FgkM%2B2u8Y%3D; pma_lang=es",
+          "origin": "http://localhost:8080",
+          "accept": "application/json",
+          "host": "localhost:8080",
+          "content-type": "application/json",
+          "connection": "keep-alive",
+          "accept-encoding": "gzip, deflate",
+          "user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.5 Safari/605.1.15",
+          "sec-fetch-dest": "empty"
+        },
+        "normalized_path_info": "/api/reservasPeriodicas/disponibilidad",
+        "path_info": "/api/reservasPeriodicas/disponibilidad",
+        "protocol": "HTTP/1.1",
+        "request_method": "POST"
+      },
+      "id": 1,
+      "thread_id": 66
+    },
+    {
+      "defined_class": "dsitp.backend.project.rest.ReservaPeriodicaResource",
+      "event": "call",
+      "id": 2,
+      "lineno": 61,
+      "method_id": "getDisponibilidadAulaReservaPeriodica",
+      "parameters": [
+        {
+          "class": "dsitp.backend.project.model.ReservaPeriodicaSinDiasDTO",
+          "kind": "req",
+          "name": "reservaPeriodicaSinDiasDTO",
+          "object_id": 1995745124,
+          "value": "dsitp.backend.project.model.ReservaPeriodicaSinDiasDTO@76f4a764"
+        }
+      ],
+      "path": "src/main/java/dsitp/backend/project/rest/ReservaPeriodicaResource.java",
+      "receiver": {
+        "class": "dsitp.backend.project.rest.ReservaPeriodicaResource",
+        "object_id": 1170737687,
+        "value": "dsitp.backend.project.rest.ReservaPeriodicaResource@45c80a17"
+      },
+      "static": false,
+      "thread_id": 66
+    },
+    {
+      "event": "call",
+      "id": 3,
+      "sql_query": {
+        "database_type": "PostgreSQL",
+        "sql": ""
+      },
+      "thread_id": 66
+    },
+    {
+      "elapsed": 0.000781,
+      "event": "return",
+      "id": 4,
+      "parent_id": 3,
+      "thread_id": 66
+    },
+    {
+      "defined_class": "dsitp.backend.project.service.ReservaPeriodicaService",
+      "event": "call",
+      "id": 5,
+      "lineno": 72,
+      "method_id": "getDisponibilidadAulaReservaPeriodica",
+      "parameters": [
+        {
+          "class": "dsitp.backend.project.model.ReservaPeriodicaSinDiasDTO",
+          "kind": "req",
+          "name": "reservaPeriodicaSinDiasDTO",
+          "object_id": 1995745124,
+          "value": "dsitp.backend.project.model.ReservaPeriodicaSinDiasDTO@76f4a764"
+        }
+      ],
+      "path": "src/main/java/dsitp/backend/project/service/ReservaPeriodicaService.java",
+      "receiver": {
+        "class": "dsitp.backend.project.service.ReservaPeriodicaService",
+        "object_id": 1870160147,
+        "value": "dsitp.backend.project.service.ReservaPeriodicaService@6f786113"
+      },
+      "static": false,
+      "thread_id": 66
+    },
+    {
+      "defined_class": "dsitp.backend.project.mapper.ReservaPeriodicaMapper",
+      "event": "call",
+      "id": 6,
+      "lineno": 49,
+      "method_id": "toReservaPeriodicaEntityDisponibilidad",
+      "parameters": [
+        {
+          "class": "dsitp.backend.project.model.ReservaPeriodicaSinDiasDTO",
+          "kind": "req",
+          "name": "reservaPeriodicaSinDiasDTO",
+          "object_id": 1995745124,
+          "value": "dsitp.backend.project.model.ReservaPeriodicaSinDiasDTO@76f4a764"
+        }
+      ],
+      "path": "src/main/java/dsitp/backend/project/mapper/ReservaPeriodicaMapper.java",
+      "receiver": {
+        "class": "dsitp.backend.project.mapper.ReservaPeriodicaMapper",
+        "object_id": 704893962,
+        "value": "dsitp.backend.project.mapper.ReservaPeriodicaMapper@2a03d40a"
+      },
+      "static": false,
+      "thread_id": 66
+    },
+    {
+      "defined_class": "dsitp.backend.project.model.TipoAula",
+      "event": "call",
+      "id": 7,
+      "lineno": 13,
+      "method_id": "fromInteger",
+      "parameters": [
+        {
+          "class": "java.lang.Integer",
+          "kind": "req",
+          "name": "value",
+          "object_id": 1668583300,
+          "value": "0"
+        }
+      ],
+      "path": "src/main/java/dsitp/backend/project/model/TipoAula.java",
+      "static": true,
+      "thread_id": 66
+    },
+    {
+      "defined_class": "dsitp.backend.project.model.TipoAula",
+      "event": "call",
+      "id": 8,
+      "lineno": 3,
+      "method_id": "values",
+      "path": "src/main/java/dsitp/backend/project/model/TipoAula.java",
+      "static": true,
+      "thread_id": 66
+    },
+    {
+      "elapsed": 0.0000308,
+      "event": "return",
+      "id": 9,
+      "parent_id": 8,
+      "return_value": {
+        "class": "[Ldsitp.backend.project.model.TipoAula;",
+        "object_id": 593359681,
+        "value": "[Ldsitp.backend.project.model.TipoAula;@235df341"
+      },
+      "thread_id": 66
+    },
+    {
+      "elapsed": 0.000076,
+      "event": "return",
+      "id": 10,
+      "parent_id": 7,
+      "return_value": {
+        "class": "dsitp.backend.project.model.TipoAula",
+        "object_id": 1895895142,
+        "value": "SIN_RECURSOS_ADICIONALES"
+      },
+      "thread_id": 66
+    },
+    {
+      "defined_class": "dsitp.backend.project.model.TipoPeriodo",
+      "event": "call",
+      "id": 11,
+      "lineno": 13,
+      "method_id": "fromInteger",
+      "parameters": [
+        {
+          "class": "java.lang.Integer",
+          "kind": "req",
+          "name": "value",
+          "object_id": 1668583300,
+          "value": "0"
+        }
+      ],
+      "path": "src/main/java/dsitp/backend/project/model/TipoPeriodo.java",
+      "static": true,
+      "thread_id": 66
+    },
+    {
+      "defined_class": "dsitp.backend.project.model.TipoPeriodo",
+      "event": "call",
+      "id": 12,
+      "lineno": 3,
+      "method_id": "values",
+      "path": "src/main/java/dsitp/backend/project/model/TipoPeriodo.java",
+      "static": true,
+      "thread_id": 66
+    },
+    {
+      "elapsed": 0.0000141,
+      "event": "return",
+      "id": 13,
+      "parent_id": 12,
+      "return_value": {
+        "class": "[Ldsitp.backend.project.model.TipoPeriodo;",
+        "object_id": 1744538964,
+        "value": "[Ldsitp.backend.project.model.TipoPeriodo;@67fb8d54"
+      },
+      "thread_id": 66
+    },
+    {
+      "elapsed": 0.0000428,
+      "event": "return",
+      "id": 14,
+      "parent_id": 11,
+      "return_value": {
+        "class": "dsitp.backend.project.model.TipoPeriodo",
+        "object_id": 548681344,
+        "value": "PRIMER_CUATRIMESTRE"
+      },
+      "thread_id": 66
+    },
+    {
+      "defined_class": "dsitp.backend.project.repos.PeriodoRepository",
+      "event": "call",
+      "id": 15,
+      "lineno": -1,
+      "method_id": "findActivePeriodosByTipo",
+      "parameters": [
+        {
+          "class": "dsitp.backend.project.model.TipoPeriodo",
+          "kind": "req",
+          "name": "p0",
+          "object_id": 548681344,
+          "value": "PRIMER_CUATRIMESTRE"
+        }
+      ],
+      "path": "src/main/java/dsitp/backend/project/repos/PeriodoRepository.java",
+      "receiver": {
+        "class": "jdk.proxy3.$Proxy237",
+        "object_id": 1178733367,
+        "value": "org.springframework.data.jpa.repository.support.SimpleJpaRepository@679aa535"
+      },
+      "static": false,
+      "thread_id": 66
+    },
+    {
+      "event": "call",
+      "id": 16,
+      "sql_query": {
+        "database_type": "PostgreSQL",
+        "sql": "select p1_0.id,p1_0.date_created,p1_0.fecha_fin,p1_0.fecha_inicio,p1_0.last_updated,p1_0.tipo_periodo from periodo p1_0 where p1_0.tipo_periodo=? and p1_0.fecha_fin>=localtimestamp"
+      },
+      "thread_id": 66
+    },
+    {
+      "elapsed": 0.0007182,
+      "event": "return",
+      "id": 17,
+      "parent_id": 16,
+      "thread_id": 66
+    },
+    {
+      "elapsed": 0.0229303,
+      "event": "return",
+      "id": 18,
+      "parent_id": 15,
+      "return_value": {
+        "class": "java.util.ArrayList",
+        "object_id": 908095042,
+        "value": "[dsitp.backend.project.domain.Periodo@4dadf780]"
+      },
+      "thread_id": 66
+    },
+    {
+      "defined_class": "dsitp.backend.project.mapper.ReservaPeriodicaMapper",
+      "event": "call",
+      "id": 19,
+      "lineno": 172,
+      "method_id": "toDiasReservados",
+      "parameters": [
+        {
+          "class": "dsitp.backend.project.domain.Periodo",
+          "kind": "req",
+          "name": "periodo",
+          "object_id": 1303246720,
+          "value": "dsitp.backend.project.domain.Periodo@4dadf780"
+        },
+        {
+          "class": "java.util.ArrayList",
+          "kind": "req",
+          "name": "diasSemanaHorasDuracion",
+          "object_id": 1247843736,
+          "value": "[dsitp.backend.project.util.Trio@217ea74f]"
+        },
+        {
+          "class": "dsitp.backend.project.domain.ReservaPeriodica",
+          "kind": "req",
+          "name": "reservaPeriodica",
+          "object_id": 512874893,
+          "value": "dsitp.backend.project.domain.ReservaPeriodica@1e91d98d"
+        }
+      ],
+      "path": "src/main/java/dsitp/backend/project/mapper/ReservaPeriodicaMapper.java",
+      "receiver": {
+        "class": "dsitp.backend.project.mapper.ReservaPeriodicaMapper",
+        "object_id": 704893962,
+        "value": "dsitp.backend.project.mapper.ReservaPeriodicaMapper@2a03d40a"
+      },
+      "static": false,
+      "thread_id": 66
+    },
+    {
+      "defined_class": "dsitp.backend.project.util.Trio",
+      "event": "call",
+      "id": 20,
+      "lineno": 18,
+      "method_id": "containsFirst",
+      "parameters": [
+        {
+          "class": "java.util.ArrayList",
+          "kind": "req",
+          "name": "list",
+          "object_id": 1247843736,
+          "value": "[dsitp.backend.project.util.Trio@217ea74f]"
+        },
+        {
+          "class": "java.lang.Integer",
+          "kind": "req",
+          "name": "target",
+          "object_id": 1870406509,
+          "value": "2"
+        }
+      ],
+      "path": "src/main/java/dsitp/backend/project/util/Trio.java",
+      "static": true,
+      "thread_id": 66
+    },
+    {
+      "elapsed": 0.0000845,
+      "event": "return",
+      "id": 21,
+      "parent_id": 20,
+      "return_value": {
+        "class": "java.lang.Boolean",
+        "object_id": 864745084,
+        "value": "false"
+      },
+      "thread_id": 66
+    },
+    {
+      "defined_class": "dsitp.backend.project.util.Trio",
+      "event": "call",
+      "id": 22,
+      "lineno": 18,
+      "method_id": "containsFirst",
+      "parameters": [
+        {
+          "class": "java.util.ArrayList",
+          "kind": "req",
+          "name": "list",
+          "object_id": 1247843736,
+          "value": "[dsitp.backend.project.util.Trio@217ea74f]"
+        },
+        {
+          "class": "java.lang.Integer",
+          "kind": "req",
+          "name": "target",
+          "object_id": 1038343211,
+          "value": "3"
+        }
+      ],
+      "path": "src/main/java/dsitp/backend/project/util/Trio.java",
+      "static": true,
+      "thread_id": 66
+    },
+    {
+      "elapsed": 0.0000152,
+      "event": "return",
+      "id": 23,
+      "parent_id": 22,
+      "return_value": {
+        "class": "java.lang.Boolean",
+        "object_id": 864745084,
+        "value": "false"
+      },
+      "thread_id": 66
+    },
+    {
+      "defined_class": "dsitp.backend.project.util.Trio",
+      "event": "call",
+      "id": 24,
+      "lineno": 18,
+      "method_id": "containsFirst",
+      "parameters": [
+        {
+          "class": "java.util.ArrayList",
+          "kind": "req",
+          "name": "list",
+          "object_id": 1247843736,
+          "value": "[dsitp.backend.project.util.Trio@217ea74f]"
+        },
+        {
+          "class": "java.lang.Integer",
+          "kind": "req",
+          "name": "target",
+          "object_id": 1769160711,
+          "value": "4"
+        }
+      ],
+      "path": "src/main/java/dsitp/backend/project/util/Trio.java",
+      "static": true,
+      "thread_id": 66
+    },
+    {
+      "elapsed": 0.0000158,
+      "event": "return",
+      "id": 25,
+      "parent_id": 24,
+      "return_value": {
+        "class": "java.lang.Boolean",
+        "object_id": 864745084,
+        "value": "false"
+      },
+      "thread_id": 66
+    },
+    {
+      "defined_class": "dsitp.backend.project.util.Trio",
+      "event": "call",
+      "id": 26,
+      "lineno": 18,
+      "method_id": "containsFirst",
+      "parameters": [
+        {
+          "class": "java.util.ArrayList",
+          "kind": "req",
+          "name": "list",
+          "object_id": 1247843736,
+          "value": "[dsitp.backend.project.util.Trio@217ea74f]"
+        },
+        {
+          "class": "java.lang.Integer",
+          "kind": "req",
+          "name": "target",
+          "object_id": 1116814298,
+          "value": "5"
+        }
+      ],
+      "path": "src/main/java/dsitp/backend/project/util/Trio.java",
+      "static": true,
+      "thread_id": 66
+    },
+    {
+      "elapsed": 0.0000121,
+      "event": "return",
+      "id": 27,
+      "parent_id": 26,
+      "return_value": {
+        "class": "java.lang.Boolean",
+        "object_id": 864745084,
+        "value": "false"
+      },
+      "thread_id": 66
+    },
+    {
+      "defined_class": "dsitp.backend.project.util.Trio",
+      "event": "call",
+      "id": 28,
+      "lineno": 18,
+      "method_id": "containsFirst",
+      "parameters": [
+        {
+          "class": "java.util.ArrayList",
+          "kind": "req",
+          "name": "list",
+          "object_id": 1247843736,
+          "value": "[dsitp.backend.project.util.Trio@217ea74f]"
+        },
+        {
+          "class": "java.lang.Integer",
+          "kind": "req",
+          "name": "target",
+          "object_id": 650906850,
+          "value": "6"
+        }
+      ],
+      "path": "src/main/java/dsitp/backend/project/util/Trio.java",
+      "static": true,
+      "thread_id": 66
+    },
+    {
+      "elapsed": 0.0000144,
+      "event": "return",
+      "id": 29,
+      "parent_id": 28,
+      "return_value": {
+        "class": "java.lang.Boolean",
+        "object_id": 864745084,
+        "value": "false"
+      },
+      "thread_id": 66
+    },
+    {
+      "defined_class": "dsitp.backend.project.util.Trio",
+      "event": "call",
+      "id": 30,
+      "lineno": 18,
+      "method_id": "containsFirst",
+      "parameters": [
+        {
+          "class": "java.util.ArrayList",
+          "kind": "req",
+          "name": "list",
+          "object_id": 1247843736,
+          "value": "[dsitp.backend.project.util.Trio@217ea74f]"
+        },
+        {
+          "class": "java.lang.Integer",
+          "kind": "req",
+          "name": "target",
+          "object_id": 1668583300,
+          "value": "0"
+        }
+      ],
+      "path": "src/main/java/dsitp/backend/project/util/Trio.java",
+      "static": true,
+      "thread_id": 66
+    },
+    {
+      "elapsed": 0.0000113,
+      "event": "return",
+      "id": 31,
+      "parent_id": 30,
+      "return_value": {
+        "class": "java.lang.Boolean",
+        "object_id": 99458708,
+        "value": "true"
+      },
+      "thread_id": 66
+    },
+    {
+      "defined_class": "dsitp.backend.project.util.Trio",
+      "event": "call",
+      "id": 32,
+      "lineno": 23,
+      "method_id": "findByFirst",
+      "parameters": [
+        {
+          "class": "java.util.ArrayList",
+          "kind": "req",
+          "name": "list",
+          "object_id": 1247843736,
+          "value": "[dsitp.backend.project.util.Trio@217ea74f]"
+        },
+        {
+          "class": "java.lang.Integer",
+          "kind": "req",
+          "name": "target",
+          "object_id": 1668583300,
+          "value": "0"
+        }
+      ],
+      "path": "src/main/java/dsitp/backend/project/util/Trio.java",
+      "static": true,
+      "thread_id": 66
+    },
+    {
+      "elapsed": 0.0000501,
+      "event": "return",
+      "id": 33,
+      "parent_id": 32,
+      "return_value": {
+        "class": "dsitp.backend.project.util.Trio",
+        "object_id": 561948495,
+        "value": "dsitp.backend.project.util.Trio@217ea74f"
+      },
+      "thread_id": 66
+    },
+    {
+      "defined_class": "dsitp.backend.project.validation.DurationValidator",
+      "event": "call",
+      "id": 34,
+      "lineno": 12,
+      "method_id": "isValid",
+      "parameters": [
+        {
+          "class": "java.lang.Integer",
+          "kind": "req",
+          "name": "duracion",
+          "object_id": 591768759,
+          "value": "30"
+        },
+        {
+          "class": "org.hibernate.validator.internal.engine.constraintvalidation.ConstraintValidatorContextImpl",
+          "kind": "req",
+          "name": "context",
+          "object_id": 491548954,
+          "value": "org.hibernate.validator.internal.engine.constraintvalidation.ConstraintValidatorContextImpl@1d4c711a"
+        }
+      ],
+      "path": "src/main/java/dsitp/backend/project/validation/DurationValidator.java",
+      "receiver": {
+        "class": "dsitp.backend.project.validation.DurationValidator",
+        "object_id": 1783085934,
+        "value": "dsitp.backend.project.validation.DurationValidator@6a47bb6e"
+      },
+      "static": false,
+      "thread_id": 66
+    },
+    {
+      "elapsed": 0.0000448,
+      "event": "return",
+      "id": 35,
+      "parent_id": 34,
+      "return_value": {
+        "class": "java.lang.Boolean",
+        "object_id": 99458708,
+        "value": "true"
+      },
+      "thread_id": 66
+    },
+    {
+      "defined_class": "dsitp.backend.project.util.Trio",
+      "event": "call",
+      "id": 36,
+      "lineno": 18,
+      "method_id": "containsFirst",
+      "parameters": [
+        {
+          "class": "java.util.ArrayList",
+          "kind": "req",
+          "name": "list",
+          "object_id": 1247843736,
+          "value": "[dsitp.backend.project.util.Trio@217ea74f]"
+        },
+        {
+          "class": "java.lang.Integer",
+          "kind": "req",
+          "name": "target",
+          "object_id": 1553895892,
+          "value": "1"
+        }
+      ],
+      "path": "src/main/java/dsitp/backend/project/util/Trio.java",
+      "static": true,
+      "thread_id": 66
+    },
+    {
+      "elapsed": 0.0000152,
+      "event": "return",
+      "id": 37,
+      "parent_id": 36,
+      "return_value": {
+        "class": "java.lang.Boolean",
+        "object_id": 864745084,
+        "value": "false"
+      },
+      "thread_id": 66
+    },
+    {
+      "defined_class": "dsitp.backend.project.util.Trio",
+      "event": "call",
+      "id": 38,
+      "lineno": 18,
+      "method_id": "containsFirst",
+      "parameters": [
+        {
+          "class": "java.util.ArrayList",
+          "kind": "req",
+          "name": "list",
+          "object_id": 1247843736,
+          "value": "[dsitp.backend.project.util.Trio@217ea74f]"
+        },
+        {
+          "class": "java.lang.Integer",
+          "kind": "req",
+          "name": "target",
+          "object_id": 1870406509,
+          "value": "2"
+        }
+      ],
+      "path": "src/main/java/dsitp/backend/project/util/Trio.java",
+      "static": true,
+      "thread_id": 66
+    },
+    {
+      "elapsed": 0.0000109,
+      "event": "return",
+      "id": 39,
+      "parent_id": 38,
+      "return_value": {
+        "class": "java.lang.Boolean",
+        "object_id": 864745084,
+        "value": "false"
+      },
+      "thread_id": 66
+    },
+    {
+      "defined_class": "dsitp.backend.project.util.Trio",
+      "event": "call",
+      "id": 40,
+      "lineno": 18,
+      "method_id": "containsFirst",
+      "parameters": [
+        {
+          "class": "java.util.ArrayList",
+          "kind": "req",
+          "name": "list",
+          "object_id": 1247843736,
+          "value": "[dsitp.backend.project.util.Trio@217ea74f]"
+        },
+        {
+          "class": "java.lang.Integer",
+          "kind": "req",
+          "name": "target",
+          "object_id": 1038343211,
+          "value": "3"
+        }
+      ],
+      "path": "src/main/java/dsitp/backend/project/util/Trio.java",
+      "static": true,
+      "thread_id": 66
+    },
+    {
+      "elapsed": 0.000016,
+      "event": "return",
+      "id": 41,
+      "parent_id": 40,
+      "return_value": {
+        "class": "java.lang.Boolean",
+        "object_id": 864745084,
+        "value": "false"
+      },
+      "thread_id": 66
+    },
+    {
+      "defined_class": "dsitp.backend.project.util.Trio",
+      "event": "call",
+      "id": 42,
+      "lineno": 18,
+      "method_id": "containsFirst",
+      "parameters": [
+        {
+          "class": "java.util.ArrayList",
+          "kind": "req",
+          "name": "list",
+          "object_id": 1247843736,
+          "value": "[dsitp.backend.project.util.Trio@217ea74f]"
+        },
+        {
+          "class": "java.lang.Integer",
+          "kind": "req",
+          "name": "target",
+          "object_id": 1769160711,
+          "value": "4"
+        }
+      ],
+      "path": "src/main/java/dsitp/backend/project/util/Trio.java",
+      "static": true,
+      "thread_id": 66
+    },
+    {
+      "elapsed": 0.0000126,
+      "event": "return",
+      "id": 43,
+      "parent_id": 42,
+      "return_value": {
+        "class": "java.lang.Boolean",
+        "object_id": 864745084,
+        "value": "false"
+      },
+      "thread_id": 66
+    },
+    {
+      "defined_class": "dsitp.backend.project.util.Trio",
+      "event": "call",
+      "id": 44,
+      "lineno": 18,
+      "method_id": "containsFirst",
+      "parameters": [
+        {
+          "class": "java.util.ArrayList",
+          "kind": "req",
+          "name": "list",
+          "object_id": 1247843736,
+          "value": "[dsitp.backend.project.util.Trio@217ea74f]"
+        },
+        {
+          "class": "java.lang.Integer",
+          "kind": "req",
+          "name": "target",
+          "object_id": 1116814298,
+          "value": "5"
+        }
+      ],
+      "path": "src/main/java/dsitp/backend/project/util/Trio.java",
+      "static": true,
+      "thread_id": 66
+    },
+    {
+      "elapsed": 0.0000112,
+      "event": "return",
+      "id": 45,
+      "parent_id": 44,
+      "return_value": {
+        "class": "java.lang.Boolean",
+        "object_id": 864745084,
+        "value": "false"
+      },
+      "thread_id": 66
+    },
+    {
+      "elapsed": 0.0019646,
+      "event": "return",
+      "id": 46,
+      "parent_id": 19,
+      "return_value": {
+        "class": "java.util.ArrayList",
+        "object_id": 1378922212,
+        "value": "[dsitp.backend.project.domain.DiaReservado@48d7f568]"
+      },
+      "thread_id": 66
+    },
+    {
+      "defined_class": "dsitp.backend.project.repos.BedelRepository",
+      "event": "call",
+      "id": 47,
+      "lineno": -1,
+      "method_id": "findByIdRegistroAndEliminadoFalse",
+      "parameters": [
+        {
+          "class": "java.lang.String",
+          "kind": "req",
+          "name": "p0",
+          "object_id": 1453745330,
+          "value": "Francisco"
+        }
+      ],
+      "path": "src/main/java/dsitp/backend/project/repos/BedelRepository.java",
+      "receiver": {
+        "class": "jdk.proxy3.$Proxy234",
+        "object_id": 1647186865,
+        "value": "org.springframework.data.jpa.repository.support.SimpleJpaRepository@4d0a4995"
+      },
+      "static": false,
+      "thread_id": 66
+    },
+    {
+      "event": "call",
+      "id": 48,
+      "sql_query": {
+        "database_type": "PostgreSQL",
+        "sql": "select b1_0.id,b1_0.apellido,b1_0.contrasena,b1_0.date_created,b1_0.id_registro,b1_0.last_updated,b1_0.nombre,b1_0.eliminado,b1_0.tipo_turno from bedel b1_0 where b1_0.id_registro=? and not(b1_0.eliminado)"
+      },
+      "thread_id": 66
+    },
+    {
+      "elapsed": 0.0000665,
+      "event": "return",
+      "id": 49,
+      "parent_id": 48,
+      "thread_id": 66
+    },
+    {
+      "event": "call",
+      "id": 50,
+      "sql_query": {
+        "database_type": "PostgreSQL",
+        "sql": "select r1_0.id_bedel,r1_0.id,r1_0.clazz_,r1_0.apellido_docente,r1_0.cant_alumnos,r1_0.correo_docente,r1_0.date_created,r1_0.id_catedra,r1_0.id_docente,r1_0.last_updated,r1_0.nombre_catedra,r1_0.nombre_docente,r1_0.tipo_aula,p1_0.id,p1_0.date_created,p1_0.fecha_fin,p1_0.fecha_inicio,p1_0.last_updated,p1_0.tipo_periodo from (select id, apellido_docente, cant_alumnos, correo_docente, date_created, id_catedra, id_docente, last_updated, nombre_catedra, nombre_docente, tipo_aula, id_bedel, cast(null as integer) as id_periodo, 1 as clazz_ from reserva_esporadica union all select id, apellido_docente, cant_alumnos, correo_docente, date_created, id_catedra, id_docente, last_updated, nombre_catedra, nombre_docente, tipo_aula, id_bedel, id_periodo, 2 as clazz_ from reserva_periodica) r1_0 left join periodo p1_0 on p1_0.id=r1_0.id_periodo where r1_0.id_bedel=?"
+      },
+      "thread_id": 66
+    },
+    {
+      "elapsed": 0.0000507,
+      "event": "return",
+      "id": 51,
+      "parent_id": 50,
+      "thread_id": 66
+    },
+    {
+      "event": "call",
+      "id": 52,
+      "sql_query": {
+        "database_type": "PostgreSQL",
+        "sql": "select dr1_0.id_reserva,dr1_0.id,a1_0.numero,a1_0.tipo_aula,a1_0.capacidad,a1_0.date_created,a1_0.last_updated,a1_0.nombre,a1_0.piso,a1_0.tiene_aire_acondicionado,a1_0.tipo_pizarron,a1_0.cantidadpcs,a1_0.tiene_canon,a1_0.tiene_computadora,a1_0.tiene_televisor,a1_0.tiene_ventiladores,dr1_0.date_created,dr1_0.duracion,dr1_0.fecha_reserva,dr1_0.hora_inicio,dr1_0.last_updated from dia_reservado dr1_0 left join aula a1_0 on a1_0.numero=dr1_0.id_aula where dr1_0.id_reserva=?"
+      },
+      "thread_id": 66
+    },
+    {
+      "elapsed": 0.000041,
+      "event": "return",
+      "id": 53,
+      "parent_id": 52,
+      "thread_id": 66
+    },
+    {
+      "elapsed": 0.0098966,
+      "event": "return",
+      "id": 54,
+      "parent_id": 47,
+      "return_value": {
+        "class": "java.util.Optional",
+        "object_id": 1553055668,
+        "value": "Optional[dsitp.backend.project.domain.Bedel@43f305]"
+      },
+      "thread_id": 66
+    },
+    {
+      "defined_class": "dsitp.backend.project.validation.UniqueDayAndTimeValidator",
+      "event": "call",
+      "id": 55,
+      "lineno": 20,
+      "method_id": "isValid",
+      "parameters": [
+        {
+          "class": "java.util.ArrayList",
+          "kind": "req",
+          "name": "diasReservados",
+          "object_id": 1378922212,
+          "value": "[dsitp.backend.project.domain.DiaReservado@48d7f568]"
+        },
+        {
+          "class": "org.hibernate.validator.internal.engine.constraintvalidation.ConstraintValidatorContextImpl",
+          "kind": "req",
+          "name": "context",
+          "object_id": 74604316,
+          "value": "org.hibernate.validator.internal.engine.constraintvalidation.ConstraintValidatorContextImpl@4725f1c"
+        }
+      ],
+      "path": "src/main/java/dsitp/backend/project/validation/UniqueDayAndTimeValidator.java",
+      "receiver": {
+        "class": "dsitp.backend.project.validation.UniqueDayAndTimeValidator",
+        "object_id": 1439644729,
+        "value": "dsitp.backend.project.validation.UniqueDayAndTimeValidator@55cf3c39"
+      },
+      "static": false,
+      "thread_id": 66
+    },
+    {
+      "elapsed": 0.000127,
+      "event": "return",
+      "id": 56,
+      "parent_id": 55,
+      "return_value": {
+        "class": "java.lang.Boolean",
+        "object_id": 99458708,
+        "value": "true"
+      },
+      "thread_id": 66
+    },
+    {
+      "elapsed": 0.0375336,
+      "event": "return",
+      "id": 57,
+      "parent_id": 6,
+      "return_value": {
+        "class": "dsitp.backend.project.domain.ReservaPeriodica",
+        "object_id": 512874893,
+        "value": "dsitp.backend.project.domain.ReservaPeriodica@1e91d98d"
+      },
+      "thread_id": 66
+    },
+    {
+      "defined_class": "dsitp.backend.project.model.TipoAula",
+      "event": "call",
+      "id": 58,
+      "lineno": 9,
+      "method_id": "toInteger",
+      "path": "src/main/java/dsitp/backend/project/model/TipoAula.java",
+      "receiver": {
+        "class": "dsitp.backend.project.model.TipoAula",
+        "object_id": 1895895142,
+        "value": "SIN_RECURSOS_ADICIONALES"
+      },
+      "static": false,
+      "thread_id": 66
+    },
+    {
+      "elapsed": 0.0000142,
+      "event": "return",
+      "id": 59,
+      "parent_id": 58,
+      "return_value": {
+        "class": "java.lang.Integer",
+        "object_id": 1668583300,
+        "value": "0"
+      },
+      "thread_id": 66
+    },
+    {
+      "defined_class": "dsitp.backend.project.repos.AulaRepository",
+      "event": "call",
+      "id": 60,
+      "lineno": -1,
+      "method_id": "findByTipoAulaAndCapacidad",
+      "parameters": [
+        {
+          "class": "java.lang.Integer",
+          "kind": "req",
+          "name": "p0",
+          "object_id": 1553895892,
+          "value": "1"
+        },
+        {
+          "class": "java.lang.Integer",
+          "kind": "req",
+          "name": "p1",
+          "object_id": 1668583300,
+          "value": "0"
+        }
+      ],
+      "path": "src/main/java/dsitp/backend/project/repos/AulaRepository.java",
+      "receiver": {
+        "class": "jdk.proxy3.$Proxy245",
+        "object_id": 659569653,
+        "value": "org.springframework.data.jpa.repository.support.SimpleJpaRepository@5b8ea597"
+      },
+      "static": false,
+      "thread_id": 66
+    },
+    {
+      "event": "call",
+      "id": 61,
+      "sql_query": {
+        "database_type": "PostgreSQL",
+        "sql": "SELECT * FROM aula WHERE tipo_aula = ? AND capacidad >= ?"
+      },
+      "thread_id": 66
+    },
+    {
+      "elapsed": 0.0000638,
+      "event": "return",
+      "id": 62,
+      "parent_id": 61,
+      "thread_id": 66
+    },
+    {
+      "elapsed": 0.0083255,
+      "event": "return",
+      "id": 63,
+      "parent_id": 60,
+      "return_value": {
+        "class": "java.util.ArrayList",
+        "object_id": 1767248287,
+        "value": "[]"
+      },
+      "thread_id": 66
+    },
+    {
+      "defined_class": "dsitp.backend.project.service.ReservaPeriodicaService",
+      "event": "call",
+      "id": 64,
+      "lineno": 97,
+      "method_id": "obtenerDisponibilidad",
+      "parameters": [
+        {
+          "class": "java.util.ArrayList",
+          "kind": "req",
+          "name": "aulas",
+          "object_id": 1767248287,
+          "value": "[]"
+        },
+        {
+          "class": "dsitp.backend.project.domain.DiaReservado",
+          "kind": "req",
+          "name": "diaReservado",
+          "object_id": 1222112616,
+          "value": "dsitp.backend.project.domain.DiaReservado@48d7f568"
+        }
+      ],
+      "path": "src/main/java/dsitp/backend/project/service/ReservaPeriodicaService.java",
+      "receiver": {
+        "class": "dsitp.backend.project.service.ReservaPeriodicaService",
+        "object_id": 1870160147,
+        "value": "dsitp.backend.project.service.ReservaPeriodicaService@6f786113"
+      },
+      "static": false,
+      "thread_id": 66
+    },
+    {
+      "elapsed": 0.0000687,
+      "event": "return",
+      "id": 65,
+      "parent_id": 64,
+      "return_value": {
+        "class": "java.util.ArrayList",
+        "object_id": 109462613,
+        "value": "[]"
+      },
+      "thread_id": 66
+    },
+    {
+      "defined_class": "dsitp.backend.project.mapper.DiaReservadoMapper",
+      "event": "call",
+      "id": 66,
+      "lineno": 14,
+      "method_id": "toDiaReservadoDTO",
+      "parameters": [
+        {
+          "class": "dsitp.backend.project.domain.DiaReservado",
+          "kind": "req",
+          "name": "diaReservado",
+          "object_id": 1222112616,
+          "value": "dsitp.backend.project.domain.DiaReservado@48d7f568"
+        }
+      ],
+      "path": "src/main/java/dsitp/backend/project/mapper/DiaReservadoMapper.java",
+      "receiver": {
+        "class": "dsitp.backend.project.mapper.DiaReservadoMapper",
+        "object_id": 401224864,
+        "value": "dsitp.backend.project.mapper.DiaReservadoMapper@17ea34a0"
+      },
+      "static": false,
+      "thread_id": 66
+    },
+    {
+      "elapsed": 0.0000261,
+      "event": "return",
+      "id": 67,
+      "parent_id": 66,
+      "return_value": {
+        "class": "dsitp.backend.project.model.DiaReservadoDTO",
+        "object_id": 1132185263,
+        "value": "dsitp.backend.project.model.DiaReservadoDTO@437bc6af"
+      },
+      "thread_id": 66
+    },
+    {
+      "defined_class": "dsitp.backend.project.service.ReservaPeriodicaService",
+      "event": "call",
+      "id": 68,
+      "lineno": 120,
+      "method_id": "obtenerAulasConMenorSuperposicion",
+      "parameters": [
+        {
+          "class": "java.util.ArrayList",
+          "kind": "req",
+          "name": "aulas",
+          "object_id": 1767248287,
+          "value": "[]"
+        },
+        {
+          "class": "dsitp.backend.project.domain.Periodo",
+          "kind": "req",
+          "name": "periodo",
+          "object_id": 1303246720,
+          "value": "dsitp.backend.project.domain.Periodo@4dadf780"
+        },
+        {
+          "class": "dsitp.backend.project.domain.DiaReservado",
+          "kind": "req",
+          "name": "diaReservado",
+          "object_id": 1222112616,
+          "value": "dsitp.backend.project.domain.DiaReservado@48d7f568"
+        }
+      ],
+      "path": "src/main/java/dsitp/backend/project/service/ReservaPeriodicaService.java",
+      "receiver": {
+        "class": "dsitp.backend.project.service.ReservaPeriodicaService",
+        "object_id": 1870160147,
+        "value": "dsitp.backend.project.service.ReservaPeriodicaService@6f786113"
+      },
+      "static": false,
+      "thread_id": 66
+    },
+    {
+      "elapsed": 0.0000923,
+      "event": "return",
+      "id": 69,
+      "parent_id": 68,
+      "return_value": {
+        "class": "java.util.ArrayList",
+        "object_id": 2106501773,
+        "value": "[]"
+      },
+      "thread_id": 66
+    },
+    {
+      "elapsed": 0.0466252,
+      "event": "return",
+      "id": 70,
+      "parent_id": 5,
+      "return_value": {
+        "class": "dsitp.backend.project.model.ReservaRetornoDTO",
+        "object_id": 1416556857,
+        "value": "dsitp.backend.project.model.ReservaRetornoDTO@546ef139"
+      },
+      "thread_id": 66
+    },
+    {
+      "elapsed": 0.058795,
+      "event": "return",
+      "id": 71,
+      "parent_id": 2,
+      "return_value": {
+        "class": "org.springframework.http.ResponseEntity",
+        "object_id": 1793380672,
+        "value": "<200 OK OK,dsitp.backend.project.model.ReservaRetornoDTO@546ef139,[]>"
+      },
+      "thread_id": 66
+    },
+    {
+      "elapsed": 0.0889593,
+      "event": "return",
+      "http_server_response": {
+        "headers": {
+          "Transfer-Encoding": "chunked",
+          "Keep-Alive": "timeout=60",
+          "Connection": "keep-alive",
+          "Vary": "Origin",
+          "Date": "Tue, 10 Dec 2024 15:41:55 GMT",
+          "Content-Type": "application/json"
+        },
+        "status": 200
+      },
+      "id": 72,
+      "parent_id": 1,
+      "thread_id": 66
+    }
+  ],
+  "version": "1.2",
+  "metadata": {
+    "name": "POST /api/reservasPeriodicas/disponibilidad (200) - 12:41:54.869",
+    "app": "DSITP-backend",
+    "language": {
+      "name": "java",
+      "version": "21.0.4+7-LTS",
+      "engine": "OpenJDK 64-Bit Server VM"
+    },
+    "client": {
+      "name": "appmap-java",
+      "url": "https://github.com/appland/appmap-java"
+    },
+    "recorder": {
+      "name": "request_recording",
+      "type": "requests"
+    },
+    "recording": {},
+    "git": {
+      "repository": "https://github.com/FranciscoKuchen1/DSITP.git",
+      "branch": "backend",
+      "commit": "c4e63811390430c7f350dae420611a9e2fbaf764"
+    }
+  },
+  "classMap": [
+    {
+      "children": [
+        {
+          "children": [
+            {
+              "children": [
+                {
+                  "children": [
+                    {
+                      "children": [
+                        {
+                          "name": "isValid",
+                          "type": "function",
+                          "static": false,
+                          "location": "src/main/java/dsitp/backend/project/validation/UniqueDayAndTimeValidator.java:20"
+                        }
+                      ],
+                      "name": "UniqueDayAndTimeValidator",
+                      "type": "class"
+                    },
+                    {
+                      "children": [
+                        {
+                          "name": "isValid",
+                          "type": "function",
+                          "static": false,
+                          "location": "src/main/java/dsitp/backend/project/validation/DurationValidator.java:12"
+                        }
+                      ],
+                      "name": "DurationValidator",
+                      "type": "class"
+                    }
+                  ],
+                  "name": "validation",
+                  "type": "package"
+                },
+                {
+                  "children": [
+                    {
+                      "children": [
+                        {
+                          "name": "toInteger",
+                          "type": "function",
+                          "static": false,
+                          "location": "src/main/java/dsitp/backend/project/model/TipoAula.java:9"
+                        },
+                        {
+                          "name": "values",
+                          "type": "function",
+                          "static": true,
+                          "location": "src/main/java/dsitp/backend/project/model/TipoAula.java:3"
+                        },
+                        {
+                          "name": "fromInteger",
+                          "type": "function",
+                          "static": true,
+                          "location": "src/main/java/dsitp/backend/project/model/TipoAula.java:13"
+                        }
+                      ],
+                      "name": "TipoAula",
+                      "type": "class"
+                    },
+                    {
+                      "children": [
+                        {
+                          "name": "fromInteger",
+                          "type": "function",
+                          "static": true,
+                          "location": "src/main/java/dsitp/backend/project/model/TipoPeriodo.java:13"
+                        },
+                        {
+                          "name": "values",
+                          "type": "function",
+                          "static": true,
+                          "location": "src/main/java/dsitp/backend/project/model/TipoPeriodo.java:3"
+                        }
+                      ],
+                      "name": "TipoPeriodo",
+                      "type": "class"
+                    }
+                  ],
+                  "name": "model",
+                  "type": "package"
+                },
+                {
+                  "children": [
+                    {
+                      "children": [
+                        {
+                          "name": "containsFirst",
+                          "type": "function",
+                          "static": true,
+                          "location": "src/main/java/dsitp/backend/project/util/Trio.java:18"
+                        },
+                        {
+                          "name": "findByFirst",
+                          "type": "function",
+                          "static": true,
+                          "location": "src/main/java/dsitp/backend/project/util/Trio.java:23"
+                        }
+                      ],
+                      "name": "Trio",
+                      "type": "class"
+                    }
+                  ],
+                  "name": "util",
+                  "type": "package"
+                },
+                {
+                  "children": [
+                    {
+                      "children": [
+                        {
+                          "name": "getDisponibilidadAulaReservaPeriodica",
+                          "type": "function",
+                          "static": false,
+                          "location": "src/main/java/dsitp/backend/project/rest/ReservaPeriodicaResource.java:61"
+                        }
+                      ],
+                      "name": "ReservaPeriodicaResource",
+                      "type": "class"
+                    }
+                  ],
+                  "name": "rest",
+                  "type": "package"
+                },
+                {
+                  "children": [
+                    {
+                      "children": [
+                        {
+                          "name": "toReservaPeriodicaEntityDisponibilidad",
+                          "type": "function",
+                          "static": false,
+                          "location": "src/main/java/dsitp/backend/project/mapper/ReservaPeriodicaMapper.java:49"
+                        },
+                        {
+                          "name": "toDiasReservados",
+                          "type": "function",
+                          "static": false,
+                          "location": "src/main/java/dsitp/backend/project/mapper/ReservaPeriodicaMapper.java:172"
+                        }
+                      ],
+                      "name": "ReservaPeriodicaMapper",
+                      "type": "class"
+                    },
+                    {
+                      "children": [
+                        {
+                          "name": "toDiaReservadoDTO",
+                          "type": "function",
+                          "static": false,
+                          "location": "src/main/java/dsitp/backend/project/mapper/DiaReservadoMapper.java:14"
+                        }
+                      ],
+                      "name": "DiaReservadoMapper",
+                      "type": "class"
+                    }
+                  ],
+                  "name": "mapper",
+                  "type": "package"
+                },
+                {
+                  "children": [
+                    {
+                      "children": [
+                        {
+                          "name": "obtenerDisponibilidad",
+                          "type": "function",
+                          "static": false,
+                          "location": "src/main/java/dsitp/backend/project/service/ReservaPeriodicaService.java:97"
+                        },
+                        {
+                          "name": "obtenerAulasConMenorSuperposicion",
+                          "type": "function",
+                          "static": false,
+                          "location": "src/main/java/dsitp/backend/project/service/ReservaPeriodicaService.java:120"
+                        },
+                        {
+                          "name": "getDisponibilidadAulaReservaPeriodica",
+                          "type": "function",
+                          "static": false,
+                          "location": "src/main/java/dsitp/backend/project/service/ReservaPeriodicaService.java:72"
+                        }
+                      ],
+                      "name": "ReservaPeriodicaService",
+                      "type": "class"
+                    }
+                  ],
+                  "name": "service",
+                  "type": "package"
+                },
+                {
+                  "children": [
+                    {
+                      "children": [
+                        {
+                          "name": "findByTipoAulaAndCapacidad",
+                          "type": "function",
+                          "static": false,
+                          "location": "src/main/java/dsitp/backend/project/repos/AulaRepository.java:-1"
+                        }
+                      ],
+                      "name": "AulaRepository",
+                      "type": "class"
+                    },
+                    {
+                      "children": [
+                        {
+                          "name": "findByIdRegistroAndEliminadoFalse",
+                          "type": "function",
+                          "static": false,
+                          "location": "src/main/java/dsitp/backend/project/repos/BedelRepository.java:-1"
+                        }
+                      ],
+                      "name": "BedelRepository",
+                      "type": "class"
+                    },
+                    {
+                      "children": [
+                        {
+                          "name": "findActivePeriodosByTipo",
+                          "type": "function",
+                          "static": false,
+                          "location": "src/main/java/dsitp/backend/project/repos/PeriodoRepository.java:-1"
+                        }
+                      ],
+                      "name": "PeriodoRepository",
+                      "type": "class"
+                    }
+                  ],
+                  "name": "repos",
+                  "type": "package"
+                }
+              ],
+              "name": "project",
+              "type": "package"
+            }
+          ],
+          "name": "backend",
+          "type": "package"
+        }
+      ],
+      "name": "dsitp",
+      "type": "package"
+    },
+    {
+      "type": "http",
+      "name": "HTTP server requests",
+      "children": [
+        {
+          "type": "route",
+          "name": "POST /api/reservasPeriodicas/disponibilidad"
+        }
+      ]
+    },
+    {
+      "type": "database",
+      "name": "Database",
+      "children": [
+        {
+          "type": "query",
+          "name": "select p1_0.id,p1_0.date_created,p1_0.fecha_fin,p1_0.fecha_inicio,p1_0.last_updated,p1_0.tipo_periodo from periodo p1_0 where p1_0.tipo_periodo=? and p1_0.fecha_fin>=localtimestamp"
+        },
+        {
+          "type": "query",
+          "name": "select b1_0.id,b1_0.apellido,b1_0.contrasena,b1_0.date_created,b1_0.id_registro,b1_0.last_updated,b1_0.nombre,b1_0.eliminado,b1_0.tipo_turno from bedel b1_0 where b1_0.id_registro=? and not(b1_0.eliminado)"
+        },
+        {
+          "type": "query",
+          "name": "select r1_0.id_bedel,r1_0.id,r1_0.clazz_,r1_0.apellido_docente,r1_0.cant_alumnos,r1_0.correo_docente,r1_0.date_created,r1_0.id_catedra,r1_0.id_docente,r1_0.last_updated,r1_0.nombre_catedra,r1_0.nombre_docente,r1_0.tipo_aula,p1_0.id,p1_0.date_created,p1_0.fecha_fin,p1_0.fecha_inicio,p1_0.last_updated,p1_0.tipo_periodo from (select id, apellido_docente, cant_alumnos, correo_docente, date_created, id_catedra, id_docente, last_updated, nombre_catedra, nombre_docente, tipo_aula, id_bedel, cast(null as integer) as id_periodo, 1 as clazz_ from reserva_esporadica union all select id, apellido_docente, cant_alumnos, correo_docente, date_created, id_catedra, id_docente, last_updated, nombre_catedra, nombre_docente, tipo_aula, id_bedel, id_periodo, 2 as clazz_ from reserva_periodica) r1_0 left join periodo p1_0 on p1_0.id=r1_0.id_periodo where r1_0.id_bedel=?"
+        },
+        {
+          "type": "query",
+          "name": "select dr1_0.id_reserva,dr1_0.id,a1_0.numero,a1_0.tipo_aula,a1_0.capacidad,a1_0.date_created,a1_0.last_updated,a1_0.nombre,a1_0.piso,a1_0.tiene_aire_acondicionado,a1_0.tipo_pizarron,a1_0.cantidadpcs,a1_0.tiene_canon,a1_0.tiene_computadora,a1_0.tiene_televisor,a1_0.tiene_ventiladores,dr1_0.date_created,dr1_0.duracion,dr1_0.fecha_reserva,dr1_0.hora_inicio,dr1_0.last_updated from dia_reservado dr1_0 left join aula a1_0 on a1_0.numero=dr1_0.id_aula where dr1_0.id_reserva=?"
+        },
+        {
+          "type": "query",
+          "name": "SELECT * FROM aula WHERE tipo_aula = ? AND capacidad >= ?"
+        }
+      ]
+    },
+    {
+      "type": "class",
+      "children": [
+        {
+          "type": "function"
+        }
+      ]
+    }
+  ]
+}

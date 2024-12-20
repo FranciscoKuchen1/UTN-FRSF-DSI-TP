@@ -1,0 +1,5 @@
+name: DSITP-backend
+packages:
+  - path: dsitp.backend.project
+language: java
+appmap_dir: tmp/appmap

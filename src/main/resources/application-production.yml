@@ -1,0 +1,94 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5433/project
+    username: postgres
+    password: P4ssword!
+    hikari:
+      connection-timeout: 30000
+      maximum-pool-size: 10
+      
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+      dialect: org.hibernate.dialect.PostgreSQLDialect
+    open-in-view: false
+    properties:
+      hibernate:
+        default_schema: public
+        jdbc:
+          lob:
+            non_contextual_creation: true
+        id:
+          new_generator_mappings: true
+        format_sql: true
+        use_sql_comments: true
+    defer-datasource-initialization: true
+    
+  docker:
+    compose:
+      lifecycle-management: start-only
+      
+  devtools:
+      livereload:
+          enabled: true
+          
+  sql:
+    init:
+      mode: never
+      
+  depends_on:
+      - postgres
+      
+      
+error:
+  handling:
+    http-status-in-json-response: true
+    exception-logging: NO_LOGGING
+    full-stacktrace-http-statuses: 5xx
+    log-levels:
+      5xx: ERROR
+      
+      
+springdoc:
+  pathsToMatch: /, /api/**
+
+
+
+#
+#spring:
+#  application:
+#    name: demo-tareas
+#
+#  datasource:
+#    url: jdbc:postgresql://localhost:5432/pg-deso
+#    username: pguser
+#    password: pgpassword
+#    driver-class-name: org.postgresql.Driver
+#    hikari:
+#      minimum-idle: 2
+#      maximum-pool-size: 2
+#      idle-timeout: 30000
+#      connection-timeout: 30000
+#      max-lifetime: 1800000
+#
+#  jpa:
+#    hibernate:
+#      ddl-auto: update
+#    show-sql: true
+#    properties:
+#      hibernate.dialect: org.hibernate.dialect.PostgreSQLDialect
+#
+#  thymeleaf:
+#    cache: false
+#    prefix: classpath:/templates/
+#    suffix: .html
+#    mode: HTML5
+#    encoding: UTF-8
+#    servlet:
+#      content-type: text/html
+#
+#logging:
+#  level:
+#    org.hibernate.SQL: DEBUG
+#    org.hibernate.type.descriptor.sql.BasicBinder: TRACE

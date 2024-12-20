@@ -1,0 +1,30 @@
+[
+  {
+    "caller": "POST /api/reservasPeriodicas/disponibilidad",
+    "callee": "dsitp/backend"
+  },
+  {
+    "caller": "dsitp/backend",
+    "callee": "#"
+  },
+  {
+    "caller": "dsitp/backend",
+    "callee": "SELECT * FROM aula WHERE tipo_aula = ? AND capacidad >= ?"
+  },
+  {
+    "caller": "dsitp/backend",
+    "callee": "select b1_0.id,b1_0.apellido,b1_0.contrasena,b1_0.date_created,b1_0.id_registro,b1_0.last_updated,b1_0.nombre,b1_0.eliminado,b1_0.tipo_turno from bedel b1_0 where b1_0.id_registro=? and not(b1_0.eliminado)"
+  },
+  {
+    "caller": "dsitp/backend",
+    "callee": "select dr1_0.id_reserva,dr1_0.id,a1_0.numero,a1_0.tipo_aula,a1_0.capacidad,a1_0.date_created,a1_0.last_updated,a1_0.nombre,a1_0.piso,a1_0.tiene_aire_acondicionado,a1_0.tipo_pizarron,a1_0.cantidadpcs,a1_0.tiene_canon,a1_0.tiene_computadora,a1_0.tiene_televisor,a1_0.tiene_ventiladores,dr1_0.date_created,dr1_0.duracion,dr1_0.fecha_reserva,dr1_0.hora_inicio,dr1_0.last_updated from dia_reservado dr1_0 left join aula a1_0 on a1_0.numero=dr1_0.id_aula where dr1_0.id_reserva=?"
+  },
+  {
+    "caller": "dsitp/backend",
+    "callee": "select p1_0.id,p1_0.date_created,p1_0.fecha_fin,p1_0.fecha_inicio,p1_0.last_updated,p1_0.tipo_periodo from periodo p1_0 where p1_0.tipo_periodo=? and p1_0.fecha_fin>=localtimestamp"
+  },
+  {
+    "caller": "dsitp/backend",
+    "callee": "select r1_0.id_bedel,r1_0.id,r1_0.clazz_,r1_0.apellido_docente,r1_0.cant_alumnos,r1_0.correo_docente,r1_0.date_created,r1_0.id_catedra,r1_0.id_docente,r1_0.last_updated,r1_0.nombre_catedra,r1_0.nombre_docente,r1_0.tipo_aula,p1_0.id,p1_0.date_created,p1_0.fecha_fin,p1_0.fecha_inicio,p1_0.last_updated,p1_0.tipo_periodo from (select id, apellido_docente, cant_alumnos, correo_docente, date_created, id_catedra, id_docente, last_updated, nombre_catedra, nombre_docente, tipo_aula, id_bedel, cast(null as integer) as id_periodo, 1 as clazz_ from reserva_esporadica union all select id, apellido_docente, cant_alumnos, correo_docente, date_created, id_catedra, id_docente, last_updated, nombre_catedra, nombre_docente, tipo_aula, id_bedel, id_periodo, 2 as clazz_ from reserva_periodica) r1_0 left join periodo p1_0 on p1_0.id=r1_0.id_periodo where r1_0.id_bedel=?"
+  }
+]
