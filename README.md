@@ -2,7 +2,7 @@
 
 # BackEnd (Business Logic Layer and Data Access Layer / Controller and Model) and FrontEnd (Presentation Layer or UI) for App 
 
-# Índice
+# Index
 
 1. [Overview](#overview)
 2. [Features](#features)
