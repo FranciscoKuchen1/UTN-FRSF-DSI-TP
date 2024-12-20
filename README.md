@@ -1,6 +1,8 @@
-# DSITP Backend (Business Logic Layer and Data Access Layer / Controller and Model) for App
+# Universidad Tecnológica Nacional Facultad Regional Santa Fe Diseño de Sistemas de Información Trabajo Práctico. BackEnd (Business Logic Layer and Data Access Layer / Controller and Model) and FrontEnd (Presentation Layer or UI) for App 
 
 ## Overview
+
+![Spring Boot and Docker](https://upload.wikimedia.org/wikipedia/commons/a/ab/Spring_Framework_Logo_2018.svg)
 
 This project combines **Spring Boot** and **Docker Compose** to build a backend application that integrates **PostgreSQL** and **pgAdmin4**. It also includes support for **Angular** as the frontend. This README outlines the setup, build, and deployment process for this project.
 
@@ -27,6 +29,22 @@ This project combines **Spring Boot** and **Docker Compose** to build a backend 
 ---
 
 ## Project Structure
+
+```plaintext
+src
+├── main
+│   ├── java
+│   │   ├── com.example.project
+│   │   │   ├── controller
+│   │   │   ├── model
+│   │   │   ├── repository
+│   │   │   └── service
+│   ├── resources
+│   │   ├── application.yml
+│   │   └── docker-compose.yml
+├── test
+└── pom.xml
+```
 
 - **Resource**: Contains controllers (`@RestController`).
 - **Domain**: Defines basic entities.
@@ -83,6 +101,8 @@ This project combines **Spring Boot** and **Docker Compose** to build a backend 
 
 ### Frontend Setup
 
+![Angular Logo](https://angular.io/assets/images/logos/angular/angular.svg)
+
 1. **Install Angular CLI**:
    ```bash
    npm install -g @angular/cli
@@ -119,6 +139,8 @@ This project combines **Spring Boot** and **Docker Compose** to build a backend 
 
 ## PostgreSQL Notes
 
+![PostgreSQL Logo](https://upload.wikimedia.org/wikipedia/commons/2/29/Postgresql_elephant.svg)
+
 - Use `ON DELETE CASCADE` to enable cascading deletions in relationships.
 - Access PostgreSQL from the command line:
   ```bash
@@ -143,7 +165,7 @@ Access the Swagger UI for interactive API exploration:
 
 ## Class Diagram
 
-![Class Diagram]()
+![Class Diagram](https://via.placeholder.com/600x400.png?text=Class+Diagram+Placeholder)
 
 ---
 
