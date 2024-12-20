@@ -1,83 +1,180 @@
-# DSITP Backend (Capa de Negocio/Logica y Capa de Acceso a Datos o Controller y Model) para App
-Se usa Docker Compose (recomiendo descargar Docker Desktop, con el archivo docker-compose y el comando ```docker compose up -d``` (Ver indicaciones, en ingles) levantan una instancia de imagen de PostgreSQL) en su ```localhost:5433``` (ver en navegador ```http://localhost:5433``` o ```http://localhost:5433/project```, creo). Se usa Hibernate, Maven y muchas dependencias de Java. 
-El paquete Resource es de Controllers (RestController). Domain son las entidades básicas, model los DTO, repository hacen de DAOs.
+# DSITP Backend (Business Logic Layer and Data Access Layer / Controller and Model) for App
 
-Por configuracion ver: ```project/src/main/resources``` (archivos .yml), ```project/pom.xml``` y ```project/docker-compose.yml```
+## Overview
 
-Creo que en el mismo projecto podemos tener tanto archivos de Java como de Angular. 
+This project combines **Spring Boot** and **Docker Compose** to build a backend application that integrates **PostgreSQL** and **pgAdmin4**. It also includes support for **Angular** as the frontend. This README outlines the setup, build, and deployment process for this project.
 
-Para investigar sobre Spring Boot recomiendo (Capitulo 2): https://howtodoinjava.com/spring-boot/spring-boot/
+---
 
-## Para importar proyecto de Java
-Primero descargar ZIP desde GitHub (DAR A CODE Y HTTP/SSH/... -> ZIP)
-### En NetBeans
-File -> Import Project -> From ZIP
+## Features
 
-### En IntelliJ IDEA
-File o Open -> Seleccionar ZIP descargado -> Open
+- **Spring Boot** for backend logic.
+- **Hibernate** and **Maven** for ORM and dependency management.
+- **Docker Compose** for managing containers.
+- **PostgreSQL** as the database.
+- **Swagger UI** for API documentation.
+- **Angular** for frontend development.
 
-### Para acceder a la UI de Swagger
-Acceder a [SwaggerUI](http://localhost:8080/swagger-ui/index.html#/)
+---
 
+## Requirements
 
-## Development
+1. **Docker**: [Install Docker](https://www.docker.com/get-started/).
+2. **Java**: Java 11 or later.
+3. **Node.js**: Version 14.15 or later.
+4. **npm**: Included with Node.js (verify installation using `npm -v`).
 
-When starting the application `docker compose up` is called and the app will connect to the contained services.
-[Docker](https://www.docker.com/get-started/) must be available on the current system.
+---
 
-During development it is recommended to use the profile `local`. In IntelliJ `-Dspring.profiles.active=local` can be
-added in the VM options of the Run Configuration after enabling this property in "Modify options". Create your own
-`application-local.yml` file to override settings for development.
+## Project Structure
 
+- **Resource**: Contains controllers (`@RestController`).
+- **Domain**: Defines basic entities.
+- **Model**: Represents DTOs.
+- **Repository**: Acts as DAOs.
 
-After starting the application it is accessible under `localhost:8080`.
+---
 
-## Build
+## Configuration Files
 
-The application can be built using the following command:
+- `src/main/resources/*.yml`
+- `pom.xml`
+- `docker-compose.yml`
 
+---
+
+## Setup Instructions
+
+### Import the Java Project
+
+1. **Download the ZIP** from GitHub (Code -> Download ZIP).
+
+#### In NetBeans:
+- Navigate to: `File -> Import Project -> From ZIP`.
+
+#### In IntelliJ IDEA:
+- Navigate to: `File -> Open`, then select the ZIP file.
+
+---
+
+### Start Backend Application
+
+1. **Build the application**:
+   ```bash
+   ./mvnw clean package
+   ```
+
+2. **Run with Docker Compose**:
+   ```bash
+   docker compose up
+   ```
+   _Tip_: To avoid issues, run `docker compose down` before restarting.
+
+3. **Run Spring Boot Application**:
+   ```bash
+   ./mvnw spring-boot:run
+   ```
+   _or_
+   ```bash
+   java -Dspring.profiles.active=production -jar ./target/project-0.0.1-SNAPSHOT.jar
+   ```
+
+---
+
+### Frontend Setup
+
+1. **Install Angular CLI**:
+   ```bash
+   npm install -g @angular/cli
+   ```
+
+2. **Install Modules**:
+   From the project root, run:
+   ```bash
+   npm install
+   ```
+
+3. **Start the Angular Application**:
+   ```bash
+   ng serve
+   ```
+   _To use a custom port:_
+   ```bash
+   ng serve --port <port-number>
+   ```
+
+---
+
+## Development Tips
+
+- Use the `local` profile during development. Configure it by adding:
+  ```bash
+  -Dspring.profiles.active=local
+  ```
+  in your Run Configuration (VM Options).
+
+- Create an `application-local.yml` file to override default settings for development.
+
+---
+
+## PostgreSQL Notes
+
+- Use `ON DELETE CASCADE` to enable cascading deletions in relationships.
+- Access PostgreSQL from the command line:
+  ```bash
+  psql -h localhost -p 5432 -U postgres -d project
+  ```
+
+---
+
+## API Documentation
+
+Access the Swagger UI for interactive API exploration:
+[SwaggerUI](http://localhost:8080/swagger-ui/index.html#)
+
+---
+
+## App Ports
+
+- **pgAdmin4**: [http://localhost:8081/](http://localhost:8081/)
+- **Angular Frontend**: [http://localhost:4200/](http://localhost:4200/)
+
+---
+
+## Class Diagram
+
+![Class Diagram]()
+
+---
+
+## Useful Links
+
+- [Maven Documentation](https://maven.apache.org/guides/index.html)
+- [Spring Boot Reference](https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/)
+- [Spring Data JPA Reference](https://docs.spring.io/spring-data/jpa/reference/jpa.html)
+
+---
+
+## Build Docker Image
+
+Create a production-ready Docker image:
+```bash
+./mvnw spring-boot:build-image -Dspring-boot.build-image.imageName=isi.deso/tp-etapa-8-implementacion
 ```
-./mvnw clean package
+
+---
+
+## Mocking Data
+
+When starting the app, Hibernate will automatically create tables and mock data. To prevent repeated mocking, set:
+```properties
+spring.sql.init.mode=never
 ```
+in `application.properties`.
 
-Start your application with the following command - here with the profile `production`:
+---
 
-```
-java -Dspring.profiles.active=production -jar ./target/project-0.0.1-SNAPSHOT.jar
-```
-o
+## Further Reading
 
-```
-./mvnw spring-boot:run
-```
-
-Si se quiere especificar el perfil de compilación usar:
-```
--Dspring.profiles.active=
-```
-
-## Base de Datos en PostgreSQL:
-
-Si se quiere la eliminación en casada, cambiar de:
-```ON DELETE NO ACTION``` a ```ON DELETE CASCADE```
-
-
-If required, a Docker image can be created with the Spring Boot plugin. Add `SPRING_PROFILES_ACTIVE=production` as
-environment variable when running the container.
-
-```
-./mvnw spring-boot:build-image -Dspring-boot.build-image.imageName=dsitp.backend/project
-```
-
-Para acceder desde línea de comando (bash) usar:
-
-```
-psql -h localhost -p 5432 -U postgres -d project
-
-```
-
-## Further readings
-
-* [Maven docs](https://maven.apache.org/guides/index.html)  
-* [Spring Boot reference](https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/)  
-* [Spring Data JPA reference](https://docs.spring.io/spring-data/jpa/reference/jpa.html)
+- [Angular CLI](https://github.com/angular/angular-cli)
+- [Node.js](https://nodejs.org/en/download/package-manager)
