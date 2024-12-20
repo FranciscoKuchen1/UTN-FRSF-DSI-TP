@@ -34,11 +34,19 @@ This project combines **Spring Boot** and **Docker Compose** to build a backend 
 src
 ├── main
 │   ├── java
-│   │   ├── com.example.project
+│   │   ├── dsitp.backend.project
+│   │   │   ├── config
 │   │   │   ├── controller
+│   │   │   ├── domain
+│   │   │   ├── integration
+│   │   │   ├── mapper
 │   │   │   ├── model
-│   │   │   ├── repository
-│   │   │   └── service
+│   │   │   ├── repos
+│   │   │   ├── rest
+│   │   │   ├── service
+│   │   │   ├── util
+│   │   │   └── validation
+│   │   └── ProjectApplication.java
 │   ├── resources
 │   │   ├── application.yml
 │   │   └── docker-compose.yml
@@ -46,16 +54,19 @@ src
 └── pom.xml
 ```
 
-- **Resource**: Contains controllers (`@RestController`).
-- **Domain**: Defines basic entities.
-- **Model**: Represents DTOs.
-- **Repository**: Acts as DAOs.
+- **Controller**: REST endpoints using `@RestController`.
+- **Domain**: Basic entities.
+- **Model**: DTOs (Data Transfer Objects).
+- **Repos**: DAO (Data Access Object) layer.
+- **Service**: Business logic.
+- **Util**: Utility classes.
+- **Validation**: Input validation logic.
 
 ---
 
 ## Configuration Files
 
-- `src/main/resources/*.yml`
+- `src/main/resources/application.yml`
 - `pom.xml`
 - `docker-compose.yml`
 
