@@ -1,47 +1,36 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sistema de Registro de Aulas</title>
-</head>
-<body>
+# Universidad Tecnológica Nacional Facultad Regional Santa Fe Diseño de Sistemas de Información Trabajo Práctico Sistema de Registro de Aulas. BackEnd (Business Logic Layer and Data Access Layer / Controller and Model) and FrontEnd (Presentation Layer or UI) for App 
 
-<h1>Universidad Tecnológica Nacional Facultad Regional Santa Fe</h1>
-<h2>Diseño de Sistemas de Información Trabajo Práctico</h2>
-<h3>Sistema de Registro de Aulas. BackEnd (Business Logic Layer and Data Access Layer / Controller and Model) and FrontEnd (Presentation Layer or UI) for App</h3>
+## Overview
 
-<h2>Overview</h2>
 <img src="https://upload.wikimedia.org/wikipedia/commons/7/79/Spring_Boot.svg" alt="Spring Boot Logo" width="250"/>
 
-<p>This project combines <strong>Spring Boot</strong> and <strong>Docker Compose</strong> to build a backend application that integrates <strong>PostgreSQL</strong> and <strong>pgAdmin4</strong>. It also includes support for <strong>Angular</strong> as the frontend. This README outlines the setup, build, and deployment process for this project.</p>
+This project combines **Spring Boot** and **Docker Compose** to build a backend application that integrates **PostgreSQL** and **pgAdmin4**. It also includes support for **Angular** as the frontend. This README outlines the setup, build, and deployment process for this project.
 
-<hr>
+---
 
-<h2>Features</h2>
-<ul>
-    <li><strong>Spring Boot</strong> for backend logic.</li>
-    <li><strong>Hibernate</strong> and <strong>Maven</strong> for ORM and dependency management.</li>
-    <li><strong>Docker Compose</strong> for managing containers.</li>
-    <li><strong>PostgreSQL</strong> as the database.</li>
-    <li><strong>Swagger UI</strong> for API documentation.</li>
-    <li><strong>Angular</strong> for frontend development.</li>
-</ul>
+## Features
 
-<hr>
+- **Spring Boot** for backend logic.
+- **Hibernate** and **Maven** for ORM and dependency management.
+- **Docker Compose** for managing containers.
+- **PostgreSQL** as the database.
+- **Swagger UI** for API documentation.
+- **Angular** for frontend development.
 
-<h2>Requirements</h2>
-<ol>
-    <li><strong>Docker</strong>: <a href="https://www.docker.com/get-started/">Install Docker</a>.</li>
-    <li><strong>Java</strong>: Java 11 or later.</li>
-    <li><strong>Node.js</strong>: Version 14.15 or later.</li>
-    <li><strong>npm</strong>: Included with Node.js (verify installation using <code>npm -v</code>).</li>
-</ol>
+---
 
-<hr>
+## Requirements
 
-<h2>Project Structure</h2>
-<pre>
+1. **Docker**: [Install Docker](https://www.docker.com/get-started/).
+2. **Java**: Java 11 or later.
+3. **Node.js**: Version 14.15 or later.
+4. **npm**: Included with Node.js (verify installation using `npm -v`).
+
+---
+
+## Project Structure
+
+```plaintext
 src
 ├── main
 │   ├── java
@@ -63,153 +52,163 @@ src
 │   │   └── docker-compose.yml
 ├── test
 └── pom.xml
-</pre>
+```
 
-<ul>
-    <li><strong>Controller</strong>: REST endpoints using <code>@RestController</code>.</li>
-    <li><strong>Domain</strong>: Basic entities.</li>
-    <li><strong>Model</strong>: DTOs (Data Transfer Objects).</li>
-    <li><strong>Repos</strong>: DAO (Data Access Object) layer.</li>
-    <li><strong>Service</strong>: Business logic.</li>
-    <li><strong>Util</strong>: Utility classes.</li>
-    <li><strong>Validation</strong>: Input validation logic.</li>
-</ul>
+- **Controller**: REST endpoints using `@RestController`.
+- **Domain**: Basic entities.
+- **Model**: DTOs (Data Transfer Objects).
+- **Repos**: DAO (Data Access Object) layer.
+- **Service**: Business logic.
+- **Util**: Utility classes.
+- **Validation**: Input validation logic.
 
-<hr>
+---
 
-<h2>Configuration Files</h2>
-<ul>
-    <li><code>src/main/resources/application.yml</code></li>
-    <li><code>pom.xml</code></li>
-    <li><code>docker-compose.yml</code></li>
-</ul>
+## Configuration Files
 
-<hr>
+- `src/main/resources/application.yml`
+- `pom.xml`
+- `docker-compose.yml`
 
-<h2>Setup Instructions</h2>
+---
 
-<h3>Import the Java Project</h3>
-<p>1. <strong>Download the ZIP</strong> from GitHub (Code -> Download ZIP).</p>
+## Setup Instructions
 
-<h4>In NetBeans:</h4>
-<ul>
-    <li>Navigate to: <code>File -> Import Project -> From ZIP</code>.</li>
-</ul>
+### Import the Java Project
 
-<h4>In IntelliJ IDEA:</h4>
-<ul>
-    <li>Navigate to: <code>File -> Open</code>, then select the ZIP file.</li>
-</ul>
+1. **Download the ZIP** from GitHub (Code -> Download ZIP).
 
-<hr>
+#### In NetBeans:
+- Navigate to: `File -> Import Project -> From ZIP`.
 
-<h3>Start Backend Application</h3>
-<ol>
-    <li><strong>Build the application</strong>:
-        <pre>./mvnw clean package</pre>
-    </li>
-    <li><strong>Run with Docker Compose</strong>:
-        <pre>docker compose up</pre>
-        <p><em>Tip</em>: To avoid issues, run <code>docker compose down</code> before restarting.</p>
-    </li>
-    <li><strong>Run Spring Boot Application</strong>:
-        <pre>./mvnw spring-boot:run</pre>
-        <p><em>or</em></p>
-        <pre>java -Dspring.profiles.active=production -jar ./target/project-0.0.1-SNAPSHOT.jar</pre>
-    </li>
-</ol>
+#### In IntelliJ IDEA:
+- Navigate to: `File -> Open`, then select the ZIP file.
 
-<hr>
+---
 
-<h2>Frontend Setup</h2>
+### Start Backend Application
+
+1. **Build the application**:
+   ```bash
+   ./mvnw clean package
+   ```
+
+2. **Run with Docker Compose**:
+   ```bash
+   docker compose up
+   ```
+   _Tip_: To avoid issues, run `docker compose down` before restarting.
+
+3. **Run Spring Boot Application**:
+   ```bash
+   ./mvnw spring-boot:run
+   ```
+   _or_
+   ```bash
+   java -Dspring.profiles.active=production -jar ./target/project-0.0.1-SNAPSHOT.jar
+   ```
+
+---
+
+### Frontend Setup
+
 <img src="https://angular.io/assets/images/logos/angular/angular.svg" alt="Angular Logo" width="250"/>
 
-<ol>
-    <li><strong>Install Angular CLI</strong>:
-        <pre>npm install -g @angular/cli</pre>
-    </li>
-    <li><strong>Install Modules</strong>:
-        <p>From the project root, run:</p>
-        <pre>npm install</pre>
-    </li>
-    <li><strong>Start the Angular Application</strong>:
-        <pre>ng serve</pre>
-        <p><em>To use a custom port:</em></p>
-        <pre>ng serve --port &lt;port-number&gt;</pre>
-    </li>
-</ol>
+1. **Install Angular CLI**:
+   ```bash
+   npm install -g @angular/cli
+   ```
 
-<hr>
+2. **Install Modules**:
+   From the project root, run:
+   ```bash
+   npm install
+   ```
 
-<h2>Development Tips</h2>
-<ul>
-    <li>Use the <code>local</code> profile during development. Configure it by adding:
-        <pre>-Dspring.profiles.active=local</pre>
-        <p>in your Run Configuration (VM Options).</p>
-    </li>
-    <li>Create an <code>application-local.yml</code> file to override default settings for development.</li>
-</ul>
+3. **Start the Angular Application**:
+   ```bash
+   ng serve
+   ```
+   _To use a custom port:_
+   ```bash
+   ng serve --port <port-number>
+   ```
 
-<hr>
+---
 
-<h2>PostgreSQL Notes</h2>
+## Development Tips
+
+- Use the `local` profile during development. Configure it by adding:
+  ```bash
+  -Dspring.profiles.active=local
+  ```
+  in your Run Configuration (VM Options).
+
+- Create an `application-local.yml` file to override default settings for development.
+
+---
+
+## PostgreSQL Notes
+
 <img src="https://upload.wikimedia.org/wikipedia/commons/2/29/Postgresql_elephant.svg" alt="PostgreSQL Logo" width="250"/>
 
-<ul>
-    <li>Use <code>ON DELETE CASCADE</code> to enable cascading deletions in relationships.</li>
-    <li>Access PostgreSQL from the command line:
-        <pre>psql -h localhost -p 5432 -U postgres -d project</pre>
-    </li>
-</ul>
+- Use `ON DELETE CASCADE` to enable cascading deletions in relationships.
+- Access PostgreSQL from the command line:
+  ```bash
+  psql -h localhost -p 5432 -U postgres -d project
+  ```
 
-<hr>
+---
 
-<h2>API Documentation</h2>
-<p>Access the Swagger UI for interactive API exploration: <a href="http://localhost:8080/swagger-ui/index.html#">SwaggerUI</a></p>
+## API Documentation
 
-<hr>
+Access the Swagger UI for interactive API exploration:
+[SwaggerUI](http://localhost:8080/swagger-ui/index.html#)
 
-<h2>App Ports</h2>
-<ul>
-    <li><strong>pgAdmin4</strong>: <a href="http://localhost:8081/">http://localhost:8081/</a></li>
-    <li><strong>Angular Frontend</strong>: <a href="http://localhost:4200/">http://localhost:4200/</a></li>
-</ul>
+---
 
-<hr>
+## App Ports
 
-<h2>Class Diagrams</h2>
-<p><img src="https://github.com/user-attachments/assets/1b14c28b-6f66-4e96-966d-ba7008c1bef2" alt="Basic Class Diagram draw.io"></p>
-<p><img src="https://github.com/user-attachments/assets/2b9e9c60-d534-4c34-9fb9-bbf6e4de7aef" alt="Class Diagram"></p>
+- **pgAdmin4**: [http://localhost:8081/](http://localhost:8081/)
+- **Angular Frontend**: [http://localhost:4200/](http://localhost:4200/)
 
-<hr>
+---
 
-<h2>Useful Links</h2>
-<ul>
-    <li><a href="https://maven.apache.org/guides/index.html">Maven Documentation</a></li>
-    <li><a href="https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/">Spring Boot Reference</a></li>
-    <li><a href="https://docs.spring.io/spring-data/jpa/reference/jpa.html">Spring Data JPA Reference</a></li>
-</ul>
+## Class Diagrams
 
-<hr>
+![Basic Class Diagram draw.io](https://github.com/user-attachments/assets/1b14c28b-6f66-4e96-966d-ba7008c1bef2)
+![Class Diagram](https://github.com/user-attachments/assets/2b9e9c60-d534-4c34-9fb9-bbf6e4de7aef)
 
-<h2>Build Docker Image</h2>
-<p>Create a production-ready Docker image:</p>
-<pre>./mvnw spring-boot:build-image -Dspring-boot.build-image.imageName=isi.deso/tp-etapa-8-implementacion</pre>
+---
 
-<hr>
+## Useful Links
 
-<h2>Mocking Data</h2>
-<p>When starting the app, Hibernate will automatically create tables and mock data. To prevent repeated mocking, set:</p>
-<pre>spring.sql.init.mode=never</pre>
-<p>in <code>application.properties</code>.</p>
+- [Maven Documentation](https://maven.apache.org/guides/index.html)
+- [Spring Boot Reference](https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/)
+- [Spring Data JPA Reference](https://docs.spring.io/spring-data/jpa/reference/jpa.html)
 
-<hr>
+---
 
-<h2>Further Reading</h2>
-<ul>
-    <li><a href="https://github.com/angular/angular-cli">Angular CLI</a></li>
-    <li><a href="https://nodejs.org/en/download/package-manager">Node.js</a></li>
-</ul>
+## Build Docker Image
 
-</body>
-</html>
+Create a production-ready Docker image:
+```bash
+./mvnw spring-boot:build-image -Dspring-boot.build-image.imageName=isi.deso/tp-etapa-8-implementacion
+```
+
+---
+
+## Mocking Data
+
+When starting the app, Hibernate will automatically create tables and mock data. To prevent repeated mocking, set:
+```properties
+spring.sql.init.mode=never
+```
+in `application.properties`.
+
+---
+
+## Further Reading
+
+- [Angular CLI](https://github.com/angular/angular-cli)
+- [Node.js](https://nodejs.org/en/download/package-manager)
