@@ -2,7 +2,7 @@
 
 ## Overview
 
-<img src="https://upload.wikimedia.org/wikipedia/commons/7/79/Spring_Boot.svg" alt="Spring Boot and Docker" width="250"/>
+<img src="https://upload.wikimedia.org/wikipedia/commons/7/79/Spring_Boot.svg" alt="Spring Boot Logo" width="250"/>
 
 This project combines **Spring Boot** and **Docker Compose** to build a backend application that integrates **PostgreSQL** and **pgAdmin4**. It also includes support for **Angular** as the frontend. This README outlines the setup, build, and deployment process for this project.
 
@@ -112,7 +112,7 @@ src
 
 ### Frontend Setup
 
-![Angular Logo](https://angular.io/assets/images/logos/angular/angular.svg)
+<img src="https://angular.io/assets/images/logos/angular/angular.svg" alt="Angular Logo" width="250"/>
 
 1. **Install Angular CLI**:
    ```bash
@@ -150,7 +150,7 @@ src
 
 ## PostgreSQL Notes
 
-![PostgreSQL Logo](https://upload.wikimedia.org/wikipedia/commons/2/29/Postgresql_elephant.svg)
+<img src="https://upload.wikimedia.org/wikipedia/commons/2/29/Postgresql_elephant.svg" alt="PostgreSQL Logo" width="250"/>
 
 - Use `ON DELETE CASCADE` to enable cascading deletions in relationships.
 - Access PostgreSQL from the command line:
