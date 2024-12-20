@@ -1,4 +1,4 @@
-# Universidad Tecnológica Nacional Facultad Regional Santa Fe Diseño de Sistemas de Información Trabajo Práctico. BackEnd (Business Logic Layer and Data Access Layer / Controller and Model) and FrontEnd (Presentation Layer or UI) for App 
+# Universidad Tecnológica Nacional Facultad Regional Santa Fe Diseño de Sistemas de Información Trabajo Práctico Sistema de Registro de Aulas. BackEnd (Business Logic Layer and Data Access Layer / Controller and Model) and FrontEnd (Presentation Layer or UI) for App 
 
 ## Overview
 
@@ -176,7 +176,8 @@ Access the Swagger UI for interactive API exploration:
 
 ## Class Diagram
 
-![Class Diagram](https://via.placeholder.com/600x400.png?text=Class+Diagram+Placeholder)
+![Actual Class Diagram](https://via.placeholder.com/600x400.png?text=Class+Diagram+Placeholder)
+![Basic Class Diagram draw.io](https://github.com/user-attachments/assets/1b14c28b-6f66-4e96-966d-ba7008c1bef2)
 
 ---
 
