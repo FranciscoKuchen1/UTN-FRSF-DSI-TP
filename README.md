@@ -2,7 +2,7 @@
 
 ## Overview
 
-![Spring Boot and Docker](https://upload.wikimedia.org/wikipedia/commons/7/79/Spring_Boot.svg)
+<img src="https://upload.wikimedia.org/wikipedia/commons/7/79/Spring_Boot.svg" alt="Spring Boot and Docker" width="200"/>
 
 This project combines **Spring Boot** and **Docker Compose** to build a backend application that integrates **PostgreSQL** and **pgAdmin4**. It also includes support for **Angular** as the frontend. This README outlines the setup, build, and deployment process for this project.
 
