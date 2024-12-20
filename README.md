@@ -174,7 +174,7 @@ Access the Swagger UI for interactive API exploration:
 
 ---
 
-## Class Diagram
+## Class Diagrams
 
 ![Actual Class Diagram](https://via.placeholder.com/600x400.png?text=Class+Diagram+Placeholder)
 ![Basic Class Diagram draw.io](https://github.com/user-attachments/assets/1b14c28b-6f66-4e96-966d-ba7008c1bef2)
