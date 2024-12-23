@@ -4,25 +4,48 @@
 
 # Index
 
-1. [Overview](#overview)
-2. [Features](#features)
-3. [Requirements](#requirements)
-4. [Project Structure](#project-structure)
-5. [Configuration Files](#configuration-files)
-6. [Setup Instructions](#setup-instructions)
+1. [Documentation Diagrams](#documentation-diagrams)
+2. [Overview](#overview)
+3. [Features](#features)
+4. [Requirements](#requirements)
+5. [Project Structure](#project-structure)
+6. [Configuration Files](#configuration-files)
+7. [Setup Instructions](#setup-instructions)
    1. [Import the Java Project](#import-the-java-project)
    2. [Start Backend Application](#start-backend-application)
-7. [Frontend Setup](#frontend-setup)
-8. [Development Tips](#development-tips)
-9. [PostgreSQL Notes](#postgresql-notes)
-10. [API Documentation](#api-documentation)
-11. [App Ports](#app-ports)
-12. [Class Diagrams](#class-diagrams)
-13. [Useful Links](#useful-links)
-14. [Build Docker Image](#build-docker-image)
-15. [Mocking Data](#mocking-data)
-16. [Further Reading](#further-reading)
-    
+8. [Frontend Setup](#frontend-setup)
+9. [Development Tips](#development-tips)
+10. [PostgreSQL Notes](#postgresql-notes)
+11. [API Documentation](#api-documentation)
+12. [App Ports](#app-ports)
+13. [Class Diagrams](#class-diagrams)
+14. [Useful Links](#useful-links)
+15. [Build Docker Image](#build-docker-image)
+16. [Mocking Data](#mocking-data)
+17. [Further Reading](#further-reading)
+
+## Documentation Diagrams from draw.io
+
+### Etapa 3: Diagrama de Clases de Diseño Refinado
+
+[Take a look](https://viewer.diagrams.net/?tags=%7B%7D&lightbox=1&highlight=0000ff&layers=1&nav=1&title=Etapa%203%3A%20Diagrama%20de%20Clases%20de%20Dise%C3%B1o%20Refinado.drawio#Uhttps%3A%2F%2Fdrive.google.com%2Fuc%3Fid%3D1YVADOm4JgJKi42wlq5s7f9I0kilPRx8x%26export%3Ddownload).
+You can switch between diagrams.
+
+### Etapa 4: Diagramas Entidad-Relación
+
+[Take a look](https://viewer.diagrams.net/?tags=%7B%7D&lightbox=1&highlight=0000ff&layers=1&nav=1&title=Etapa%204%3A%20Diagramas%20Entidad-Relaci%C3%B3n.drawio#Uhttps%3A%2F%2Fdrive.google.com%2Fuc%3Fid%3D1W3XM6aZN4Pi9KA2UBDgkHQ24t9sd53c9%26export%3Ddownload).
+You can switch between diagrams.
+
+### Etapa 5: Diagramas de Secuencia del CU13, CU14, CU15 y CU16
+
+[Take a look](https://viewer.diagrams.net/?tags=%7B%7D&lightbox=1&highlight=0000ff&layers=1&nav=1&title=Etapa%205%3A%20Diagramas%20de%20Secuencia%20del%20CU13%2C%20CU14%2C%20CU15%20y%20CU16.drawio#Uhttps%3A%2F%2Fdrive.google.com%2Fuc%3Fid%3D1A7j7BY0LKcJxpTA1UvUemNCPsQpTxded%26export%3Ddownload).
+You can switch between diagrams.
+
+### Etapa 6: Diagramas de Secuencia del CU01 y CU05
+
+[Take a look](https://viewer.diagrams.net/?tags=%7B%7D&lightbox=1&highlight=0000ff&layers=1&nav=1&title=Etapa%206%3A%20Diagramas%20de%20Secuencia.drawio#Uhttps%3A%2F%2Fdrive.google.com%2Fuc%3Fid%3D1Rdd4bfmVAIRpdIXVgMuDPwdoYZeVGevu%26export%3Ddownload).
+You can switch between diagrams.
+
 ## Overview
 
 <img src="https://upload.wikimedia.org/wikipedia/commons/7/79/Spring_Boot.svg" alt="Spring Boot Logo" width="250"/>
