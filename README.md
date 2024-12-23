@@ -4,7 +4,7 @@
 
 # Index
 
-1. [Documentation Diagrams from draw.io](#documentation-diagrams-from-draw.io).
+1. [Documentation Diagrams from draw.io](#documentation-diagrams-from-drawio).
 2. [Overview](#overview).
 3. [Features](#features).
 4. [Requirements](#requirements)
@@ -24,7 +24,7 @@
 16. [Mocking Data](#mocking-data).
 17. [Further Reading](#further-reading).
 
-## Documentation Diagrams from draw.io
+## Documentation Diagrams from drawio
 
 ### Etapa 3: Diagrama de Clases de Diseño Refinado
 
