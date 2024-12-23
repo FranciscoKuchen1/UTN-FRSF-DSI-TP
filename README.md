@@ -4,7 +4,7 @@
 
 # Index
 
-1. [Documentation Diagrams from draw.io](#documentation-diagrams).
+1. [Documentation Diagrams from draw.io](#documentation-diagrams-from-draw.io).
 2. [Overview](#overview).
 3. [Features](#features).
 4. [Requirements](#requirements)
