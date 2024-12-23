@@ -23,7 +23,7 @@ public class Trio<T1, T2, T3> {
         return list.stream()
                 .filter(trio -> trio.getDia().equals(target))
                 .findFirst()
-                .orElse(null); // Devuelve null si no encuentra ninguno
+                .orElse(null);
     }
 
 }

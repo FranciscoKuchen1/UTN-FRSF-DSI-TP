@@ -18,7 +18,7 @@ public class BedelMapper {
         bedelDTO.setNombre(bedel.getNombre());
         bedelDTO.setApellido(bedel.getApellido());
         bedelDTO.setContrasena(bedel.getContrasena());
-        bedelDTO.setConfirmacionContrasena(bedel.getContrasena()); // Suponiendo que es la misma
+        bedelDTO.setConfirmacionContrasena(bedel.getContrasena());
         bedelDTO.setTipoTurno(bedel.getTipoTurno() != null ? bedel.getTipoTurno().ordinal() : null);
 
         return bedelDTO;

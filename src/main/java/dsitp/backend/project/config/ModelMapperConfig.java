@@ -14,7 +14,6 @@ public class ModelMapperConfig {
     public ModelMapper modelMapper() {
         ModelMapper modelMapper = new ModelMapper();
 
-        // Converter de Enum a Integer
         Converter<TipoTurno, Integer> enumToIntegerConverter = new Converter<>() {
             @Override
             public Integer convert(MappingContext<TipoTurno, Integer> context) {
@@ -22,7 +21,6 @@ public class ModelMapperConfig {
             }
         };
 
-        // Converter de Integer a Enum
         Converter<Integer, TipoTurno> integerToEnumConverter = new Converter<>() {
             @Override
             public TipoTurno convert(MappingContext<Integer, TipoTurno> context) {
@@ -30,7 +28,6 @@ public class ModelMapperConfig {
             }
         };
 
-        // Registrar converters
         modelMapper.createTypeMap(TipoTurno.class, Integer.class).setConverter(enumToIntegerConverter);
         modelMapper.createTypeMap(Integer.class, TipoTurno.class).setConverter(integerToEnumConverter);
 

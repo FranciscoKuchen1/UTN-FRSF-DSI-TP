@@ -103,11 +103,6 @@ public class BedelResource {
     public ResponseEntity<Void> deleteBedelLogica(
             @PathVariable(name = "idRegistro") @NotBlank(message = "Id de registro es obligatorio") final String idRegistro) {
         logger.info("Bedel es eliminado");
-        // final ReferencedWarning referencedWarning =
-        // bedelService.getReferencedWarning(idRegistro);
-        // if (referencedWarning != null) {
-        // throw new ReferencedException(referencedWarning);
-        // }
 
         bedelService.deleteLogico(idRegistro);
         return ResponseEntity.noContent().build();

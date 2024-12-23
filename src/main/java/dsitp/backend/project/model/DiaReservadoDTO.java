@@ -17,8 +17,6 @@ import lombok.Setter;
 @FutureMomentDTO(message = "El momento debe ser futuro.")
 public class DiaReservadoDTO {
 
-    // @NotNull(message = "El id del dia reservado es obligatorio.")
-    // private Integer id;
     @NotNull(message = "La fecha de reserva es obligatoria.")
     private LocalDate fechaReserva;
 
@@ -32,7 +30,6 @@ public class DiaReservadoDTO {
     @NotNull(message = "La duración es obligatoria.")
     private Integer duracion;
 
-    // TODO: ver @NotNull
     private Integer idAula;
 
 }

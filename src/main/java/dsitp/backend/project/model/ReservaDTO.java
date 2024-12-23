@@ -54,10 +54,8 @@ public class ReservaDTO {
     @Size(max = 20, message = "El id de registro del bedel no debe superar los 100 caracteres.")
     private String idRegistroBedel;
 
-    // @NotEmpty(message = "Debe seleccionar al menos un día a reservar.")
     private List<DiaSemanaDTO> diasSemanaDTO;
 
-    // @NotEmpty(message = "Debe seleccionar al menos un día a reservar.")
     private List<DiaReservadoDTO> diasReservadosDTO;
 
 }
