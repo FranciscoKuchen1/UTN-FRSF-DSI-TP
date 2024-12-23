@@ -4,7 +4,7 @@
 
 # Index
 
-1. [Documentation Diagrams from draw.io](#documentation-diagrams).
+1. [Documentation Diagrams from draw.io](#documentation-diagrams-from-draw.io).
 2. [Overview](#overview).
 3. [Features](#features).
 4. [Requirements](#requirements)
@@ -44,6 +44,8 @@ You can switch between diagrams.
 
 [Take a look](https://viewer.diagrams.net/?tags=%7B%7D&lightbox=1&highlight=0000ff&layers=1&nav=1&title=Etapa%206%3A%20Diagramas%20de%20Secuencia.drawio#Uhttps%3A%2F%2Fdrive.google.com%2Fuc%3Fid%3D1Rdd4bfmVAIRpdIXVgMuDPwdoYZeVGevu%26export%3Ddownload).
 You can switch between diagrams.
+
+---
 
 ## Overview
 
