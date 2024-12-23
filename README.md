@@ -29,7 +29,6 @@
 ### Etapa 3: Diagrama de Clases de Diseño Refinado
 
 [Take a look](https://viewer.diagrams.net/?tags=%7B%7D&lightbox=1&highlight=0000ff&layers=1&nav=1&title=Etapa%203%3A%20Diagrama%20de%20Clases%20de%20Dise%C3%B1o%20Refinado.drawio#Uhttps%3A%2F%2Fdrive.google.com%2Fuc%3Fid%3D1YVADOm4JgJKi42wlq5s7f9I0kilPRx8x%26export%3Ddownload).
-You can switch between diagrams.
 
 ### Etapa 4: Diagramas Entidad-Relación
 
