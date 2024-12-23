@@ -22,11 +22,8 @@ public class UniqueDayAndTimeValidator implements ConstraintValidator<UniqueDayA
             return isValid;
         }
 
-        // Map<LocalDate, Set<LocalTime>> diasMap = new HashMap<>();
         for (DiaReservado dia : diasReservados) {
             int count = 0;
-            // diasMap.computeIfAbsent(dia.getFechaReserva(), k -> new
-            // HashSet<>()).add(dia.getHoraInicio());
             for (DiaReservado dia2 : diasReservados) {
                 if (dia.getFechaReserva().isEqual(dia2.getFechaReserva())) {
                     count++;
@@ -37,7 +34,6 @@ public class UniqueDayAndTimeValidator implements ConstraintValidator<UniqueDayA
             }
         }
 
-        // Boolean isValid = diasMap.values().stream().allMatch(set -> set.size() == 1);
         if (!isValid) {
             context.disableDefaultConstraintViolation();
             context.buildConstraintViolationWithTemplate(

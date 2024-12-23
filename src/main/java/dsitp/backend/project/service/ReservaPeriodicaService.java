@@ -87,37 +87,6 @@ public class ReservaPeriodicaService {
                 .orElseThrow(NotFoundException::new);
     }
 
-    // public ReservaRetornoDTO getDisponibilidadAulaReservaPeriodica(
-    // final ReservaPeriodicaSinDiasDTO reservaPeriodicaSinDiasDTO) {
-    // final ReservaPeriodica reservaPeriodica = reservaPeriodicaMapper
-    // .toReservaPeriodicaEntityDisponibilidad(reservaPeriodicaSinDiasDTO);
-    // ReservaRetornoDTO reservaRetornoDTO = new ReservaRetornoDTO();
-    // reservaRetornoDTO.setDiasDisponibles(new ArrayList<>());
-    // reservaRetornoDTO.setDiasConSolapamiento(new ArrayList<>());
-    // List<Aula> aulas =
-    // aulaRepository.findByTipoAulaAndCapacidad(reservaPeriodica.getTipoAula().toInteger(),
-    // reservaPeriodica.getCantAlumnos());
-    // if (!aulas.isEmpty()) {
-    // for (DiaReservado diaReservado : reservaPeriodica.getDiasReservados()) {
-    // List<AulaDTO> aulasDisponibles = obtenerDisponibilidad(aulas, diaReservado);
-    // if (!aulasDisponibles.isEmpty()) {
-    // DiaDisponibilidadDTO diaDisponibilidadDTO = new DiaDisponibilidadDTO();
-    // diaDisponibilidadDTO.setDiaReservado(diaReservadoMapper.toDiaReservadoDTO(diaReservado));
-    // diaDisponibilidadDTO.setAulasDisponibles(aulasDisponibles);
-    // reservaRetornoDTO.getDiasDisponibles().add(diaDisponibilidadDTO);
-    // } else {
-    // DiaSolapamientoDTO diaSolapamientoDTO = new DiaSolapamientoDTO();
-    // diaSolapamientoDTO.setDiaReservado(diaReservadoMapper.toDiaReservadoDTO(diaReservado));
-    // diaSolapamientoDTO.setAulasConSolapamiento(obtenerAulasConMenorSuperposicion(aulas,
-    // diaReservado));
-    // reservaRetornoDTO.getDiasConSolapamiento().add(diaSolapamientoDTO);
-    // }
-    // }
-    // }
-
-    // return reservaRetornoDTO;
-    // }
-
     public Integer create(final ReservaPeriodicaDTO reservaPeriodicaDTO) {
         final ReservaPeriodica reservaPeriodica = reservaPeriodicaMapper.toReservaPeriodicaEntity(reservaPeriodicaDTO);
 
@@ -240,7 +209,6 @@ public class ReservaPeriodicaService {
         while (!fechaActual.isAfter(fechaFin)) {
             DayOfWeek diaSemana = fechaActual.getDayOfWeek();
             Integer idDiaSemana = diaSemana.getValue() % 7;
-            // NOTE: si hay 2 lunes, se toma el primero, por ejemplo
             if (Trio.containsFirst(diasSemanaHorasDuracion, idDiaSemana)) {
                 Trio<Integer, String, String> trio = Trio.findByFirst(diasSemanaHorasDuracion, idDiaSemana);
                 LocalTime horaInicio = LocalTime.parse(trio.getHoraInicio(), DateTimeFormatter.ofPattern("HH:mm"));

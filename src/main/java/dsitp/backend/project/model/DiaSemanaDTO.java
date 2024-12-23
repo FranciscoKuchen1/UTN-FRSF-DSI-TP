@@ -29,8 +29,6 @@ public class DiaSemanaDTO {
     @Pattern(regexp = "^[0-9]+$", message = "La duración debe contener solo dígitos")
     private String duracion;
 
-    // TODO: ver
-    // @NotNull(message = "La duración es obligatoria.")
     private Integer idAula;
 
     public static Boolean containsFirst(List<DiaSemanaDTO> diasSemanaDTO, Integer target) {

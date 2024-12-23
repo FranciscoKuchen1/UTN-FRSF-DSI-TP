@@ -31,11 +31,7 @@ public class AulaResource {
     public AulaResource(final AulaService aulaService) {
         this.aulaService = aulaService;
     }
-
-//    @GetMapping
-//    public ResponseEntity<List<AulaDTO>> getAllAulas() {
-//        return ResponseEntity.ok(aulaService.findAll());
-//    }
+    
     @GetMapping("/{numero}")
     @ApiResponse(responseCode = "200")
     public ResponseEntity<AulaDTO> getAula(

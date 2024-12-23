@@ -24,7 +24,6 @@ public class PasswordPolicyValidator implements ConstraintValidator<ValidPasswor
             return false;
         }
 
-        // Boolean isValid = externalApiService.validatePassword(contrasena);
         List<String> errores = new ArrayList<>();
 
         Boolean isValid = true;
@@ -49,11 +48,6 @@ public class PasswordPolicyValidator implements ConstraintValidator<ValidPasswor
             errores.add("La contraseña debe contener al menos un dígito.");
         }
 
-//        if (passwordHistoryService.isPasswordInHistory(userId, password)) {
-//            isValid = false;
-//            errores.add("La contraseña no puede ser igual a una contraseña anterior.");
-//
-//        }
         if (!isValid) {
             context.disableDefaultConstraintViolation();
             context.buildConstraintViolationWithTemplate("La contraseña no cumple con las políticas de seguridad")

@@ -49,8 +49,6 @@ public class ReservaResource {
     public ResponseEntity<ReservaRetornoDTO> getDisponibilidadAulaReserva(
             @RequestBody @Valid final ReservaDTO reservaDTO,
             @PathVariable(name = "tipoReserva") final Integer tipoReserva) {
-        // TODO: es necesario poner NotNull en @PathVariable(name = "tipoReserva") final
-        // Integer tipoReserva?
         ReservaRetornoDTO reservaRetornoDTO = reservaService
                 .getDisponibilidadAulaReserva(reservaDTO, tipoReserva);
         return ResponseEntity.ok(reservaRetornoDTO);
@@ -62,8 +60,6 @@ public class ReservaResource {
     public ResponseEntity<Integer> createReserva(
             @RequestBody @Valid final ReservaDTO reservaDTO,
             @PathVariable(name = "tipoReserva") final Integer tipoReserva) {
-        // TODO: es necesario poner NotNull en @PathVariable(name = "tipoReserva") final
-        // Integer tipoReserva?
         final Integer createdId = reservaService.create(reservaDTO, tipoReserva);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdId);
     }

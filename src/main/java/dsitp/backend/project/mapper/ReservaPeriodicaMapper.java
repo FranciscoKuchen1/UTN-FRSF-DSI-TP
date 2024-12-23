@@ -46,56 +46,6 @@ public class ReservaPeriodicaMapper {
         this.diaReservadoValidator = diaReservadoValidator;
     }
 
-    // public ReservaPeriodica
-    // toReservaPeriodicaEntityDisponibilidad(ReservaPeriodicaSinDiasDTO
-    // reservaPeriodicaSinDiasDTO) {
-
-    // ReservaPeriodica reservaPeriodica = new ReservaPeriodica();
-    // reservaPeriodica.setIdCatedra(reservaPeriodicaSinDiasDTO.getIdCatedra());
-    // reservaPeriodica.setNombreCatedra(reservaPeriodicaSinDiasDTO.getNombreCatedra());
-    // reservaPeriodica.setIdDocente(reservaPeriodicaSinDiasDTO.getIdDocente());
-    // reservaPeriodica.setNombreDocente(reservaPeriodicaSinDiasDTO.getNombreDocente());
-    // reservaPeriodica.setApellidoDocente(reservaPeriodicaSinDiasDTO.getApellidoDocente());
-    // reservaPeriodica.setCorreoDocente(reservaPeriodicaSinDiasDTO.getCorreoDocente());
-    // reservaPeriodica.setCantAlumnos(reservaPeriodicaSinDiasDTO.getCantAlumnos());
-    // reservaPeriodica.setTipoAula(TipoAula.fromInteger(reservaPeriodicaSinDiasDTO.getTipoAula()));
-
-    // Periodo periodo =
-    // periodoRepository.findActivePeriodosByTipo(TipoPeriodo.fromInteger(reservaPeriodicaSinDiasDTO.getTipoPeriodo())).getFirst();
-    // reservaPeriodica.setPeriodo(periodo);
-
-    // List<DiaReservado> diasReservados = toDiasReservados(
-    //
-    // periodo,
-    // reservaPeriodicaSinDiasDTO.getDiasSemanaHorasDuracion(),
-    // reservaPeriodica
-    // );
-    // reservaPeriodica.setDiasReservados(diasReservados);
-
-    // Bedel bedel =
-    // bedelRepository.findByIdRegistroAndEliminadoFalse(reservaPeriodicaSinDiasDTO.getIdRegistroBedel())
-    // .orElseThrow(() -> new NotFoundException("Bedel no encontrado"));
-    // reservaPeriodica.setBedel(bedel);
-
-    // BindingResult bindingResult = new BeanPropertyBindingResult(reservaPeriodica,
-    // "reservaPeriodica");
-    // reservaPeriodicaValidator.validate(reservaPeriodica, bindingResult);
-
-    // if (bindingResult.hasErrors()) {
-
-    // StringBuilder errorMessages = new StringBuilder();
-    // bindingResult.getAllErrors().forEach(error -> {
-    // String errorMessage = error.getDefaultMessage();
-    // if (errorMessage != null) {
-    // errorMessages.append(errorMessage).append("\n");
-    // }
-    // });
-
-    // throw new IllegalArgumentException(errorMessages.toString());
-    // }
-
-    // return reservaPeriodica;
-    // }
 
     public ReservaPeriodica toReservaPeriodicaEntity(ReservaPeriodicaDTO reservaPeriodicaDTO) {
 

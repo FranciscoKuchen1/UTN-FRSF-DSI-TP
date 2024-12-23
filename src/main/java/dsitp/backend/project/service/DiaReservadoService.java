@@ -60,7 +60,6 @@ public class DiaReservadoService {
 
     private DiaReservadoDTO mapToDTO(final DiaReservado diaReservado,
             final DiaReservadoDTO diaReservadoDTO) {
-//        diaReservadoDTO.setId(diaReservado.getId());
         diaReservadoDTO.setFechaReserva(diaReservado.getFechaReserva());
         diaReservadoDTO.setDuracion(diaReservado.getDuracion());
         diaReservadoDTO.setHoraInicio(diaReservado.getHoraInicio());

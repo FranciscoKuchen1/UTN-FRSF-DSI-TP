@@ -40,16 +40,6 @@ public class CatedraDocenteExternalApiService {
                 .filter(catedra -> catedra.getId().equals(idCatedra))
                 .findFirst()
                 .orElse(null);
-
-        // try {
-        // return webClient.get()
-        // .uri("/catedras/{id}", idCatedra)
-        // .retrieve()
-        // .bodyToMono(CatedraResponse.class)
-        // .block();
-        // } catch (Exception ex) {
-        // throw new RuntimeException("No se pudo obtener la catedra", ex);
-        // }
     }
 
     public DocenteResponse getDocenteById(Integer idDocente) {
@@ -57,14 +47,5 @@ public class CatedraDocenteExternalApiService {
                 .filter(docente -> docente.getId().equals(idDocente))
                 .findFirst()
                 .orElse(null);
-        // try {
-        // return webClient.get()
-        // .uri("/docentes/{id}", idDocente)
-        // .retrieve()
-        // .bodyToMono(DocenteResponse.class)
-        // .block();
-        // } catch (Exception ex) {
-        // throw new RuntimeException("No se pudo obtener el docente", ex);
-        // }
     }
 }

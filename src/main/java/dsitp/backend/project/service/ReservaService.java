@@ -54,7 +54,6 @@ import java.util.NoSuchElementException;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
@@ -62,6 +61,12 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.BeanPropertyBindingResult;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
+
+/**
+ * Servicio que maneja la lógica de reserva de aulas, tanto para reservas periódicas como esporádicas.
+ * Esta clase incluye métodos para verificar la disponibilidad de aulas y gestionar reservas solapadas.
+ *
+ */
 
 @Service
 @Transactional
@@ -78,6 +83,20 @@ public class ReservaService {
     private final Validator reservaEsporadicaValidator;
     private final Validator diaReservadoValidator;
 
+    /**
+     * Constructor para inicializar el servicio con los repositorios necesarios y tres validador.
+     *
+     * @param reservaRepository Repositorio de reservas.
+     * @param reservaPeriodicaRepository Repositorio de reservas periódicas.
+     * @param reservaEsporadicaRepository Repositorio de reservas esporádicas.
+     * @param diaReservadoRepository Repositorio de días reservados.
+     * @param aulaRepository Repositorio de aulas.
+     * @param periodoRepository Repositorio de periodos.
+     * @param bedelRepository Repositorio de bedeles.
+     * @param reservaPeriodicaValidator Validador de reservas periódicas.
+     * @param reservaEsporadicaValidator Validador de reservas esporádicas.
+     * @param diaReservadoValidator Validador de días reservados.
+     */
     @Autowired
     public ReservaService(final ReservaRepository reservaRepository,
             final ReservaPeriodicaRepository reservaPeriodicaRepository,
@@ -101,6 +120,14 @@ public class ReservaService {
         this.diaReservadoValidator = diaReservadoValidator;
     }
 
+    /**
+     * Obtiene la disponibilidad de aula para una reserva, ya sea periódica o esporádica.
+     *
+     * @param reservaDTO Objeto que contiene los datos de la reserva.
+     * @param tipoReserva Tipo de reserva (0 para periódica, 1 para esporádica).
+     * @return Un objeto {@link ReservaRetornoDTO} que contiene las aulas disponibles y con solapamiento.
+     * @throws IllegalArgumentException Si hay errores de validación.
+     */
     public ReservaRetornoDTO getDisponibilidadAulaReserva(final ReservaDTO reservaDTO, final Integer tipoReserva) {
 
         ReservaRetornoDTO reservaRetornoDTO = new ReservaRetornoDTO();
@@ -117,7 +144,6 @@ public class ReservaService {
 
                 final ReservaPeriodica reservaPeriodica = toReservaPeriodicaEntityDisponibilidad(reservaDTO);
                 for (DiaSemanaDTO diaSemanaDTO : reservaDTO.getDiasSemanaDTO()) {
-                    // TODO: Ver si no da problemas
                     BindingResult bindingResult = new BeanPropertyBindingResult(diaSemanaDTO, "diaSemanaDTO");
                     diaReservadoValidator.validate(diaSemanaDTO, bindingResult);
 
@@ -205,6 +231,14 @@ public class ReservaService {
         return reservaRetornoDTO;
     }
 
+    /**
+     * Obtiene las aulas disponibles en un periodo específico para una reserva periódica.
+     *
+     * @param reservaPeriodica Objeto que representa la reserva periódica.
+     * @param aulasObtenidas Lista de aulas obtenidas según los criterios de búsqueda.
+     * @param diaSemanaDTO Objeto que representa el día de la semana para la reserva.
+     * @return Una lista de objetos {@link AulaDTO} que representan las aulas disponibles.
+     */
     public List<AulaDTO> obtenerAulasDisponibleEnPeriodo(ReservaPeriodica reservaPeriodica, List<Aula> aulasObtenidas,
             DiaSemanaDTO diaSemanaDTO) {
 
@@ -216,6 +250,14 @@ public class ReservaService {
     }
 
     // diag nombre y no hay parametro cantAlumnos
+    /**
+     * Obtiene las aulas que presentan solapamiento con la reserva periódica.
+     *
+     * @param reservaPeriodica Objeto que representa la reserva periódica.
+     * @param diaSemanaDTO Objeto que representa el día de la semana para la reserva.
+     * @param aulasObtenidas Lista de aulas obtenidas según los criterios de búsqueda.
+     * @return Una lista de objetos {@link AulaSolapadaDTO} que representan las aulas con solapamiento.
+     */
     public List<AulaSolapadaDTO> obtenerDisponibilidadSuperposicionReservaPeriodica(ReservaPeriodica reservaPeriodica,
             DiaSemanaDTO diaSemanaDTO, List<Aula> aulasObtenidas) {
         List<AulaSolapadaDTO> aulasSolapadasDTO = new ArrayList<>();
@@ -329,6 +371,13 @@ public class ReservaService {
         return aulasSolapadasDTO;
     }
 
+    /**
+     * Obtiene los días reservados para una reserva periódica en función de los datos proporcionados.
+     *
+     * @param reservaPeriodica Objeto que representa la reserva periódica.
+     * @param diaSemanaDTO Objeto que representa el día de la semana para la reserva.
+     * @return Una lista de objetos {@link DiaReservado} que representan los días reservados.
+     */
     private List<DiaReservado> obtenerDiasReservados(ReservaPeriodica reservaPeriodica, DiaSemanaDTO diaSemanaDTO) {
 
         LocalDate fechaIterador = null;
@@ -396,6 +445,14 @@ public class ReservaService {
     }
 
     // diag nombre
+    /**
+     * Obtiene la disponibilidad de aulas para una reserva periódica, teniendo en cuenta los días reservados.
+     *
+     * @param cantAlumnos Cantidad de alumnos para la reserva.
+     * @param aulasObtenidas Lista de aulas obtenidas según los criterios de búsqueda.
+     * @param diasReservados Lista de días reservados para la reserva.
+     * @return Una lista de objetos {@link AulaDTO} que representan las aulas disponibles.
+     */
     private List<AulaDTO> obtenerDisponibilidadReservaPeriodica(Integer cantAlumnos, List<Aula> aulasObtenidas,
             List<DiaReservado> diasReservados) {
         List<AulaDTO> aulasDisponiblesDTO = new ArrayList<>();
@@ -429,6 +486,12 @@ public class ReservaService {
     }
 
     // diag nombre
+    /**
+     * Convierte un objeto {@link ReservaDTO} en un objeto {@link ReservaPeriodica}.
+     *
+     * @param reservaDTO Objeto que contiene los datos de la reserva.
+     * @return Un objeto {@link ReservaPeriodica} con los datos de la reserva.
+     */
     public List<AulaSolapadaDTO> obtenerDisponibilidadSuperposicionReservaEsporadica(
             DiaReservadoDTO diaReservadoDTO, List<Aula> aulasObtenidas) {
         List<AulaSolapadaDTO> aulasSolapadasDTO = new ArrayList<>();
@@ -450,7 +513,6 @@ public class ReservaService {
                     diaReservadoDTO.getHoraInicio(),
                     diaReservadoDTO.getHoraInicio().plusMinutes(diaReservadoDTO.getDuracion()));
 
-            // TODO: ver de asegurar
             Map<Aula, Tuple> aulasSolapadas = new HashMap<>();
 
             if (reservaEsporadicaSolapadaConTiempoSolap == null && reservaPeriodicaSolapadaConTiempoSolap != null) {
@@ -510,6 +572,13 @@ public class ReservaService {
     }
 
     // diag nombre y no hay parametro cantAlumnos
+    /**
+     * Obtiene las aulas que presentan solapamiento con la reserva esporádica.
+     *
+     * @param diaReservadoDTO Objeto que representa el día reservado para la reserva esporádica.
+     * @param aulasObtenidas Lista de aulas obtenidas según los criterios de búsqueda.
+     * @return Una lista de objetos {@link AulaSolapadaDTO} que representan las aulas con solapamiento.
+     */
     private List<AulaDTO> obtenerDisponibilidadReservaEsporadica(List<Aula> aulasObtenidas,
             DiaReservadoDTO diaReservadoDTO) {
         List<AulaDTO> aulasDisponiblesDTO = new ArrayList<>();
@@ -534,6 +603,13 @@ public class ReservaService {
                 .collect(Collectors.toList());
     }
 
+    /**
+     * Obtiene la disponibilidad de aulas para una reserva esporádica.
+     *
+     * @param aulasObtenidas Lista de aulas obtenidas según los criterios de búsqueda.
+     * @param diaReservadoDTO Objeto que representa el día reservado para la reserva esporádica.
+     * @return Una lista de objetos {@link AulaDTO} que representan las aulas disponibles.
+     */
     public ReservaPeriodica toReservaPeriodicaEntityDisponibilidad(
             ReservaDTO reservaDTO) {
 
@@ -575,6 +651,14 @@ public class ReservaService {
         return reservaPeriodica;
     }
 
+    /**
+     * Convierte un objeto ReservaDTO en una entidad ReservaPeriodica.
+     *
+     * @param reservaDTO El objeto DTO que contiene la información de la reserva.
+     * @return La entidad ReservaPeriodica construida a partir del DTO.
+     * @throws NotFoundException Si no se encuentra un Bedel con el ID proporcionado.
+     * @throws IllegalArgumentException Si hay errores de validación en la reserva.
+     */
     public ReservaPeriodica toReservaPeriodicaEntity(ReservaDTO reservaDTO) {
 
         ReservaPeriodica reservaPeriodica = new ReservaPeriodica();
@@ -622,7 +706,6 @@ public class ReservaService {
             while (!fechaIterador.isAfter(periodo.getFechaFin())) {
                 DayOfWeek diaSemana = fechaIterador.getDayOfWeek();
                 Integer idDiaSemana = diaSemana.getValue() % 7;
-                // TODO: Probar id 7
                 if (diaSemanaDTO.getDia() == idDiaSemana) {
                     LocalTime horaInicio = LocalTime.parse(diaSemanaDTO.getHoraInicio(),
                             DateTimeFormatter.ofPattern("HH:mm"));
@@ -671,6 +754,12 @@ public class ReservaService {
         return reservaPeriodica;
     }
 
+    /**
+     * Convierte una entidad ReservaPeriodica en un objeto DTO.
+     *
+     * @param reservaPeriodica La entidad ReservaPeriodica que se desea convertir.
+     * @return El objeto DTO correspondiente a la entidad.
+     */
     public ReservaPeriodicaDTO toReservaPeriodicaDTO(ReservaPeriodica reservaPeriodica) {
         if (reservaPeriodica == null) {
             return null;
@@ -706,6 +795,14 @@ public class ReservaService {
         return reservaPeriodicaDTO;
     }
 
+    /**
+     * Convierte un objeto ReservaDTO en una entidad ReservaEsporadica, considerando la disponibilidad.
+     *
+     * @param reservaDTO El objeto DTO que contiene la información de la reserva.
+     * @return La entidad ReservaEsporadica construida a partir del DTO.
+     * @throws NotFoundException Si no se encuentra un Bedel con el ID proporcionado.
+     * @throws IllegalArgumentException Si hay errores de validación en la reserva.
+     */
     public ReservaEsporadica toReservaEsporadicaEntityDisponibilidad(ReservaDTO reservaDTO) {
 
         ReservaEsporadica reservaEsporadica = new ReservaEsporadica();
@@ -729,20 +826,7 @@ public class ReservaService {
             diaReservado.setHoraInicio(diaReservadoDTO.getHoraInicio());
             diaReservado.setDuracion(diaReservadoDTO.getDuracion());
 
-            // if (!diasReservados.isEmpty()) {
-            // for (DiaReservado diaYaReservado : diasReservados) {
-            // if (diaYaReservado.getFechaReserva().isEqual(diaReservado.getFechaReserva())
-            // && !diaYaReservado.getHoraInicio().plusMinutes(diaYaReservado.getDuracion())
-            // .equals(diaReservado.getHoraInicio())
-            // && diaYaReservado.getHoraInicio().plusMinutes(diaYaReservado.getDuracion())
-            // .isAfter(diaReservado.getHoraInicio())) {
-            // throw new IllegalArgumentException("Hay solapamiento en los dias
-            // ingresados.");
-            // }
-            // }
-            // }
 
-            // TODO: NECESARIO?
             Optional<Aula> aula = aulaRepository.findById(diaReservadoDTO.getIdAula());
             if (aula.isPresent()) {
                 diaReservado.setAula(aula.get());
@@ -775,6 +859,14 @@ public class ReservaService {
         return reservaEsporadica;
     }
 
+    /**
+     * Convierte un objeto ReservaDTO en una entidad ReservaEsporadica.
+     *
+     * @param reservaDTO El objeto DTO que contiene la información de la reserva.
+     * @return La entidad ReservaEsporadica construida a partir del DTO.
+     * @throws NotFoundException Si no se encuentra un Bedel con el ID proporcionado.
+     * @throws IllegalArgumentException Si hay errores de validación en la reserva.
+     */
     public ReservaEsporadica toReservaEsporadicaEntity(ReservaDTO reservaDTO) {
 
         ReservaEsporadica reservaEsporadica = new ReservaEsporadica();
@@ -830,6 +922,13 @@ public class ReservaService {
         return reservaEsporadica;
     }
 
+    /**
+     * Convierte una entidad Reserva y un objeto DiaReservado en un objeto DTO ReservaSolapadaDTO.
+     *
+     * @param reserva La entidad Reserva que contiene los detalles de la reserva.
+     * @param diaReservado El objeto DiaReservado que contiene los detalles del día reservado.
+     * @return El objeto DTO ReservaSolapadaDTO con la información de la reserva y el día reservado.
+     */
     public ReservaSolapadaDTO toReservaSolapadaDTO(Reserva reserva, DiaReservado diaReservado) {
 
         ReservaSolapadaDTO reservaSolapadaDTO = new ReservaSolapadaDTO();
@@ -843,6 +942,12 @@ public class ReservaService {
         return reservaSolapadaDTO;
     }
 
+    /**
+     * Convierte una entidad Aula en un objeto DTO AulaDTO.
+     *
+     * @param aula La entidad Aula que se desea convertir.
+     * @return El objeto DTO AulaDTO correspondiente a la entidad.
+     */
     public AulaDTO toAulaDTO(Aula aula) {
         if (aula == null) {
             return null;
@@ -881,6 +986,13 @@ public class ReservaService {
         return aulaDTO;
     }
 
+    /**
+     * Crea una nueva reserva a partir de un objeto ReservaDTO y el tipo de reserva.
+     *
+     * @param reservaDTO El objeto DTO que contiene la información de la reserva.
+     * @param tipoReserva El tipo de reserva (0 para ReservaPeriodica, 1 para ReservaEsporadica).
+     * @return El ID de la reserva creada.
+     */
     public Integer create(final ReservaDTO reservaDTO, final Integer tipoReserva) {
 
         if (tipoReserva == 0) {

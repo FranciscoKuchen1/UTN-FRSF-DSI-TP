@@ -61,13 +61,10 @@ public class DiaReservado {
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_aula")
-    // TODO: ver
-    // @NotNull(message = "El aula es obligatoria.", groups = RegistrarGroup.class)
     private Aula aula;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_reserva")
-    // TODO: ver
     @NotNull(message = "La reserva es obligatoria.")
     private Reserva reserva;
 
