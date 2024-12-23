@@ -4,25 +4,25 @@
 
 # Index
 
-1. [Documentation Diagrams](#documentation-diagrams)
-2. [Overview](#overview)
-3. [Features](#features)
+1. [Documentation Diagrams](#documentation-diagrams).
+2. [Overview](#overview).
+3. [Features](#features).
 4. [Requirements](#requirements)
-5. [Project Structure](#project-structure)
-6. [Configuration Files](#configuration-files)
-7. [Setup Instructions](#setup-instructions)
-   1. [Import the Java Project](#import-the-java-project)
-   2. [Start Backend Application](#start-backend-application)
-8. [Frontend Setup](#frontend-setup)
-9. [Development Tips](#development-tips)
-10. [PostgreSQL Notes](#postgresql-notes)
-11. [API Documentation](#api-documentation)
-12. [App Ports](#app-ports)
-13. [Class Diagrams](#class-diagrams)
-14. [Useful Links](#useful-links)
-15. [Build Docker Image](#build-docker-image)
-16. [Mocking Data](#mocking-data)
-17. [Further Reading](#further-reading)
+5. [Project Structure](#project-structure).
+6. [Configuration Files](#configuration-files).
+7. [Setup Instructions](#setup-instructions).
+   1. [Import the Java Project](#import-the-java-project).
+   2. [Start Backend Application](#start-backend-application).
+8. [Frontend Setup](#frontend-setup).
+9. [Development Tips](#development-tips).
+10. [PostgreSQL Notes](#postgresql-notes).
+11. [API Documentation](#api-documentation).
+12. [App Ports](#app-ports).
+13. [Class Diagrams](#class-diagrams).
+14. [Useful Links](#useful-links).
+15. [Build Docker Image](#build-docker-image).
+16. [Mocking Data](#mocking-data).
+17. [Further Reading](#further-reading).
 
 ## Documentation Diagrams from draw.io
 
@@ -208,29 +208,30 @@ src
 ## API Documentation
 
 Access the Swagger UI for interactive API exploration:
-[SwaggerUI](http://localhost:8080/swagger-ui/index.html#)
+[SwaggerUI](http://localhost:8080/swagger-ui/index.html#).
 
 ---
 
 ## App Ports
 
-- **pgAdmin4**: [http://localhost:8081/](http://localhost:8081/)
-- **Angular Frontend**: [http://localhost:4200/](http://localhost:4200/)
+- **pgAdmin4**: [http://localhost:8081/](http://localhost:8081/).
+- **Angular Frontend**: [http://localhost:4200/](http://localhost:4200/).
 
 ---
 
 ## Class Diagrams
 
-![Basic Class Diagram draw.io](https://github.com/user-attachments/assets/1b14c28b-6f66-4e96-966d-ba7008c1bef2)
-![Class Diagram](https://github.com/user-attachments/assets/2b9e9c60-d534-4c34-9fb9-bbf6e4de7aef)
+![Basic Class Diagram draw.io](![Etapa 3 Diagrama de Clases de Diseño Refinado](https://github.com/user-attachments/assets/c73963d3-2fea-47b1-ae4d-cccf3dd840a7)
+)
+![Class Diagram](https://github.com/user-attachments/assets/2b9e9c60-d534-4c34-9fb9-bbf6e4de7aef).
 
 ---
 
 ## Useful Links
 
-- [Maven Documentation](https://maven.apache.org/guides/index.html)
-- [Spring Boot Reference](https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/)
-- [Spring Data JPA Reference](https://docs.spring.io/spring-data/jpa/reference/jpa.html)
+- [Maven Documentation](https://maven.apache.org/guides/index.html).
+- [Spring Boot Reference](https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/).
+- [Spring Data JPA Reference](https://docs.spring.io/spring-data/jpa/reference/jpa.html).
 
 ---
 
@@ -255,5 +256,5 @@ in `application.properties`.
 
 ## Further Reading
 
-- [Angular CLI](https://github.com/angular/angular-cli)
-- [Node.js](https://nodejs.org/en/download/package-manager)
+- [Angular CLI](https://github.com/angular/angular-cli).
+- [Node.js](https://nodejs.org/en/download/package-manager).
