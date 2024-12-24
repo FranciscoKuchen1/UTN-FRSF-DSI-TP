@@ -4,7 +4,7 @@
 
 # Index
 
-1. [Documentation Diagrams from draw.io](#documentation-diagrams-from-drawio).
+1. [UML Documentation Diagrams from draw.io](#uml-documentation-diagrams-from-drawio).
 2. [Overview](#overview).
 3. [Features](#features).
 4. [Requirements](#requirements)
@@ -24,7 +24,7 @@
 16. [Mocking Data](#mocking-data).
 17. [Further Reading](#further-reading).
 
-## Documentation Diagrams from drawio
+## UML Documentation Diagrams from draw.io
 
 ### Etapa 1: Diseño de Entradas y Salidas
 
