@@ -4,7 +4,7 @@
 
 # Index
 
-1. [UML Documentation Diagrams from draw.io](#uml-documentation-diagrams-from-draw.io).
+1. [UML Documentation Diagrams from draw.io](#uml-documentation-diagrams-from-drawio).
 2. [Overview](#overview).
 3. [Features](#features).
 4. [Requirements](#requirements)
